@@ -13,7 +13,8 @@ class WorkController extends Controller
      */
     public function index()
     {
-        //
+        $works = Work::all();
+        return view('works', compact('works'));
     }
 
     /**
