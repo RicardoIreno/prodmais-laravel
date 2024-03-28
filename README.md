@@ -10,3 +10,8 @@
 ### Rodar migration
 
     php artisan migrate:fresh
+
+### Criar registros de teste
+
+    php artisan db:seed --class=PersonSeeder
+    php artisan db:seed --class=WorkSeeder
