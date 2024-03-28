@@ -29,7 +29,14 @@ class PersonController extends Controller
      */
     public function store(StorePersonRequest $request)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        Person::create($request->all())->id;
+
+        return redirect()->route('welcome')
+            ->with('success', 'Person created successfully.');
     }
 
     /**
