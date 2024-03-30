@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\WorkController;
+use App\Http\Controllers\LattesController;
 
 
 /*
@@ -20,5 +21,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/upload', function () {
+    return view('upload');
+});
+
 Route::resource('people', PersonController::class);
 Route::resource('works', WorkController::class);
+
+Route::post('/lattes', [LattesController::class, 'processXML']);
