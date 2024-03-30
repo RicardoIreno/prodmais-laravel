@@ -9,22 +9,17 @@ class LattesController extends Controller
 {
     public function processXML(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
         if ($request->file) {
-            $lattes = simplexml_load_file($request->file);
-            // Verifica se o conteúdo é um XML válido
-            if ($lattes) {
-                // Sucesso, o XML foi recebido e é válido
-                echo 'XML recebido com sucesso!';
-                // Aqui você pode manipular o objeto $xml conforme necessário
-            } else {
-                return Response::json(array('O conteúdo recebido não é um XML válido.' => 'O conteúdo recebido não é um XML válido.'), 204);
-                // Falha, o conteúdo recebido não é um XML válido
-                echo 'O conteúdo recebido não é um XML válido.';
+            try {
+                $lattes = simplexml_load_file($request->file);
+                echo 'XML do Lattes recebido com sucesso!';
+                var_dump($lattes);
+            } catch (\Exception $e) {
+                echo 'O conteúdo recebido não é um XML do Lattes válido.';
             }
-            var_dump($lattes);
         } else {
-            return Response::json(array('O conteúdo recebido não é um XML válido.' => 'O conteúdo recebido não é um XML válido.'), 204);
+            echo 'Não foi enviado um arquivo XML do Lattes válido.';
         }
     }
 }
