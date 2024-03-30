@@ -15,6 +15,16 @@
         <h1>Prodmais</h1>
         <a href="people">People</a>
         <a href="works">Works</a>
+
+        <form>
+            <div class="mb-3">
+                <label for="search" class="form-label">Expressão de busca</label>
+                <input type="text" class="form-control" id="search" aria-describedby="searchHelp">
+                <div id="searchHelp" class="form-text"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
