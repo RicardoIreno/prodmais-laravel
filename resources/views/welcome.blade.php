@@ -16,7 +16,7 @@
         <a href="people">People</a>
         <a href="works">Works</a>
 
-        <form>
+        <form method="get" action="{{url('works')}}">
             <div class="mb-3">
                 <label for="search" class="form-label">Expressão de busca</label>
                 <input type="text" class="form-control" id="search" aria-describedby="searchHelp">
