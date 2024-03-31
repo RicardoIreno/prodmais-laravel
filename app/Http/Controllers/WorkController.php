@@ -5,16 +5,25 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreWorkRequest;
 use App\Http\Requests\UpdateWorkRequest;
 use App\Models\Work;
+use Illuminate\Http\Request;
 
 class WorkController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $works = Work::all();
-        return view('works', compact('works'));
+        if (!$request->per_page) {
+            $request->per_page = 10;
+        }
+        $query = Work::query();
+        if ($request->name) {
+            $query->where('name', 'iLIKE', '%' . $request->name . '%');
+        }
+        $works = $query->orderByDesc('name')->paginate($request->per_page)->withQueryString();
+
+        return view('works', compact('works', 'request'));
     }
 
     /**
