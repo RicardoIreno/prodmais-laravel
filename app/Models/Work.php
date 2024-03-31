@@ -10,6 +10,8 @@ class Work extends Model
     use HasFactory;
 
     protected $fillable = [
+        'datePublished',
+        'doi',
         'name'
     ];
 }

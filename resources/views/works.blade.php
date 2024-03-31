@@ -36,8 +36,15 @@
             @endif
             @foreach($works as $key => $value)
             <p>{{ $value->name }}</p>
+            <ul>
+
+                <li>Ano de publicação: {{ $value->datePublished }}</li>
+                <li>DOI: <a href="https://doi.org/{{ $value->doi }}" target="_blank"
+                        rel="nofollow">{{ $value->doi }}</a>
+                </li>
+            </ul>
             @endforeach
-            <div class="d-flex mt-3 mb-3">
+            <div class=" d-flex mt-3 mb-3">
                 <div class="mx-auto">
                     {{ $works->links() }}
                 </div>

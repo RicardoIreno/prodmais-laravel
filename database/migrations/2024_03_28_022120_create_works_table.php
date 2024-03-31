@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('works', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('datePublished')->nullable();
+            $table->string('doi')->nullable();
             $table->timestamps();
         });
     }

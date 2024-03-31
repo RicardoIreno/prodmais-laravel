@@ -21,7 +21,7 @@ class WorkController extends Controller
         if ($request->name) {
             $query->where('name', 'iLIKE', '%' . $request->name . '%');
         }
-        $works = $query->orderByDesc('name')->paginate($request->per_page)->withQueryString();
+        $works = $query->orderByDesc('datePublished')->paginate($request->per_page)->withQueryString();
 
         return view('works', compact('works', 'request'));
     }
