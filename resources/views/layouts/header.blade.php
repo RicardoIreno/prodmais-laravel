@@ -7,6 +7,7 @@
                 <li><a href="{{url('/')}}" class="nav-link px-2 text-secondary">Início</a></li>
                 <li><a href="{{url('/')}}/people" class="nav-link px-2 text-white">People</a></li>
                 <li><a href="{{url('/')}}/works" class="nav-link px-2 text-white">Works</a></li>
+                <li><a href="{{url('/')}}/upload" class="nav-link px-2 text-white">Upload</a></li>
             </ul>
         </div>
     </div>
