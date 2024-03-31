@@ -26,6 +26,74 @@
         </div>
         <div class="col col-lg-4">
             <h3>Refinar resultados <a href="works" class="btn btn-warning">Limpar busca</a> </h3>
+            @if (
+            $request->has('name')||
+            $request->has('type')||
+            $request->has('datePublished')||
+            $request->has('author')||
+            $request->has('about')||
+            $request->has('isPartOf_name')||
+            $request->has('releasedEvent')||
+            $request->has('inLanguage')||
+            $request->has('issn')||
+            $request->has('sourceOrganization')||
+            $request->has('publisher')
+            )
+            <div class="alert alert-light" role="alert">
+                Filtros ativos: <br>
+                @foreach ($request->all() as $key => $value)
+                @if ($key != 'page')
+                <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                    @php
+                    if ($key == 'author') {
+                    $key_name = 'Autor';
+                    }
+                    if ($key == 'name') {
+                    $key_name = 'Título';
+                    }
+                    if ($key == 'about') {
+                    $key_name = 'Assunto';
+                    }
+                    if ($key == 'type') {
+                    $key_name = 'Tipo';
+                    }
+                    if ($key == 'datePublished') {
+                    $key_name = 'Ano de publicação';
+                    }
+                    if ($key == 'isPartOf_name') {
+                    $key_name = 'Publicação';
+                    }
+                    if ($key == 'releasedEvent') {
+                    $key_name = 'Nome do evento';
+                    }
+                    if ($key == 'inLanguage') {
+                    $key_name = 'Idioma';
+                    }
+                    if ($key == 'issn') {
+                    $key_name = 'ISSN';
+                    }
+                    if ($key == 'publisher') {
+                    $key_name = 'Editora';
+                    }
+                    if ($key == 'sourceOrganization') {
+                    $key_name = 'Instituição';
+                    }
+                    @endphp
+                    <a type="button" class="btn btn-outline-warning mb-1"
+                        href="works?{{ http_build_query(array_diff_key($request->all(), [$key => $value])) }}">
+                        {{ $key_name }}: {{ $value }} (X)
+                    </a>
+                </div>
+                @endif
+                @endforeach
+            </div>
+            @endif
+
+
+            <div class="accordion" id="facets">
+                <x-facet field="datePublished" fieldName="Ano de publicação" :request="$request" />
+            </div>
+
         </div>
         <div class="col col-lg-8">
             <h3>Resultados</h3>
