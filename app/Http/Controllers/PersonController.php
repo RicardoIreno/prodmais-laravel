@@ -5,16 +5,25 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonRequest;
 use App\Models\Person;
+use Illuminate\Http\Request;
 
 class PersonController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $people = Person::all();
-        return view('people', compact('people'));
+        if (!$request->per_page) {
+            $request->per_page = 10;
+        }
+        $query = Person::query();
+        if ($request->name) {
+            $query->where('name', 'iLIKE', '%' . $request->name . '%');
+        }
+        $people = $query->orderBy('name')->paginate($request->per_page)->withQueryString();
+
+        return view('people', compact('people', 'request'));
     }
 
     /**
