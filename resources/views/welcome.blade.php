@@ -4,9 +4,7 @@
 
 @section('content')
 <main class="container">
-    <h1>Prodmais</h1>
-
-
+    <h2>Prodmais</h2>
     <form method="get" action="{{url('works')}}">
         <div class="mb-3">
             <label for="search" class="form-label">Expressão de busca</label>

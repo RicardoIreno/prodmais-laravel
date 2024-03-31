@@ -13,7 +13,7 @@ class LattesController extends Controller
     public function artigos(array $artigos, array $attributes)
     {
         // echo "<pre>" . print_r($attributes, true) . "</pre>";
-        echo "<pre>" . print_r($artigos, true) . "</pre>";
+        // echo "<pre>" . print_r($artigos, true) . "</pre>";
         foreach ($artigos['ARTIGO-PUBLICADO'] as $artigo) {
             echo "<pre>" . print_r($artigo, true) . "</pre>";
             $createArtigo =  Work::updateOrCreate(

@@ -4,7 +4,7 @@
 
 @section('content')
 <main class="container">
-    <h1>Prodmais - Pesquisadores</h1>
+    <h2>Prodmais - Pesquisadores</h2>
     <div class="row">
         <div class="col col-lg-12">
             <h3 class="mt-2">
