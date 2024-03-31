@@ -12,6 +12,7 @@ class Work extends Model
     protected $fillable = [
         'datePublished',
         'doi',
+        'inLanguage',
         'name'
     ];
 }

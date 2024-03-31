@@ -26,7 +26,7 @@
                 @endphp
                 @endforeach
                 <li class="list-group-item">
-                    <a href="/works?{{ implode('&', $searchArray)}}">
+                    <a href="works?{{ implode('&', $searchArray)}}">
                         {{ $value->field }} ({{ $value->count }})
                     </a>
                 </li>

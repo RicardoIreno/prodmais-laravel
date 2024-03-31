@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('datePublished')->nullable();
             $table->string('doi')->nullable();
+            $table->string('inLanguage')->nullable();
             $table->timestamps();
         });
     }

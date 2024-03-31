@@ -18,6 +18,12 @@ class WorkController extends Controller
             $request->per_page = 10;
         }
         $query = Work::query();
+        if ($request->datePublished) {
+            $query->where('datePublished', $request->datePublished);
+        }
+        if ($request->inLanguage) {
+            $query->where('inLanguage', $request->inLanguage);
+        }
         if ($request->name) {
             $query->where('name', 'iLIKE', '%' . $request->name . '%');
         }

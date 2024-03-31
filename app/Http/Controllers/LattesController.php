@@ -20,7 +20,8 @@ class LattesController extends Controller
                 [
                     'name' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['TITULO-DO-ARTIGO'],
                     'datePublished' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['ANO-DO-ARTIGO'],
-                    'doi' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['DOI']
+                    'doi' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['DOI'],
+                    'inLanguage' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['IDIOMA']
                 ]
             );
         }

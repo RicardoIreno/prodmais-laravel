@@ -92,6 +92,7 @@
 
             <div class="accordion" id="facets">
                 <x-facet field="datePublished" fieldName="Ano de publicação" :request="$request" />
+                <x-facet field="inLanguage" fieldName="Idioma" :request="$request" />
             </div>
 
         </div>
@@ -110,6 +111,7 @@
                 <li>DOI: <a href="https://doi.org/{{ $value->doi }}" target="_blank"
                         rel="nofollow">{{ $value->doi }}</a>
                 </li>
+                <li>Idioma: {{ $value->inLanguage }}</li>
             </ul>
             @endforeach
             <div class=" d-flex mt-3 mb-3">
