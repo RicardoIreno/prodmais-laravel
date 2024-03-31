@@ -11,7 +11,7 @@
     @yield('head')
 </head>
 
-<body style="" ref="body">
+<body ref="body">
     @include('layouts.ga')
     @include('layouts.header')
 
