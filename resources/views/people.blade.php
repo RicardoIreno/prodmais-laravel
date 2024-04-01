@@ -35,7 +35,7 @@
             </div>
             @endif
             @foreach($people as $key => $value)
-            <p>{{ $value->name }}</p>
+            <p><a href="person/{{ $value->id }}">{{ $value->name }}</a></p>
             <ul>
 
             </ul>

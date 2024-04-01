@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\LattesController;
-
+use App\Models\Person;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +29,7 @@ Route::resource('people', PersonController::class);
 Route::resource('works', WorkController::class);
 
 Route::post('/lattes', [LattesController::class, 'processXML']);
+
+Route::get('/person/{id}', function (Person $id) {
+    return view('person', compact('id'));
+});
