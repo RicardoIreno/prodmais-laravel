@@ -120,6 +120,14 @@
                 <li>Volume: {{ $value->volumeNumber }}</li>
                 <li>Página inicial: {{ $value->pageStart }}</li>
                 <li>Página final: {{ $value->pageEnd }}</li>
+                @foreach($value->about as $about)
+                <li>Assuntos: {{ $about }}</li>
+                @endforeach
+                @foreach($value->author as $author)
+                <li>Autores: <a href="https://lattes.cnpq.br/{{ $author['NRO-ID-CNPQ'] }}">
+                        {{ $author['NOME-COMPLETO-DO-AUTOR'] }}</a>
+                </li>
+                @endforeach
             </ul>
             @endforeach
             <div class=" d-flex mt-3 mb-3">

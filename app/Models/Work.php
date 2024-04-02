@@ -9,10 +9,19 @@ class Work extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'about' => 'array',
+        'author' => 'array',
+        'isbn' => 'array'
+    ];
+
     protected $fillable = [
+        'about',
+        'author',
         'datePublished',
         'doi',
         'inLanguage',
+        'isbn',
         'isPartOf',
         'issn',
         'issueNumber',

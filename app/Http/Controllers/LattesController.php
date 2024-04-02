@@ -10,27 +10,60 @@ use Illuminate\Support\Facades\DB;
 class LattesController extends Controller
 {
 
+    public function processaPalavrasChaveLattes($palavras_chave)
+    {
+        foreach (range(1, 6) as $number) {
+            if (!empty($palavras_chave['@attributes']["PALAVRA-CHAVE-$number"])) {
+                $array_result[$number] = $palavras_chave['@attributes']["PALAVRA-CHAVE-$number"];
+            }
+        }
+        if (isset($array_result)) {
+            return $array_result;
+        }
+        unset($array_result);
+    }
+    public function processaAutores($autores)
+    {
+        $i = 0;
+        foreach ($autores as $autor) {
+            $array_autores[$i]['NOME-COMPLETO-DO-AUTOR'] = $autor['@attributes']['NOME-COMPLETO-DO-AUTOR'];
+            $array_autores[$i]['NOME-PARA-CITACAO'] = $autor['@attributes']['NOME-PARA-CITACAO'];
+            $array_autores[$i]['NRO-ID-CNPQ'] = $autor['@attributes']['NRO-ID-CNPQ'];
+            $i++;
+        }
+        return $array_autores;
+        unset($array_autores);
+    }
+
     public function artigos(array $artigos, array $attributes)
     {
         // echo "<pre>" . print_r($attributes, true) . "</pre>";
         // echo "<pre>" . print_r($artigos, true) . "</pre>";
         foreach ($artigos['ARTIGO-PUBLICADO'] as $artigo) {
             echo "<pre>" . print_r($artigo, true) . "</pre>";
-            $createArtigo =  Work::updateOrCreate(
-                [
-                    'name' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['TITULO-DO-ARTIGO'],
-                    'datePublished' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['ANO-DO-ARTIGO'],
-                    'doi' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['DOI'],
-                    'inLanguage' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['IDIOMA'],
-                    'isPartOf' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['TITULO-DO-PERIODICO-OU-REVISTA'],
-                    'issn' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['ISSN'],
-                    'issueNumber' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['SERIE'],
-                    'pageEnd' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-FINAL'],
-                    'pageStart' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-INICIAL'],
-                    'url' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['HOME-PAGE-DO-TRABALHO'],
-                    'volumeNumber' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['VOLUME']
-                ]
-            );
+            if (isset($artigo['PALAVRAS-CHAVE'])) {
+                $array_result_pc = $this->processaPalavrasChaveLattes($artigo['PALAVRAS-CHAVE']);
+            }
+            if (isset($artigo['AUTORES'])) {
+                $array_autores = $this->processaAutores($artigo['AUTORES']);
+            }
+            $record['about'] = $array_result_pc;
+            $record['author'] = $array_autores;
+            $record['datePublished'] = $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['ANO-DO-ARTIGO'];
+            $record['doi'] = $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['DOI'];
+            $record['inLanguage'] = $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['IDIOMA'];
+            $record['isPartOf'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['TITULO-DO-PERIODICO-OU-REVISTA'];
+            $record['issn'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['ISSN'];
+            $record['issueNumber'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['SERIE'];
+            $record['name'] = $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['TITULO-DO-ARTIGO'];
+            $record['pageEnd'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-FINAL'];
+            $record['pageStart'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-INICIAL'];
+            $record['url'] = $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['HOME-PAGE-DO-TRABALHO'];
+            $record['volumeNumber'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['VOLUME'];
+            //echo "<pre>" . print_r($record, true) . "</pre>";
+            $work = new Work($record);
+            $work->save();
+            unset($array_result_pc);
         }
     }
 

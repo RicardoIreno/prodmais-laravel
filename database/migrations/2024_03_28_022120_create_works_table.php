@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('works', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->jsonb('about')->nullable();
+            $table->jsonb('author')->nullable();
             $table->string('datePublished')->nullable();
             $table->string('doi')->nullable();
             $table->string('inLanguage')->nullable();
             $table->string('isPartOf')->nullable();
             $table->string('issn')->nullable();
             $table->string('issueNumber')->nullable();
+            $table->string('name');
             $table->string('pageEnd')->nullable();
             $table->string('pageStart')->nullable();
             $table->string('url')->nullable();
