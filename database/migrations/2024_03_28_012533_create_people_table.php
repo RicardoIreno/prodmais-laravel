@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->id();
+            $table->string('lattesDataAtualizacao');
             $table->string('name');
+            $table->string('orcid');
+            $table->longText('resumoCVpt');
+            $table->longText('resumoCVen');
             $table->timestamps();
         });
     }

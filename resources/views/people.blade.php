@@ -37,7 +37,7 @@
             @foreach($people as $key => $value)
             <p><a href="person/{{ $value->id }}">{{ $value->name }}</a></p>
             <ul>
-
+                <p>ORCID: <a href="{{ $value->orcid }}">{{ $value->orcid }}</a></p>
             </ul>
             @endforeach
             <div class=" d-flex mt-3 mb-3">

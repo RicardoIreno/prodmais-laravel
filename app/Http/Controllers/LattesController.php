@@ -40,7 +40,7 @@ class LattesController extends Controller
         // echo "<pre>" . print_r($attributes, true) . "</pre>";
         // echo "<pre>" . print_r($artigos, true) . "</pre>";
         foreach ($artigos['ARTIGO-PUBLICADO'] as $artigo) {
-            echo "<pre>" . print_r($artigo, true) . "</pre>";
+            // echo "<pre>" . print_r($artigo, true) . "</pre>";
             if (isset($artigo['PALAVRAS-CHAVE'])) {
                 $array_result_pc = $this->processaPalavrasChaveLattes($artigo['PALAVRAS-CHAVE']);
             }
@@ -69,14 +69,17 @@ class LattesController extends Controller
 
     public function createPerson(array $curriculo, array $attributes)
     {
-        //echo "<pre>" . print_r($attributes, true) . "</pre>";
-        //echo "<pre>" . print_r($curriculo, true) . "</pre>";
-        //dd($curriculo['@attributes']['NOME-COMPLETO']);
+        echo "<pre>" . print_r($attributes, true) . "</pre>";
+        echo "<pre>" . print_r($curriculo, true) . "</pre>";
 
-        $person = Person::updateOrCreate(
-            ['id' =>  $attributes['NUMERO-IDENTIFICADOR']],
-            ['name' => $curriculo['@attributes']['NOME-COMPLETO']]
-        );
+        $record_person['id'] = $attributes['NUMERO-IDENTIFICADOR'];
+        $record_person['lattesDataAtualizacao'] = $attributes['DATA-ATUALIZACAO'];
+        $record_person['resumoCVpt'] = $curriculo['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH'];
+        $record_person['resumoCVen'] = $curriculo['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH-EN'];
+        $record_person['name'] = $curriculo['@attributes']['NOME-COMPLETO'];
+        $record_person['orcid'] = $curriculo['@attributes']['ORCID-ID'];
+        $person = new Person($record_person);
+        $person->save();
     }
 
     public function producaoBibliografica(array $producaoBibliografica, array $attributes)

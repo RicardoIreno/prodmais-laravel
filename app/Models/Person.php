@@ -13,6 +13,10 @@ class Person extends Model
 
     protected $fillable = [
         'id',
-        'name'
+        'lattesDataAtualizacao',
+        'name',
+        'orcid',
+        'resumoCVpt',
+        'resumoCVen'
     ];
 }
