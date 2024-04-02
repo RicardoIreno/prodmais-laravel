@@ -111,7 +111,15 @@
                 <li>DOI: <a href="https://doi.org/{{ $value->doi }}" target="_blank"
                         rel="nofollow">{{ $value->doi }}</a>
                 </li>
+                <li>URL: <a href="{{ $value->url }}" target="_blank" rel="nofollow">{{ $value->url }}</a>
+                </li>
                 <li>Idioma: {{ $value->inLanguage }}</li>
+                <li>É parte de: {{ $value->isPartOf }}</li>
+                <li>ISSN: {{ $value->issn }}</li>
+                <li>Fascículo: {{ $value->issueNumber }}</li>
+                <li>Volume: {{ $value->volumeNumber }}</li>
+                <li>Página inicial: {{ $value->pageStart }}</li>
+                <li>Página final: {{ $value->pageEnd }}</li>
             </ul>
             @endforeach
             <div class=" d-flex mt-3 mb-3">

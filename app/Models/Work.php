@@ -13,6 +13,14 @@ class Work extends Model
         'datePublished',
         'doi',
         'inLanguage',
-        'name'
+        'isPartOf',
+        'issn',
+        'issueNumber',
+        'name',
+        'pageEnd',
+        'pageStart',
+        'url',
+        'volumeNumber'
+
     ];
 }

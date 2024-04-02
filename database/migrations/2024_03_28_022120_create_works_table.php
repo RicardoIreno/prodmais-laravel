@@ -17,6 +17,13 @@ return new class extends Migration
             $table->string('datePublished')->nullable();
             $table->string('doi')->nullable();
             $table->string('inLanguage')->nullable();
+            $table->string('isPartOf')->nullable();
+            $table->string('issn')->nullable();
+            $table->string('issueNumber')->nullable();
+            $table->string('pageEnd')->nullable();
+            $table->string('pageStart')->nullable();
+            $table->string('url')->nullable();
+            $table->string('volumeNumber')->nullable();
             $table->timestamps();
         });
     }
