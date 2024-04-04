@@ -28,6 +28,7 @@ class Work extends Model
         'name',
         'pageEnd',
         'pageStart',
+        'type',
         'url',
         'volumeNumber'
 

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('pageEnd')->nullable();
             $table->string('pageStart')->nullable();
+            $table->string('type');
             $table->string('url')->nullable();
             $table->string('volumeNumber')->nullable();
             $table->timestamps();

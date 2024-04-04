@@ -3,29 +3,14 @@
 @section('title', 'Prodmais - Produção Intelectual')
 
 @section('content')
-<main class="container">
-    <h2>Prodmais - Produção Intelectual</h2>
-    <div class="row">
-        <div class="col col-lg-12">
-            <h3 class="mt-2">
-                Resultado da busca <span class="badge text-bg-light fw-lighter">Exibindo
-                    {{ $works->firstItem() }}
-                    a {{ $works->lastItem() }} de {{ $works->total() }} registros</span>
-            </h3>
-            <form action="works" method="GET">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Pesquisar no título" name="name">
-                    <button class="btn btn-primary" type="submit">Buscar</button>
-                </div>
-            </form>
-            <div class="d-flex mt-3 mb-3">
-                <div class="mx-auto">
-                    {{ $works->links() }}
-                </div>
-            </div>
-        </div>
-        <div class="col col-lg-4">
-            <h3>Refinar resultados <a href="works" class="btn btn-warning">Limpar busca</a> </h3>
+<div class="p-result-container">
+
+    <nav class="p-result-nav">
+        <details id="filterlist" class="c-filterlist" onload="resizeMenu" open="">
+            <summary class="c-filterlist__header">
+                <h3 class="c-filterlist__title">Refinar resultados <a href="works" class="btn btn-warning btn-sm">Limpar
+                        busca</a></h3>
+            </summary>
             @if (
             $request->has('name')||
             $request->has('type')||
@@ -89,25 +74,92 @@
             </div>
             @endif
 
+            <div class="c-filterlist__content">
+                <div class="accordion" id="facets">
+                    <x-facet field="datePublished" fieldName="Ano de publicação" :request="$request" />
+                    <x-facet field="inLanguage" fieldName="Idioma" :request="$request" />
+                </div>
 
-            <div class="accordion" id="facets">
-                <x-facet field="datePublished" fieldName="Ano de publicação" :request="$request" />
-                <x-facet field="inLanguage" fieldName="Idioma" :request="$request" />
             </div>
+        </details>
+    </nav>
 
+    <main class="p-result-main">
+        <div class="col col-lg-12">
+            <h3 class="mt-2">
+                Resultado da busca <span class="badge text-bg-light fw-lighter">Exibindo
+                    {{ $works->firstItem() }}
+                    a {{ $works->lastItem() }} de {{ $works->total() }} registros</span>
+            </h3>
+            <form action="works" method="GET">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Pesquisar no título" name="name">
+                    <button class="btn btn-primary" type="submit">Buscar</button>
+                </div>
+            </form>
+            <div class="d-flex mt-3 mb-3">
+                <div class="mx-auto">
+                    {{ $works->links() }}
+                </div>
+            </div>
         </div>
-        <div class="col col-lg-8">
+        <div class="row">
+
             <h3>Resultados</h3>
             @if ($works->count() == 0)
             <div class="alert alert-warning" role="alert">
                 Nenhum registro encontrado
             </div>
             @endif
-            @foreach($works as $key => $value)
-            <p>{{ $value->name }}</p>
             <ul>
+                @foreach($works as $key => $value)
 
-                <li>Ano de publicação: {{ $value->datePublished }}</li>
+                <li class='s-list-2'>
+                    <div class='s-list-bullet'>
+                        <i class='i i-articlePublished s-list-ico' title='articlePublished'></i>
+                    </div>
+
+                    <div class='s-list-content'>
+                        <p class='t t-b t-md'>{{ $value->name }} ({{ $value->datePublished }})</p>
+                        <p class='t t-b t-md'><i>Tipo</i></p>
+                        <p class='t-gray'>
+                            <b class='t-subItem'>Autores: </b>
+                        <ul>
+                            @forelse ($value->author as $author)
+                            <li class="list-group-item"><a
+                                    href="https://lattes.cnpq.br/{{ $author['NRO-ID-CNPQ'] }}">{{ $author['NOME-COMPLETO-DO-AUTOR'] }}</a>
+                            </li>
+                            @empty
+                            <p>Sem autores</p>
+                            @endforelse
+                        </ul>
+                        </p>
+
+                        <p class='d-linewrap t-gray'>
+                        </p>
+                        <p class='mt-3'>
+                            DOI: <a href="https://doi.org/{{ $value->doi }}" target="_blank"
+                                rel="nofollow">{{ $value->doi }}</a>
+                        </p>
+
+                        <p class='t t-light'>
+                            Fonte:
+                        </p>
+
+                        <p class='t-gray'>
+                            <b class='t-subItem'>Assuntos: </b>
+                        <ul>
+                            @forelse ($value->about as $about)
+                            <li class="list-group-item">{{ $about }} </li>
+                            @empty
+                            <p>Sem assuntos</p>
+                            @endforelse
+                        </ul>
+                        </p>
+                    </div>
+                </li>
+
+                <!-- <li>Ano de publicação: {{ $value->datePublished }}</li>
                 <li>DOI: <a href="https://doi.org/{{ $value->doi }}" target="_blank"
                         rel="nofollow">{{ $value->doi }}</a>
                 </li>
@@ -127,7 +179,7 @@
                 <li>Autores: <a href="https://lattes.cnpq.br/{{ $author['NRO-ID-CNPQ'] }}">
                         {{ $author['NOME-COMPLETO-DO-AUTOR'] }}</a>
                 </li>
-                @endforeach
+                @endforeach -->
             </ul>
             @endforeach
             <div class=" d-flex mt-3 mb-3">
@@ -136,6 +188,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
+</div>
 @stop

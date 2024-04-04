@@ -58,6 +58,7 @@ class LattesController extends Controller
             $record['name'] = $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['TITULO-DO-ARTIGO'];
             $record['pageEnd'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-FINAL'];
             $record['pageStart'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-INICIAL'];
+            $record['type'] = 'Artigo publicado';
             $record['url'] = $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['HOME-PAGE-DO-TRABALHO'];
             $record['volumeNumber'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['VOLUME'];
             //echo "<pre>" . print_r($record, true) . "</pre>";
