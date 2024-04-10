@@ -157,14 +157,106 @@
                         <!-- Doutorado -->
 
                         <!-- Mestrado Profissionalizante -->
+
+
                         @if(isset($id->formacao['MESTRADO-PROFISSIONALIZANTE']))
-                        {{ dd($id->formacao['MESTRADO-PROFISSIONALIZANTE']) }}
+
+                        <div class="s-list">
+                            <div class="s-list-bullet"><i title="formation" class="i i-academic s-list-ico"></i></div>
+                            <div class="s-list-content">
+                                @if($id->formacao['MESTRADO-PROFISSIONALIZANTE']['@attributes']['STATUS-DO-CURSO'] ==
+                                'INCOMPLETO')
+                                <p class="t t-b">Status do Curso:
+                                    {{ $id->formacao['MESTRADO-PROFISSIONALIZANTE']['@attributes']['STATUS-DO-CURSO'] }}
+                                </p>
+                                @endif
+                                <p class="t t-b">Mestrado Profissionalizante em
+                                    {{ $id->formacao['MESTRADO-PROFISSIONALIZANTE']['@attributes']['NOME-CURSO'] }}
+                                </p>
+                                <p></p>
+                                @if($id->formacao['MESTRADO-PROFISSIONALIZANTE']['@attributes']['TITULO-DA-DISSERTACAO-TESE']
+                                != '')
+                                <p class="ty">
+                                    Título da dissertação:
+                                    {{ $id->formacao['MESTRADO-PROFISSIONALIZANTE']['@attributes']['TITULO-DA-DISSERTACAO-TESE'] }}
+                                </p>
+                                @endif
+                                <p class="t t-gray"></p>
+                                <p class="t t-gray"></p>
+                                <p class="t t-gray">Orientação:
+                                    {{ $id->formacao['MESTRADO-PROFISSIONALIZANTE']['@attributes']['NOME-COMPLETO-DO-ORIENTADOR'] }}
+                                </p>
+                                <p class="t t-gray">
+                                    {{ $id->formacao['MESTRADO-PROFISSIONALIZANTE']['@attributes']['NOME-INSTITUICAO'] }}
+                                </p>
+                                <ul class="s-list-tags">
+                                    <p class="t t-gray"></p>
+                                    <p class="t t-gray">
+                                        {{ $id->formacao['MESTRADO-PROFISSIONALIZANTE']['@attributes']['ANO-DE-INICIO'] }}
+                                        a
+                                        {{ $id->formacao['MESTRADO-PROFISSIONALIZANTE']['@attributes']['ANO-DE-CONCLUSAO'] }}
+                                    </p>
+                                </ul>
+                            </div>
+                        </div>
                         @endif
 
 
                         <!-- Mestrado -->
 
                         <!-- Graduação -->
+
+
+                        @if(isset($id->formacao['GRADUACAO']))
+
+                        @foreach ($id->formacao['GRADUACAO'] as $graduacao)
+
+
+                        <div class="s-list">
+                            <div class="s-list-bullet"><i title="formation" class="i i-academic s-list-ico"></i></div>
+                            <div class="s-list-content">
+                                @if($graduacao['@attributes']['STATUS-DO-CURSO'] ==
+                                'INCOMPLETO')
+                                <p class="t t-b">Status do Curso:
+                                    {{ $graduacao['@attributes']['STATUS-DO-CURSO'] }}
+                                </p>
+                                @endif
+                                <p class="t t-b">Graduação em
+                                    {{ $graduacao['@attributes']['NOME-CURSO'] }}
+                                </p>
+                                <p></p>
+                                @if($graduacao['@attributes']['TITULO-DO-TRABALHO-DE-CONCLUSAO-DE-CURSO']
+                                != '')
+                                <p class="ty">
+                                    Título do Trabalho de Conclusão de Curso:
+                                    {{ $graduacao['@attributes']['TITULO-DO-TRABALHO-DE-CONCLUSAO-DE-CURSO'] }}
+                                </p>
+                                @endif
+                                <p class="t t-gray"></p>
+                                <p class="t t-gray"></p>
+                                @if($graduacao['@attributes']['NOME-DO-ORIENTADOR']
+                                != '')
+                                <p class="t t-gray">Orientação:
+                                    {{ $graduacao['@attributes']['NOME-DO-ORIENTADOR'] }}
+                                </p>
+                                @endif
+                                <p class="t t-gray">
+                                    {{ $graduacao['@attributes']['NOME-INSTITUICAO'] }}
+                                </p>
+                                <ul class="s-list-tags">
+                                    <p class="t t-gray"></p>
+                                    <p class="t t-gray">
+                                        {{ $graduacao['@attributes']['ANO-DE-INICIO'] }}
+                                        a
+                                        {{ $graduacao['@attributes']['ANO-DE-CONCLUSAO'] }}
+                                    </p>
+                                </ul>
+                            </div>
+                        </div>
+                        @endforeach
+
+                        @endif
+
 
                     </div>
                 </transition>
