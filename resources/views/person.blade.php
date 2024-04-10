@@ -150,10 +150,16 @@
                         <hr class="c-line u-my-20" />
                         <h3 class="t t-h3">Formação</h3>
 
+
+
                         <!-- Livre Docência -->
 
                         <!-- Doutorado -->
 
+                        <!-- Mestrado Profissionalizante -->
+                        @if(isset($id->formacao['MESTRADO-PROFISSIONALIZANTE']))
+                        {{ dd($id->formacao['MESTRADO-PROFISSIONALIZANTE']) }}
+                        @endif
 
 
                         <!-- Mestrado -->
