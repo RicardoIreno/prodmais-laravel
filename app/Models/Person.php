@@ -11,8 +11,13 @@ class Person extends Model
 
     protected $primaryKey = 'id';
 
+    protected $casts = [
+        'idiomas' => 'array',
+    ];
+
     protected $fillable = [
         'id',
+        'idiomas',
         'lattesDataAtualizacao',
         'nacionalidade',
         'name',

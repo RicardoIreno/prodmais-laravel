@@ -112,19 +112,15 @@
                         <hr class="c-line u-my-20" />
                         <p class="t t-b">Perfis na web</p>
                         <div class="dh">
-                            <?php if (!empty($profile['lattesID'])) : ?>
                             <a href="https://lattes.cnpq.br/{{ $id->id }}" target="_blank" rel="external">
-                                <img class="c-socialicon" src="/inc/images/logos/academic/logo_lattes.svg" alt="Lattes"
+                                <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_lattes.svg" alt="Lattes"
                                     title="Lattes" />
                             </a>
-                            <?php endif; ?>
-                            <?php if (!empty($profile['orcid_id'])) : ?>
-                            <a href="{{ $id->orcid }}" target="_blank" rel="external">
-                                <img class="c-socialicon" src="/inc/images/logos/academic/logo_research_id.svg"
-                                    alt="ORCID" title="ORCID" />
-                            </a>
-                            <?php endif; ?>
 
+                            <a href="{{ $id->orcid }}" target="_blank" rel="external">
+                                <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_orcid.svg" alt="ORCID"
+                                    title="ORCID" />
+                            </a>
                         </div>
 
                         <hr class="c-line u-my-20" />
@@ -134,8 +130,19 @@
 
                         <div>
                             <h3 class="t t-h3">Idiomas</h3>
-
-
+                            @foreach ($id->idiomas['IDIOMA'] as $idioma)
+                            <div class="s-list">
+                                <div class="s-list-content">
+                                    <p class="t t-b">{{ $idioma['@attributes']["DESCRICAO-DO-IDIOMA"] }}</p>
+                                    <p class="t u-mb-05">
+                                        Compreende {{ $idioma['@attributes']["PROFICIENCIA-DE-COMPREENSAO"]  }},
+                                        Fala {{ $idioma['@attributes']["PROFICIENCIA-DE-FALA"]  }},
+                                        Lê {{ $idioma['@attributes']["PROFICIENCIA-DE-LEITURA"]  }},
+                                        Escreve {{ $idioma['@attributes']["PROFICIENCIA-DE-ESCRITA"]  }}
+                                    </p>
+                                </div>
+                            </div>
+                            @endforeach
 
                         </div>
 

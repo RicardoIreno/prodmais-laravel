@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->id();
+            $table->jsonb('idiomas')->nullable();
             $table->string('lattesDataAtualizacao');
             $table->string('nacionalidade');
             $table->string('name');
