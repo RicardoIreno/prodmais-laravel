@@ -10,6 +10,22 @@ use Illuminate\Support\Facades\DB;
 class LattesController extends Controller
 {
 
+    function lattesID10($lattesID16)
+    {
+        $url = 'https://lattes.cnpq.br/' . $lattesID16 . '';
+
+        $headers = @get_headers($url);
+
+        $lattesID10 = "";
+        foreach ($headers as $h) {
+            if (substr($h, 0, 87) == 'Location: http://buscatextual.cnpq.br/buscatextual/visualizacv.do?metodo=apresentar&id=') {
+                $lattesID10 = trim(substr($h, 87));
+                break;
+            }
+        }
+        return $lattesID10;
+    }
+
     public function processaPalavrasChaveLattes($palavras_chave)
     {
         foreach (range(1, 6) as $number) {
@@ -75,6 +91,7 @@ class LattesController extends Controller
 
         $record_person['id'] = $attributes['NUMERO-IDENTIFICADOR'];
         $record_person['lattesDataAtualizacao'] = $attributes['DATA-ATUALIZACAO'];
+        $record_person['lattesID10'] = $this->lattesID10($attributes['NUMERO-IDENTIFICADOR']);
         $record_person['resumoCVpt'] = $curriculo['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH'];
         $record_person['resumoCVen'] = $curriculo['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH-EN'];
         $record_person['name'] = $curriculo['@attributes']['NOME-COMPLETO'];

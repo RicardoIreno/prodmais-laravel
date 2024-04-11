@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', 'Prodmais - Pesquisadores')
+@section('title', 'Prodmais - Perfil do pesquisador - ' . $id->name)
 
 @section('content')
 
@@ -12,8 +12,7 @@
                 <div class="p-profile-header-one">
 
                     <div class="c-who-s">
-                        <img class="c-who-s-pic"
-                            src="https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&amp;bcv=true&amp;id=" />
+                        <img class="c-who-s-pic" src="https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&amp;bcv=true&amp;id={{ $id->lattesID10 }}" />
                     </div>
 
                 </div>
@@ -27,8 +26,7 @@
                     <div class="p-profile-header-numbers">
 
                         <div class="d-icon-text u-mx-10">
-                            <i class="i i-sm i-articlePublished" title="Trabalhos publicados"
-                                alt="Trabalhos publicados"></i>
+                            <i class="i i-sm i-articlePublished" title="Trabalhos publicados" alt="Trabalhos publicados"></i>
                             <span class="t">
 
                             </span>
@@ -53,33 +51,28 @@
                         <span class="c-profmenu-text">Sobre</span>
                     </button>
 
-                    <button id=" tab-btn-2" class="c-profmenu-btn" v-on:click="changeTab('2')" title="Produção"
-                        alt="Produção">
+                    <button id=" tab-btn-2" class="c-profmenu-btn" v-on:click="changeTab('2')" title="Produção" alt="Produção">
                         <i class="i i-sm i-prodsymbol c-profmenu-ico"></i>
                         <span class="c-profmenu-text">Produção</span>
                     </button>
 
-                    <button id="tab-btn-3" class="c-profmenu-btn" v-on:click="changeTab('3')" title="Atuação"
-                        alt="Atuação">
+                    <button id="tab-btn-3" class="c-profmenu-btn" v-on:click="changeTab('3')" title="Atuação" alt="Atuação">
                         <i class="i i-sm i-working c-profmenu-ico"></i>
                         <span class="c-profmenu-text">Atuação</span>
                     </button>
 
 
-                    <button id="tab-btn-4" class="c-profmenu-btn" v-on:click="changeTab('4')" title="Ensino"
-                        alt="Ensino">
+                    <button id="tab-btn-4" class="c-profmenu-btn" v-on:click="changeTab('4')" title="Ensino" alt="Ensino">
                         <i class="i i-sm i-teaching c-profmenu-ico"></i>
                         <span class="c-profmenu-text">Ensino</span>
                     </button>
 
 
-                    <button id="tab-btn-5" class="c-profmenu-btn" v-on:click="changeTab('5')" title="Gestão"
-                        alt="Gestão">
+                    <button id="tab-btn-5" class="c-profmenu-btn" v-on:click="changeTab('5')" title="Gestão" alt="Gestão">
                         <div class="i i-sm i-managment c-profmenu-ico"></div>
                         <span class="c-profmenu-text">Gestão</span>
                     </button>
-                    <button id="tab-btn-6" class="c-profmenu-btn" v-on:click="changeTab('6')" title="Pesquisa"
-                        alt="Pesquisa">
+                    <button id="tab-btn-6" class="c-profmenu-btn" v-on:click="changeTab('6')" title="Pesquisa" alt="Pesquisa">
                         <div class="i i-sm i-research c-profmenu-ico"></div>
                         <span class="c-profmenu-text">Pesquisa</span>
                     </button>
@@ -107,19 +100,16 @@
                         <p class="t-prof"></p>
                         <hr class="c-line u-my-20" />
                         <h3 class="t t-h3">Exportar dados</h3>
-                        <p><a href="tools/export_old.php?&format=bibtex&search=vinculo.lattes_id:{{ $id->id }}"
-                                target="_blank" rel="nofollow">Exportar produção no formato BIBTEX</a></p>
+                        <p><a href="tools/export_old.php?&format=bibtex&search=vinculo.lattes_id:{{ $id->id }}" target="_blank" rel="nofollow">Exportar produção no formato BIBTEX</a></p>
                         <hr class="c-line u-my-20" />
                         <p class="t t-b">Perfis na web</p>
                         <div class="dh">
                             <a href="https://lattes.cnpq.br/{{ $id->id }}" target="_blank" rel="external">
-                                <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_lattes.svg" alt="Lattes"
-                                    title="Lattes" />
+                                <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_lattes.svg" alt="Lattes" title="Lattes" />
                             </a>
 
                             <a href="{{ $id->orcid }}" target="_blank" rel="external">
-                                <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_orcid.svg" alt="ORCID"
-                                    title="ORCID" />
+                                <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_orcid.svg" alt="ORCID" title="ORCID" />
                             </a>
                         </div>
 

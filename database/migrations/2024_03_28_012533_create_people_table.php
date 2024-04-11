@@ -16,6 +16,7 @@ return new class extends Migration
             $table->jsonb('formacao')->nullable();
             $table->jsonb('idiomas')->nullable();
             $table->string('lattesDataAtualizacao');
+            $table->string('lattesID10');
             $table->string('nacionalidade');
             $table->string('name');
             $table->string('orcid');

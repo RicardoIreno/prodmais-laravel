@@ -21,6 +21,7 @@ class Person extends Model
         'id',
         'idiomas',
         'lattesDataAtualizacao',
+        'lattesID10',
         'nacionalidade',
         'name',
         'orcid',
