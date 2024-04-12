@@ -96,9 +96,11 @@ class LattesController extends Controller
         $record_person['resumoCVen'] = $curriculo['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH-EN'];
         $record_person['name'] = $curriculo['@attributes']['NOME-COMPLETO'];
         $record_person['nacionalidade'] = $curriculo['@attributes']['PAIS-DE-NACIONALIDADE'];
+        $record_person['nomeCitacoesBibliograficas'] = $curriculo['@attributes']['NOME-EM-CITACOES-BIBLIOGRAFICAS'];
         $record_person['orcid'] = $curriculo['@attributes']['ORCID-ID'];
         $record_person['idiomas'] = $curriculo['IDIOMAS'];
         $record_person['formacao'] = $curriculo['FORMACAO-ACADEMICA-TITULACAO'];
+        //$record_person['atuacao'] = $curriculo['ATUACOES-PROFISSIONAIS'];
         $person = new Person($record_person);
         $person->save();
     }

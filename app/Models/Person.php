@@ -12,11 +12,13 @@ class Person extends Model
     protected $primaryKey = 'id';
 
     protected $casts = [
+        'atuacao' => 'array',
         'formacao' => 'array',
         'idiomas' => 'array',
     ];
 
     protected $fillable = [
+        'atuacao',
         'formacao',
         'id',
         'idiomas',
@@ -24,6 +26,7 @@ class Person extends Model
         'lattesID10',
         'nacionalidade',
         'name',
+        'nomeCitacoesBibliograficas',
         'orcid',
         'resumoCVpt',
         'resumoCVen'

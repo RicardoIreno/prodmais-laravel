@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->id();
+            $table->jsonb('atuacao')->nullable();
             $table->jsonb('formacao')->nullable();
             $table->jsonb('idiomas')->nullable();
             $table->string('lattesDataAtualizacao');
             $table->string('lattesID10');
             $table->string('nacionalidade');
             $table->string('name');
+            $table->string('nomeCitacoesBibliograficas');
             $table->string('orcid');
             $table->longText('resumoCVpt');
             $table->longText('resumoCVen');

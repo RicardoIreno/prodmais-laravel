@@ -3,7 +3,7 @@
 @section('title', 'Prodmais - Pesquisadores')
 
 @section('content')
-<main class="p-result-main">
+<main class="p-result-container">
     <div class="col col-lg-12">
         <h3 class="mt-2">
             Resultado da busca <span class="badge text-bg-light fw-lighter">Exibindo
