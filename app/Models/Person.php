@@ -15,6 +15,8 @@ class Person extends Model
         'atuacao' => 'array',
         'formacao' => 'array',
         'idiomas' => 'array',
+        'orientacoesConcluidas' => 'array',
+        'orientacoesEmAndamento' => 'array',
     ];
 
     protected $fillable = [
@@ -28,6 +30,8 @@ class Person extends Model
         'name',
         'nomeCitacoesBibliograficas',
         'orcid',
+        'orientacoesConcluidas',
+        'orientacoesEmAndamento',
         'resumoCVpt',
         'resumoCVen'
     ];

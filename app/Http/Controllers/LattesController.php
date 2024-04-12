@@ -13,9 +13,7 @@ class LattesController extends Controller
     function lattesID10($lattesID16)
     {
         $url = 'https://lattes.cnpq.br/' . $lattesID16 . '';
-
         $headers = @get_headers($url);
-
         $lattesID10 = "";
         foreach ($headers as $h) {
             if (substr($h, 0, 87) == 'Location: http://buscatextual.cnpq.br/buscatextual/visualizacv.do?metodo=apresentar&id=') {
@@ -84,14 +82,16 @@ class LattesController extends Controller
         }
     }
 
-    public function createPerson(array $curriculo, array $attributes)
+    public function createPerson(array $curriculo, array $dados_complementares, array $outra_producao, array $attributes)
     {
-        echo "<pre>" . print_r($attributes, true) . "</pre>";
-        echo "<pre>" . print_r($curriculo, true) . "</pre>";
+        //echo "<pre>" . print_r($attributes, true) . "</pre>";
+        //echo "<pre>" . print_r($curriculo, true) . "</pre>";
+        //echo "<pre>" . print_r($dados_complementares, true) . "</pre>";
+        //echo "<pre>" . print_r($outra_producao, true) . "</pre>";
 
         $record_person['id'] = $attributes['NUMERO-IDENTIFICADOR'];
         $record_person['lattesDataAtualizacao'] = $attributes['DATA-ATUALIZACAO'];
-        $record_person['lattesID10'] = $this->lattesID10($attributes['NUMERO-IDENTIFICADOR']);
+        //$record_person['lattesID10'] = $this->lattesID10($attributes['NUMERO-IDENTIFICADOR']);
         $record_person['resumoCVpt'] = $curriculo['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH'];
         $record_person['resumoCVen'] = $curriculo['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH-EN'];
         $record_person['name'] = $curriculo['@attributes']['NOME-COMPLETO'];
@@ -100,7 +100,16 @@ class LattesController extends Controller
         $record_person['orcid'] = $curriculo['@attributes']['ORCID-ID'];
         $record_person['idiomas'] = $curriculo['IDIOMAS'];
         $record_person['formacao'] = $curriculo['FORMACAO-ACADEMICA-TITULACAO'];
-        $record_person['atuacao'] = $curriculo['ATUACOES-PROFISSIONAIS'];
+
+        if (isset($curriculo['ATUACOES-PROFISSIONAIS'])) {
+            $record_person['atuacao'] = $curriculo['ATUACOES-PROFISSIONAIS'];
+        }
+        if (isset($dados_complementares['ORIENTACOES-EM-ANDAMENTO'])) {
+            $record_person['orientacoesEmAndamento'] = $dados_complementares['ORIENTACOES-EM-ANDAMENTO'];
+        }
+        if (isset($outra_producao['ORIENTACOES-CONCLUIDAS'])) {
+            $record_person['orientacoesConcluidas'] = $outra_producao['ORIENTACOES-CONCLUIDAS'];
+        }
         try {
             $person = new Person($record_person);
             $person->save(); // returns false
@@ -128,12 +137,12 @@ class LattesController extends Controller
                 $lattesXML = simplexml_load_file($request->file);
                 $lattes = json_decode(json_encode($lattesXML), true);
                 //$lattes = get_object_vars($lattesXML);
-                //echo "<pre>" . print_r($lattes['PRODUCAO-BIBLIOGRAFICA'], true) . "</pre>";
-                $this->createPerson($lattes['DADOS-GERAIS'], $lattes['@attributes']);
+                //echo "<pre>" . print_r($lattes['OUTRA-PRODUCAO'], true) . "</pre>";
+                $this->createPerson($lattes['DADOS-GERAIS'], $lattes['DADOS-COMPLEMENTARES'], $lattes['OUTRA-PRODUCAO'], $lattes['@attributes']);
                 $this->producaoBibliografica($lattes['PRODUCAO-BIBLIOGRAFICA'], $lattes['@attributes']);
                 //echo "<pre>" . print_r($lattes['@attributes'], true) . "</pre>";
             } catch (\Exception $e) {
-                echo 'O conteúdo recebido não é um XML do Lattes válido.';
+                //echo 'Erro ao processar o arquivo do Lattes';
             }
         } else {
             //echo 'Não foi enviado um arquivo XML do Lattes válido.';

@@ -372,13 +372,11 @@
                         @foreach($id->atuacao['ATUACAO-PROFISSIONAL'] as $atuacao_profissional)
                         <h4 class="t t-subtitle">{{ $atuacao_profissional['@attributes']['NOME-INSTITUICAO'] }}</h4>
                         @foreach($atuacao_profissional['VINCULOS'] as $vinculos)
-
                         <?php
                         if (isset($vinculos['@attributes'])) {
                             $vinculos = $vinculos['@attributes'];
                         }
                         ?>
-
                         <li class='s-nobullet'>
                             <div class='s-list'>
                                 <div class='s-list-bullet'>
@@ -399,7 +397,6 @@
                                 </div>
                             </div>
                         </li>
-
                         @endforeach
                         @endforeach
 
@@ -409,8 +406,154 @@
                 <transition name="tabeffect">
                     <div id="tab-four" class="c-tab-content" v-if="tabOpened == '4'">
                         <h3 class="t t-h3 u-mb-20">Ensino</h3>
-                        <h3 class="t t-h3 u-mb-20">Orientações e supervisões</h3>
+                        @foreach($id->atuacao['ATUACAO-PROFISSIONAL'] as $atuacao_profissional)
+                        @if(isset($atuacao_profissional['ATIVIDADES-DE-ENSINO']))
+                        <h4 class="t t-subtitle">{{ $atuacao_profissional['@attributes']['NOME-INSTITUICAO'] }}</h4>
+                        @foreach($atuacao_profissional['ATIVIDADES-DE-ENSINO']['ENSINO'] as $ensino )
+                        <li class='s-nobullet'>
+                            <div class='s-list'>
+                                <div class='s-list-bullet'>
+                                    <i class='i i-academic s-list-ico'></i>
+                                </div>
 
+                                <div class='s-list-content'>
+
+                                    <p class='t t-b'><a class='t-a'>{{ $ensino['DISCIPLINA']  }}
+                                        </a>
+                                    </p>
+                                    <p class='t t-gray'>Nome do curso: {{ $ensino['@attributes']['NOME-CURSO']  }}</p>
+                                    <p class='t t-gray'>Grau: {{ $ensino['@attributes']['TIPO-ENSINO']  }}</p>
+                                    <p class='t t-gray'>{{ $ensino['@attributes']['ANO-INICIO']  }} -
+                                        {{ $ensino['@attributes']['ANO-FIM']  }}
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        @endforeach
+                        @endif
+                        @endforeach
+
+
+                        <h3 class="t t-h3 u-mb-20">Orientações e supervisões</h3>
+                        <h3 class="t t-h3 u-mb-20">Orientações e supervisões em andamento</h3>
+                        @foreach($id->orientacoesEmAndamento as $orientacaoEmAndamento)
+                        @foreach($orientacaoEmAndamento as $orientacao)
+
+                        @if(isset($orientacao['DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO']))
+
+                        <h4 class="t t-subtitle u-mb-20">
+                            {{ $orientacao['DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO']['@attributes']['NATUREZA'] }}
+                            em andamento
+                        </h4>
+                        <ul>
+                            <li class='s-nobullet'>
+                                <div class='s-list'>
+                                    <div class='s-list-bullet'>
+                                        <i class='i i-orientation s-list-ico'></i>
+                                    </div>
+
+                                    <div class='s-list-content'>
+
+                                        <p class='t t-b'>
+                                            @if(!empty($orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO']['@attributes']['NUMERO-ID-ORIENTADO']))
+                                            <a class='t-a'
+                                                href="https://lattes.cnpq.br/{{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO']['@attributes']['NUMERO-ID-ORIENTADO'] }}">
+                                                {{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO']['@attributes']['NOME-DO-ORIENTANDO'] }}
+                                            </a>
+                                            @else
+                                            <a class='t-a'>
+                                                {{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO']['@attributes']['NOME-DO-ORIENTANDO'] }}
+                                            </a>
+                                            @endif
+                                        </p>
+                                        <p class='t t-gray'>
+                                            {{ $orientacao['DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO']['@attributes']['TITULO-DO-TRABALHO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+                                            {{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO']['@attributes']['NOME-CURSO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+                                            {{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO']['@attributes']['NOME-INSTITUICAO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+                                            Tipo de orientação:
+                                            {{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO']['@attributes']['TIPO-DE-ORIENTACAO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+                                            Desde
+                                            {{ $orientacao['DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO']['@attributes']['ANO'] }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        @endif
+
+
+                        @if(isset($orientacao['DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']))
+
+                        <h4 class="t t-subtitle u-mb-20">
+                            {{ $orientacao['DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['NATUREZA'] }}
+                            em andamento
+                        </h4>
+                        <ul>
+                            <li class='s-nobullet'>
+                                <div class='s-list'>
+                                    <div class='s-list-bullet'>
+                                        <i class='i i-orientation s-list-ico'></i>
+                                    </div>
+
+                                    <div class='s-list-content'>
+
+                                        <p class='t t-b'>
+                                            @if(!empty($orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['NUMERO-ID-ORIENTADO']))
+                                            <a class='t-a'
+                                                href="https://lattes.cnpq.br/{{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['NUMERO-ID-ORIENTADO'] }}">
+                                                {{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['NOME-DO-ORIENTANDO'] }}
+                                            </a>
+                                            @else
+                                            <a class='t-a'>
+                                                {{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['NOME-DO-ORIENTANDO'] }}
+                                            </a>
+                                            @endif
+                                        </p>
+                                        @if($orientacao['DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['TIPO']
+                                        != 'NAO_INFORMADO')
+                                        <p class='t t-gray'>Tipo de orientação:
+                                            {{ $orientacao['DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['TIPO'] }}
+                                        </p>
+                                        @endif
+                                        <p class='t t-gray'>
+                                            {{ $orientacao['DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['TITULO-DO-TRABALHO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+                                            {{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['NOME-CURSO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+                                            {{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['NOME-INSTITUICAO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+                                            Tipo de orientação:
+                                            {{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['TIPO-DE-ORIENTACAO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+                                            Desde
+                                            {{ $orientacao['DADOS-BASICOS-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['ANO'] }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        @endif
+
+
+
+
+                        @endforeach
+                        @endforeach
+                        <h3 class="t t-h3 u-mb-20">Orientações e supervisões em concluídas</h3>
+                        <?php echo "<pre>" . print_r($id->orientacoesConcluidas, true) . "</pre>"; ?>
 
 
 

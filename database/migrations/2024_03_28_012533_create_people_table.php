@@ -17,11 +17,13 @@ return new class extends Migration
             $table->jsonb('formacao')->nullable();
             $table->jsonb('idiomas')->nullable();
             $table->string('lattesDataAtualizacao');
-            $table->string('lattesID10');
+            $table->string('lattesID10')->nullable();
             $table->string('nacionalidade');
             $table->string('name');
             $table->longText('nomeCitacoesBibliograficas');
             $table->string('orcid');
+            $table->jsonb('orientacoesConcluidas')->nullable();
+            $table->jsonb('orientacoesEmAndamento')->nullable();
             $table->longText('resumoCVpt');
             $table->longText('resumoCVen');
             $table->timestamps();
