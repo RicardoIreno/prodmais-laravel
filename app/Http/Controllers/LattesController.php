@@ -100,9 +100,14 @@ class LattesController extends Controller
         $record_person['orcid'] = $curriculo['@attributes']['ORCID-ID'];
         $record_person['idiomas'] = $curriculo['IDIOMAS'];
         $record_person['formacao'] = $curriculo['FORMACAO-ACADEMICA-TITULACAO'];
-        //$record_person['atuacao'] = $curriculo['ATUACOES-PROFISSIONAIS'];
-        $person = new Person($record_person);
-        $person->save();
+        $record_person['atuacao'] = $curriculo['ATUACOES-PROFISSIONAIS'];
+        try {
+            $person = new Person($record_person);
+            $person->save(); // returns false
+        } catch (\Exception $e) {
+            // do task when error
+            echo $e->getMessage();   // insert query
+        }
     }
 
     public function producaoBibliografica(array $producaoBibliografica, array $attributes)

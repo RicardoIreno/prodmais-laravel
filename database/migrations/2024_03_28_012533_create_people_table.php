@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('lattesID10');
             $table->string('nacionalidade');
             $table->string('name');
-            $table->string('nomeCitacoesBibliograficas');
+            $table->longText('nomeCitacoesBibliograficas');
             $table->string('orcid');
             $table->longText('resumoCVpt');
             $table->longText('resumoCVen');

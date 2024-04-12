@@ -119,11 +119,12 @@
                                 <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_lattes.svg" alt="Lattes"
                                     title="Lattes" />
                             </a>
-
+                            @if(!empty($id->orcid))
                             <a href="{{ $id->orcid }}" target="_blank" rel="external">
                                 <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_orcid.svg" alt="ORCID"
                                     title="ORCID" />
                             </a>
+                            @endif
                         </div>
 
                         <hr class="c-line u-my-20" />
@@ -368,6 +369,40 @@
                 <transition name="tabeffect">
                     <div id="tab-three" class="c-tab-content" v-if="tabOpened == '3'">
                         <h3 class="t t-h3 u-mb-20">Atuações</h3>
+                        @foreach($id->atuacao['ATUACAO-PROFISSIONAL'] as $atuacao_profissional)
+                        <h4 class="t t-subtitle">{{ $atuacao_profissional['@attributes']['NOME-INSTITUICAO'] }}</h4>
+                        @foreach($atuacao_profissional['VINCULOS'] as $vinculos)
+
+                        <?php
+                        if (isset($vinculos['@attributes'])) {
+                            $vinculos = $vinculos['@attributes'];
+                        }
+                        ?>
+
+                        <li class='s-nobullet'>
+                            <div class='s-list'>
+                                <div class='s-list-bullet'>
+                                    <i class='i i-working s-list-ico'></i>
+                                </div>
+
+                                <div class='s-list-content'>
+                                    @if(!empty($vinculos['OUTRO-ENQUADRAMENTO-FUNCIONAL-INFORMADO']))
+                                    <p class='t t-b'><a
+                                            class='t-a'>{{ $vinculos['OUTRO-ENQUADRAMENTO-FUNCIONAL-INFORMADO']  }} </a>
+                                    </p>
+                                    @endif
+                                    @if(!empty($vinculos['OUTRO-VINCULO-INFORMADO']))
+                                    <p class='t t-b'><a class='t-a'>{{ $vinculos['OUTRO-VINCULO-INFORMADO']  }} </a>
+                                    </p>
+                                    @endif
+                                    <p class='t t-gray'>{{ $vinculos['ANO-INICIO']  }} - {{ $vinculos['ANO-FIM']  }}</p>
+                                </div>
+                            </div>
+                        </li>
+
+                        @endforeach
+                        @endforeach
+
 
                     </div> <!-- end tab-three -->
                 </transition>
