@@ -127,13 +127,25 @@
                         <p class='t t-b t-md'><i>{{ $work->type }}</i></p>
                         @if(is_array($work->author))
                         <p class='t t-b t-md'>
+                        <ul>
+                            @foreach($work->author as $author)
+                            @if(!empty($author['NRO-ID-CNPQ']))
+                            <li class='s-nobullet'>
+                                {{ $author['NOME-COMPLETO-DO-AUTOR'] }}
 
-                            @foreach ($work->author as $author)
-
-                            <?php echo "<pre>" . print_r($author, true) . "</pre>";
-                            ?>
-
+                                <a href="https://lattes.cnpq.br/{{ $author['NRO-ID-CNPQ'] }}" target="_blank"
+                                    rel="external">
+                                    <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_lattes.svg"
+                                        alt="Lattes" title="Lattes" height="15px" />
+                                </a>
+                            </li>
+                            @else
+                            <li class='s-nobullet'>
+                                {{ $author['NOME-COMPLETO-DO-AUTOR'] }}
+                            </li>
+                            @endif
                             @endforeach
+                        </ul>
 
                         </p>
                         @endif

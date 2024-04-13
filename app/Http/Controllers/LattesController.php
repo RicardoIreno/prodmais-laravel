@@ -50,7 +50,7 @@ class LattesController extends Controller
     public function artigos(array $artigos, array $attributes)
     {
         //echo "<pre>" . print_r($attributes, true) . "</pre>";
-        echo "<pre>" . print_r($artigos, true) . "</pre>";
+        //echo "<pre>" . print_r($artigos, true) . "</pre>";
         foreach ($artigos['ARTIGO-PUBLICADO'] as $artigo) {
             $work = new Work;
             $work->fill([
@@ -70,9 +70,18 @@ class LattesController extends Controller
             ]);
 
             if (isset($artigo['AUTORES'])) {
+                foreach ($artigo['AUTORES'] as $autores) {
+                    if (isset($autores['@attributes'])) {
+                        $aut_array[] = $autores['@attributes'];
+                    } else {
+                        $aut_array[] = $autores;
+                    }
+                }
+
                 $work->fill([
-                    'author' => $artigo['AUTORES'],
+                    'author' => $aut_array,
                 ]);
+                unset($aut_array);
             }
 
             if (isset($artigo['PALAVRAS-CHAVE'])) {
