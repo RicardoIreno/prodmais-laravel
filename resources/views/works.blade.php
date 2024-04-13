@@ -64,8 +64,7 @@
                     $key_name = 'Instituição';
                     }
                     @endphp
-                    <a type="button" class="btn btn-outline-warning mb-1"
-                        href="works?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
+                    <a type="button" class="btn btn-outline-warning mb-1" href="works?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
                         {{ $key_name }}: {{ $work }} (X)
                     </a>
                 </div>
@@ -73,14 +72,15 @@
                 @endforeach
             </div>
             @endif
-
             <div class="c-filterlist__content">
                 <div class="accordion" id="facets">
                     <x-facet field="datePublished" fieldName="Ano de publicação" :request="$request" />
                     <x-facet field="inLanguage" fieldName="Idioma" :request="$request" />
+                    <x-facet field="isPartOf" fieldName="É parte de" :request="$request" />
                 </div>
 
             </div>
+
         </details>
     </nav>
 
@@ -133,10 +133,8 @@
                             <li class='s-nobullet'>
                                 {{ $author['NOME-COMPLETO-DO-AUTOR'] }}
 
-                                <a href="https://lattes.cnpq.br/{{ $author['NRO-ID-CNPQ'] }}" target="_blank"
-                                    rel="external">
-                                    <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_lattes.svg"
-                                        alt="Lattes" title="Lattes" height="15px" />
+                                <a href="https://lattes.cnpq.br/{{ $author['NRO-ID-CNPQ'] }}" target="_blank" rel="external">
+                                    <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_lattes.svg" alt="Lattes" title="Lattes" height="15px" />
                                 </a>
                             </li>
                             @else
@@ -151,14 +149,9 @@
                         @endif
 
 
-
-
-                        <p class='d-linewrap t-gray'>
-                        </p>
                         @if(!empty($work->doi))
                         <p class='mt-3'>
-                            DOI: <a href="https://doi.org/{{ $work->doi }}" target="_blank"
-                                rel="nofollow">{{ $work->doi }}</a>
+                            DOI: <a href="https://doi.org/{{ $work->doi }}" target="_blank" rel="nofollow">{{ $work->doi }}</a>
                         </p>
                         @endif
                         @if(!empty($work->inLanguage))
@@ -174,6 +167,11 @@
                         </p>
                         @endif
 
+                        @if(is_array($work->about))
+                        <p class='d-linewrap t-gray'>
+                            Assuntos: {{ implode(", ", $work->about) }}
+                        </p>
+                        @endif
 
                     </div>
                 </li>

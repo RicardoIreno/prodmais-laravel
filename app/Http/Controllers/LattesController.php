@@ -24,28 +24,16 @@ class LattesController extends Controller
         return $lattesID10;
     }
 
-    // public function processaPalavrasChaveLattes($palavras_chave)
-    // {
-    //     $array_result = [];
-    //     foreach (range(1, 6) as $number) {
-    //         if (!empty($palavras_chave['@attributes']["PALAVRA-CHAVE-$number"])) {
-    //             $array_result[$number] = $palavras_chave['@attributes']["PALAVRA-CHAVE-$number"];
-    //         }
-    //     }
-    //     return $array_result;
-    // }
-    // public function processaAutores($autores)
-    // {
-    //     $array_autores = [];
-    //     $i = 0;
-    //     foreach ($autores as $autor) {
-    //         $array_autores[$i]['NOME-COMPLETO-DO-AUTOR'] = $autor['@attributes']['NOME-COMPLETO-DO-AUTOR'];
-    //         $array_autores[$i]['NOME-PARA-CITACAO'] = $autor['@attributes']['NOME-PARA-CITACAO'];
-    //         $array_autores[$i]['NRO-ID-CNPQ'] = $autor['@attributes']['NRO-ID-CNPQ'];
-    //         $i++;
-    //     }
-    //     return $array_autores;
-    // }
+    public function processaPalavrasChaveLattes($palavras_chave)
+    {
+        $array_result = [];
+        foreach (range(1, 6) as $number) {
+            if (!empty($palavras_chave['@attributes']["PALAVRA-CHAVE-$number"])) {
+                $array_result[$number] = $palavras_chave['@attributes']["PALAVRA-CHAVE-$number"];
+            }
+        }
+        return $array_result;
+    }
 
     public function artigos(array $artigos, array $attributes)
     {
@@ -85,8 +73,9 @@ class LattesController extends Controller
             }
 
             if (isset($artigo['PALAVRAS-CHAVE'])) {
+                $about_array = $this->processaPalavrasChaveLattes($artigo['PALAVRAS-CHAVE']);
                 $work->fill([
-                    'about' => $artigo['PALAVRAS-CHAVE'],
+                    'about' => $about_array,
                 ]);
             }
 
