@@ -26,7 +26,7 @@
             )
             <div class="alert alert-light" role="alert">
                 Filtros ativos: <br>
-                @foreach ($request->all() as $key => $value)
+                @foreach ($request->all() as $key => $work)
                 @if ($key != 'page')
                 <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
                     @php
@@ -65,8 +65,8 @@
                     }
                     @endphp
                     <a type="button" class="btn btn-outline-warning mb-1"
-                        href="works?{{ http_build_query(array_diff_key($request->all(), [$key => $value])) }}">
-                        {{ $key_name }}: {{ $value }} (X)
+                        href="works?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
+                        {{ $key_name }}: {{ $work }} (X)
                     </a>
                 </div>
                 @endif
@@ -112,7 +112,10 @@
             </div>
             @endif
             <ul>
-                @foreach($works as $key => $value)
+                @foreach($works as $work)
+
+                <?php //echo "<pre>" . print_r($work, true) . "</pre>"; 
+                ?>
 
                 <li class='s-list-2'>
                     <div class='s-list-bullet'>
@@ -120,66 +123,48 @@
                     </div>
 
                     <div class='s-list-content'>
-                        <p class='t t-b t-md'>{{ $value->name }} ({{ $value->datePublished }})</p>
-                        <p class='t t-b t-md'><i>Tipo</i></p>
-                        <p class='t-gray'>
-                            <b class='t-subItem'>Autores: </b>
-                        <ul>
-                            @forelse ($value->author as $author)
-                            <li class="list-group-item"><a
-                                    href="https://lattes.cnpq.br/{{ $author['NRO-ID-CNPQ'] }}">{{ $author['NOME-COMPLETO-DO-AUTOR'] }}</a>
-                            </li>
-                            @empty
-                            <p>Sem autores</p>
-                            @endforelse
-                        </ul>
+                        <p class='t t-b t-md'>{{ $work->name }} ({{ $work->datePublished }})</p>
+                        <p class='t t-b t-md'><i>{{ $work->type }}</i></p>
+                        @if(is_array($work->author))
+                        <p class='t t-b t-md'>
+
+                            @foreach ($work->author as $author)
+
+                            <?php echo "<pre>" . print_r($author, true) . "</pre>";
+                            ?>
+
+                            @endforeach
+
                         </p>
+                        @endif
+
+
+
 
                         <p class='d-linewrap t-gray'>
                         </p>
+                        @if(!empty($work->doi))
                         <p class='mt-3'>
-                            DOI: <a href="https://doi.org/{{ $value->doi }}" target="_blank"
-                                rel="nofollow">{{ $value->doi }}</a>
+                            DOI: <a href="https://doi.org/{{ $work->doi }}" target="_blank"
+                                rel="nofollow">{{ $work->doi }}</a>
                         </p>
+                        @endif
+                        @if(!empty($work->inLanguage))
+                        <p class='mt-3'>
+                            Idioma: {{ $work->inLanguage }}
+                        </p>
+                        @endif
 
+
+                        @if(!empty($work->isPartOf))
                         <p class='t t-light'>
-                            Fonte:
+                            Fonte: {{ $work->isPartOf }}
                         </p>
+                        @endif
 
-                        <p class='t-gray'>
-                            <b class='t-subItem'>Assuntos: </b>
-                        <ul>
-                            @forelse ($value->about as $about)
-                            <li class="list-group-item">{{ $about }} </li>
-                            @empty
-                            <p>Sem assuntos</p>
-                            @endforelse
-                        </ul>
-                        </p>
+
                     </div>
                 </li>
-
-                <!-- <li>Ano de publicação: {{ $value->datePublished }}</li>
-                <li>DOI: <a href="https://doi.org/{{ $value->doi }}" target="_blank"
-                        rel="nofollow">{{ $value->doi }}</a>
-                </li>
-                <li>URL: <a href="{{ $value->url }}" target="_blank" rel="nofollow">{{ $value->url }}</a>
-                </li>
-                <li>Idioma: {{ $value->inLanguage }}</li>
-                <li>É parte de: {{ $value->isPartOf }}</li>
-                <li>ISSN: {{ $value->issn }}</li>
-                <li>Fascículo: {{ $value->issueNumber }}</li>
-                <li>Volume: {{ $value->volumeNumber }}</li>
-                <li>Página inicial: {{ $value->pageStart }}</li>
-                <li>Página final: {{ $value->pageEnd }}</li>
-                @foreach($value->about as $about)
-                <li>Assuntos: {{ $about }}</li>
-                @endforeach
-                @foreach($value->author as $author)
-                <li>Autores: <a href="https://lattes.cnpq.br/{{ $author['NRO-ID-CNPQ'] }}">
-                        {{ $author['NOME-COMPLETO-DO-AUTOR'] }}</a>
-                </li>
-                @endforeach -->
             </ul>
             @endforeach
             <div class=" d-flex mt-3 mb-3">
