@@ -154,6 +154,13 @@
                             DOI: <a href="https://doi.org/{{ $work->doi }}" target="_blank" rel="nofollow">{{ $work->doi }}</a>
                         </p>
                         @endif
+
+                        @if(!empty($work->url))
+                        <p class='mt-3'>
+                            URL: <a href="{{ $work->url }}" target="_blank" rel="nofollow">{{ $work->url }}</a>
+                        </p>
+                        @endif
+
                         @if(!empty($work->inLanguage))
                         <p class='mt-3'>
                             Idioma: {{ $work->inLanguage }}
