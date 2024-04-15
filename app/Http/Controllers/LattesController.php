@@ -117,8 +117,8 @@ class LattesController extends Controller
             $record_person['orientacoesConcluidas'] = $outra_producao['ORIENTACOES-CONCLUIDAS'];
         }
         try {
-            //$person = new Person($record_person);
-            //$person->save();
+            $person = new Person($record_person);
+            $person->save();
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
