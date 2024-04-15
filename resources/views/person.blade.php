@@ -433,7 +433,7 @@
                         @endif
                         @endforeach
 
-
+                        @if(isset($id->orientacoesEmAndamento))
                         <h3 class="t t-h3 u-mb-20">Orientações e supervisões</h3>
                         <h3 class="t t-h3 u-mb-20">Orientações e supervisões em andamento</h3>
                         @foreach($id->orientacoesEmAndamento as $orientacaoEmAndamento)
@@ -552,8 +552,186 @@
 
                         @endforeach
                         @endforeach
+                        @endif
+
+                        @if(isset($id->orientacoesConcluidas))
                         <h3 class="t t-h3 u-mb-20">Orientações e supervisões em concluídas</h3>
-                        <?php echo "<pre>" . print_r($id->orientacoesConcluidas, true) . "</pre>"; ?>
+                        <?php //echo "<pre>" . print_r($id->orientacoesConcluidas, true) . "</pre>"; 
+                        ?>
+
+                        @foreach($id->orientacoesConcluidas as $outraOrientacaoConcluida)
+                        @foreach($outraOrientacaoConcluida as $outraOrientacao)
+
+                        @if(isset($outraOrientacao['DADOS-BASICOS-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO']))
+
+                        <h4 class="t t-subtitle u-mb-20">
+                            Orientação de
+                            {{ $outraOrientacao['DADOS-BASICOS-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO']['@attributes']['NATUREZA'] }}
+                            concluída
+                        </h4>
+                        <ul>
+                            <li class='s-nobullet'>
+                                <div class='s-list'>
+                                    <div class='s-list-bullet'>
+                                        <i class='i i-orientation s-list-ico'></i>
+                                    </div>
+
+                                    <div class='s-list-content'>
+
+                                        <p class='t t-b'>
+                                            @if(!empty($outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO']['@attributes']['NUMERO-ID-ORIENTADO']))
+                                            <a class='t-a'
+                                                href="https://lattes.cnpq.br/{{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO']['@attributes']['NUMERO-ID-ORIENTADO'] }}">
+                                                {{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO']['@attributes']['NOME-DO-ORIENTADO'] }}
+                                            </a>
+                                            @else
+                                            <a class='t-a'>
+                                                {{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO']['@attributes']['NOME-DO-ORIENTADO'] }}
+                                            </a>
+                                            @endif
+                                        </p>
+                                        <p class='t t-gray'>
+                                            {{ $outraOrientacao['DADOS-BASICOS-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO']['@attributes']['TITULO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+                                            Nome do curso:
+                                            {{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO']['@attributes']['NOME-DO-CURSO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+
+                                        </p>
+                                        <p class='t t-gray'>
+                                            Tipo de orientação:
+                                            {{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO']['@attributes']['TIPO-DE-ORIENTACAO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+                                            Ano:
+                                            {{ $outraOrientacao['DADOS-BASICOS-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO']['@attributes']['ANO'] }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        @endif
+
+                        @if(isset($outraOrientacao['DADOS-BASICOS-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO']))
+
+                        <h4 class="t t-subtitle u-mb-20">
+                            Orientação de
+                            {{ $outraOrientacao['DADOS-BASICOS-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO']['@attributes']['NATUREZA'] }}
+                            concluída
+                        </h4>
+                        <ul>
+                            <li class='s-nobullet'>
+                                <div class='s-list'>
+                                    <div class='s-list-bullet'>
+                                        <i class='i i-orientation s-list-ico'></i>
+                                    </div>
+
+                                    <div class='s-list-content'>
+
+                                        <p class='t t-b'>
+                                            @if(!empty($outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO']['@attributes']['NUMERO-ID-ORIENTADO']))
+                                            <a class='t-a'
+                                                href="https://lattes.cnpq.br/{{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO']['@attributes']['NUMERO-ID-ORIENTADO'] }}">
+                                                {{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO']['@attributes']['NOME-DO-ORIENTADO'] }}
+                                            </a>
+                                            @else
+                                            <a class='t-a'>
+                                                {{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO']['@attributes']['NOME-DO-ORIENTADO'] }}
+                                            </a>
+                                            @endif
+                                        </p>
+                                        <p class='t t-gray'>
+                                            {{ $outraOrientacao['DADOS-BASICOS-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO']['@attributes']['TITULO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+                                            Nome do curso:
+                                            {{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO']['@attributes']['NOME-DO-CURSO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+
+                                        </p>
+                                        <p class='t t-gray'>
+                                            Tipo de orientação:
+                                            {{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO']['@attributes']['TIPO-DE-ORIENTACAO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+                                            Ano:
+                                            {{ $outraOrientacao['DADOS-BASICOS-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO']['@attributes']['ANO'] }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        @endif
+
+                        @if(isset($outraOrientacao['DADOS-BASICOS-DE-OUTRAS-ORIENTACOES-CONCLUIDAS']))
+                        <h4 class="t t-subtitle u-mb-20">
+                            Orientação de
+                            {{ $outraOrientacao['DADOS-BASICOS-DE-OUTRAS-ORIENTACOES-CONCLUIDAS']['@attributes']['NATUREZA'] }}
+                            concluída
+                        </h4>
+                        <ul>
+                            <li class='s-nobullet'>
+                                <div class='s-list'>
+                                    <div class='s-list-bullet'>
+                                        <i class='i i-orientation s-list-ico'></i>
+                                    </div>
+
+                                    <div class='s-list-content'>
+
+                                        <p class='t t-b'>
+                                            @if(!empty($outraOrientacao['DETALHAMENTO-DE-OUTRAS-ORIENTACOES-CONCLUIDAS']['@attributes']['NUMERO-ID-ORIENTADO']))
+                                            <a class='t-a'
+                                                href="https://lattes.cnpq.br/{{ $outraOrientacao['DETALHAMENTO-DE-OUTRAS-ORIENTACOES-CONCLUIDAS']['@attributes']['NUMERO-ID-ORIENTADO'] }}">
+                                                {{ $outraOrientacao['DETALHAMENTO-DE-OUTRAS-ORIENTACOES-CONCLUIDAS']['@attributes']['NOME-DO-ORIENTADO'] }}
+                                            </a>
+                                            @else
+                                            <a class='t-a'>
+                                                {{ $outraOrientacao['DETALHAMENTO-DE-OUTRAS-ORIENTACOES-CONCLUIDAS']['@attributes']['NOME-DO-ORIENTADO'] }}
+                                            </a>
+                                            @endif
+                                        </p>
+                                        <p class='t t-gray'>
+                                            {{ $outraOrientacao['DADOS-BASICOS-DE-OUTRAS-ORIENTACOES-CONCLUIDAS']['@attributes']['TITULO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+                                            Nome do curso:
+                                            {{ $outraOrientacao['DETALHAMENTO-DE-OUTRAS-ORIENTACOES-CONCLUIDAS']['@attributes']['NOME-DO-CURSO'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+
+                                        </p>
+                                        <p class='t t-gray'>
+                                            Tipo de orientação:
+                                            {{ $outraOrientacao['DETALHAMENTO-DE-OUTRAS-ORIENTACOES-CONCLUIDAS']['@attributes']['TIPO-DE-ORIENTACAO-CONCLUIDA'] }}
+                                        </p>
+                                        <p class='t t-gray'>
+                                            Ano:
+                                            {{ $outraOrientacao['DADOS-BASICOS-DE-OUTRAS-ORIENTACOES-CONCLUIDAS']['@attributes']['ANO'] }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        @endif
+
+
+
+                        <?php //echo "<pre>" . print_r($outraOrientacao, true) . "</pre>";
+                        ?>
+
+                        @endforeach
+                        @endforeach
+
+
+
+
+                        @endif
 
 
 
