@@ -410,6 +410,8 @@
                         @if(isset($atuacao_profissional['ATIVIDADES-DE-ENSINO']))
                         <h4 class="t t-subtitle">{{ $atuacao_profissional['@attributes']['NOME-INSTITUICAO'] }}</h4>
                         @foreach($atuacao_profissional['ATIVIDADES-DE-ENSINO']['ENSINO'] as $ensino )
+
+                        @if(is_array($ensino))
                         <li class='s-nobullet'>
                             <div class='s-list'>
                                 <div class='s-list-bullet'>
@@ -417,18 +419,31 @@
                                 </div>
 
                                 <div class='s-list-content'>
-
+                                    @if(isset($ensino['DISCIPLINA']))
+                                    @if(is_array($ensino['DISCIPLINA']))
+                                    @else
                                     <p class='t t-b'><a class='t-a'>{{ $ensino['DISCIPLINA']  }}
                                         </a>
                                     </p>
+                                    @endif
+                                    @endif
+                                    @if(isset($ensino['@attributes']))
                                     <p class='t t-gray'>Nome do curso: {{ $ensino['@attributes']['NOME-CURSO']  }}</p>
                                     <p class='t t-gray'>Grau: {{ $ensino['@attributes']['TIPO-ENSINO']  }}</p>
                                     <p class='t t-gray'>{{ $ensino['@attributes']['ANO-INICIO']  }} -
                                         {{ $ensino['@attributes']['ANO-FIM']  }}
                                     </p>
+                                    @else
+                                    <p class='t t-gray'>Nome do curso: {{ $ensino['NOME-CURSO']  }}</p>
+                                    <p class='t t-gray'>Grau: {{ $ensino['TIPO-ENSINO']  }}</p>
+                                    <p class='t t-gray'>{{ $ensino['ANO-INICIO']  }} -
+                                        {{ $ensino['ANO-FIM']  }}
+                                    </p>
+                                    @endif
                                 </div>
                             </div>
                         </li>
+                        @endif
                         @endforeach
                         @endif
                         @endforeach
