@@ -95,29 +95,49 @@ class LattesController extends Controller
         //echo "<pre>" . print_r($dados_complementares, true) . "</pre>";
         //echo "<pre>" . print_r($outra_producao, true) . "</pre>";
 
-        $record_person['id'] = $attributes['NUMERO-IDENTIFICADOR'];
-        $record_person['lattesDataAtualizacao'] = $attributes['DATA-ATUALIZACAO'];
-        //$record_person['lattesID10'] = $this->lattesID10($attributes['NUMERO-IDENTIFICADOR']);
-        $record_person['resumoCVpt'] = $curriculo['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH'];
-        $record_person['resumoCVen'] = $curriculo['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH-EN'];
-        $record_person['name'] = $curriculo['@attributes']['NOME-COMPLETO'];
-        $record_person['nacionalidade'] = $curriculo['@attributes']['PAIS-DE-NACIONALIDADE'];
-        $record_person['nomeCitacoesBibliograficas'] = $curriculo['@attributes']['NOME-EM-CITACOES-BIBLIOGRAFICAS'];
-        $record_person['orcid'] = $curriculo['@attributes']['ORCID-ID'];
-        $record_person['idiomas'] = $curriculo['IDIOMAS'];
-        $record_person['formacao'] = $curriculo['FORMACAO-ACADEMICA-TITULACAO'];
+
+
+        $person = new Person();
+
+        $person->fill([
+            'id' => $attributes['NUMERO-IDENTIFICADOR'],
+            'lattesDataAtualizacao' => $attributes['DATA-ATUALIZACAO'],
+            'resumoCVpt' => $curriculo['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH'],
+            'resumoCVen' => $curriculo['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH-EN'],
+            'name' => $curriculo['@attributes']['NOME-COMPLETO'],
+            'nacionalidade' => $curriculo['@attributes']['PAIS-DE-NACIONALIDADE'],
+            'nomeCitacoesBibliograficas' => $curriculo['@attributes']['NOME-EM-CITACOES-BIBLIOGRAFICAS'],
+            'orcid' => $curriculo['@attributes']['ORCID-ID'],
+            'idiomas' => $curriculo['IDIOMAS'],
+            'formacao' => $curriculo['FORMACAO-ACADEMICA-TITULACAO']
+        ]);
+
+        $lattesID10 = $this->lattesID10($attributes['NUMERO-IDENTIFICADOR']);
+
+        if (!empty($lattesID10)) {
+            $person->fill([
+                'lattesID10' => $lattesID10
+            ]);
+        }
 
         if (isset($curriculo['ATUACOES-PROFISSIONAIS'])) {
-            $record_person['atuacao'] = $curriculo['ATUACOES-PROFISSIONAIS'];
+            $person->fill([
+                'atuacao' => $curriculo['ATUACOES-PROFISSIONAIS']
+            ]);
         }
         if (isset($dados_complementares['ORIENTACOES-EM-ANDAMENTO'])) {
-            $record_person['orientacoesEmAndamento'] = $dados_complementares['ORIENTACOES-EM-ANDAMENTO'];
+            $person->fill([
+                'orientacoesEmAndamento' => $dados_complementares['ORIENTACOES-EM-ANDAMENTO']
+            ]);
         }
         if (isset($outra_producao['ORIENTACOES-CONCLUIDAS'])) {
-            $record_person['orientacoesConcluidas'] = $outra_producao['ORIENTACOES-CONCLUIDAS'];
+            $person->fill([
+                'orientacoesConcluidas' => $outra_producao['ORIENTACOES-CONCLUIDAS']
+            ]);
         }
+
+
         try {
-            $person = new Person($record_person);
             $person->save();
         } catch (\Exception $e) {
             echo $e->getMessage();
