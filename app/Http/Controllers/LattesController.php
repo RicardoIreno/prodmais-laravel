@@ -43,6 +43,7 @@ class LattesController extends Controller
             $work = new Work;
             $work->fill([
                 'datePublished' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['ANO-DO-ARTIGO'],
+                'doi' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['DOI'],
                 'inLanguage' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['IDIOMA'],
                 'isPartOf' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['TITULO-DO-PERIODICO-OU-REVISTA'],
                 'issn' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['ISSN'],
@@ -88,14 +89,63 @@ class LattesController extends Controller
         }
     }
 
+    public function trabalhosEmEventos(array $trabalhosEmEventos, array $attributes)
+    {
+        //echo "<pre>" . print_r($attributes, true) . "</pre>";
+        //echo "<pre>" . print_r($trabalhoEmEventoss, true) . "</pre>";
+        foreach ($trabalhosEmEventos['TRABALHO-EM-EVENTOS'] as $trabalhoEmEventos) {
+            $work = new Work;
+            $work->fill([
+                'datePublished' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['ANO-DO-TRABALHO'],
+                'doi' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['DOI'],
+                'inLanguage' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['IDIOMA'],
+                'isPartOf' => $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']['TITULO-DOS-ANAIS-OU-PROCEEDINGS'],
+                'name' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['TITULO-DO-TRABALHO'],
+                'pageEnd' => $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']['PAGINA-FINAL'],
+                'pageStart' => $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']['PAGINA-INICIAL'],
+                'type' => 'Trabalhos em eventos',
+                'url' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['HOME-PAGE-DO-TRABALHO'],
+
+                //'about' => $trabalhoEmEventos['PALAVRAS-CHAVE'],
+            ]);
+
+            if (isset($trabalhoEmEventos['AUTORES'])) {
+                foreach ($trabalhoEmEventos['AUTORES'] as $autores) {
+                    if (isset($autores['@attributes'])) {
+                        $aut_array[] = $autores['@attributes'];
+                    } else {
+                        $aut_array[] = $autores;
+                    }
+                }
+
+                $work->fill([
+                    'author' => $aut_array,
+                ]);
+                unset($aut_array);
+            }
+
+            if (isset($trabalhoEmEventos['PALAVRAS-CHAVE'])) {
+                $about_array = $this->processaPalavrasChaveLattes($trabalhoEmEventos['PALAVRAS-CHAVE']);
+                $work->fill([
+                    'about' => $about_array,
+                ]);
+            }
+
+            try {
+                $work->save();
+                unset($array_result_pc);
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+            }
+        }
+    }
+
     public function createPerson(array $curriculo, array $dados_complementares, array $outra_producao, array $attributes)
     {
         //echo "<pre>" . print_r($attributes, true) . "</pre>";
         //echo "<pre>" . print_r($curriculo, true) . "</pre>";
         //echo "<pre>" . print_r($dados_complementares, true) . "</pre>";
         //echo "<pre>" . print_r($outra_producao, true) . "</pre>";
-
-
 
         $person = new Person();
 
@@ -152,6 +202,11 @@ class LattesController extends Controller
         if (isset($producaoBibliografica['ARTIGOS-PUBLICADOS'])) {
             //echo "<pre>" . print_r($lattesPB['ARTIGOS-PUBLICADOS'], true) . "</pre>";
             $this->artigos($producaoBibliografica['ARTIGOS-PUBLICADOS'], $attributes);
+        }
+
+        if (isset($producaoBibliografica['TRABALHOS-EM-EVENTOS'])) {
+            //echo "<pre>" . print_r($lattesPB['ARTIGOS-PUBLICADOS'], true) . "</pre>";
+            $this->trabalhosEmEventos($producaoBibliografica['TRABALHOS-EM-EVENTOS'], $attributes);
         }
     }
 
