@@ -116,17 +116,15 @@
             <ul>
                 @foreach($works as $work)
 
-                <?php //echo "<pre>" . print_r($work, true) . "</pre>"; 
-                ?>
-
                 <li class='s-list-2'>
+
                     <div class='s-list-bullet'>
-                        <i class='i i-articlePublished s-list-ico' title='articlePublished'></i>
+                        <i>{{ $work->type }}</i><i class='i i-articlePublished s-list-ico' title='articlePublished'></i>
                     </div>
 
                     <div class='s-list-content'>
                         <p class='t t-b t-md'>{{ $work->name }} ({{ $work->datePublished }})</p>
-                        <p class='t t-b t-md'><i>{{ $work->type }}</i></p>
+
                         @if(is_array($work->author))
                         <p class='t t-b t-md'>
                         <ul>
@@ -187,8 +185,9 @@
 
                     </div>
                 </li>
+                @endforeach
             </ul>
-            @endforeach
+
             <div class=" d-flex mt-3 mb-3">
                 <div class="mx-auto">
                     {{ $works->links() }}

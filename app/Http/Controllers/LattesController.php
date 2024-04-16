@@ -35,6 +35,17 @@ class LattesController extends Controller
         return $array_result;
     }
 
+    public function processaURL($url)
+    {
+        $url_array = explode('[', $url);
+        if (isset($url_array[1])) {
+            $url_response = str_replace(']', '', $url_array[1]);
+            return $url_response;
+        } else {
+            return "";
+        }
+    }
+
     public function artigos(array $artigos, array $attributes)
     {
         //echo "<pre>" . print_r($attributes, true) . "</pre>";
@@ -77,6 +88,13 @@ class LattesController extends Controller
                 $about_array = $this->processaPalavrasChaveLattes($artigo['PALAVRAS-CHAVE']);
                 $work->fill([
                     'about' => $about_array,
+                ]);
+            }
+
+            if (isset($artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['HOME-PAGE-DO-TRABALHO'])) {
+                $url = $this->processaURL($artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['HOME-PAGE-DO-TRABALHO']);
+                $work->fill([
+                    'url' => $url,
                 ]);
             }
 
@@ -128,6 +146,13 @@ class LattesController extends Controller
                 $about_array = $this->processaPalavrasChaveLattes($trabalhoEmEventos['PALAVRAS-CHAVE']);
                 $work->fill([
                     'about' => $about_array,
+                ]);
+            }
+
+            if (isset($trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['HOME-PAGE-DO-TRABALHO'])) {
+                $url = $this->processaURL($trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['HOME-PAGE-DO-TRABALHO']);
+                $work->fill([
+                    'url' => $url,
                 ]);
             }
 
