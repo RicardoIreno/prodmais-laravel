@@ -194,38 +194,24 @@ class LattesController extends Controller
         }
     }
 
-    public function producaoBibliografica(array $producaoBibliografica, array $attributes)
-    {
-        //echo "<pre>" . print_r($attributes, true) . "</pre>";
-        //echo "<pre>" . print_r($producaoBibliografica, true) . "</pre>";
-
-        if (isset($producaoBibliografica['ARTIGOS-PUBLICADOS'])) {
-            //echo "<pre>" . print_r($lattesPB['ARTIGOS-PUBLICADOS'], true) . "</pre>";
-            $this->artigos($producaoBibliografica['ARTIGOS-PUBLICADOS'], $attributes);
-        }
-
-        if (isset($producaoBibliografica['TRABALHOS-EM-EVENTOS'])) {
-            //echo "<pre>" . print_r($lattesPB['ARTIGOS-PUBLICADOS'], true) . "</pre>";
-            $this->trabalhosEmEventos($producaoBibliografica['TRABALHOS-EM-EVENTOS'], $attributes);
-        }
-    }
-
     public function processXML(Request $request)
     {
         if ($request->file) {
             try {
                 $lattesXML = simplexml_load_file($request->file);
                 $lattes = json_decode(json_encode($lattesXML), true);
-                //$lattes = get_object_vars($lattesXML);
-                //echo "<pre>" . print_r($lattes['OUTRA-PRODUCAO'], true) . "</pre>";
                 $this->createPerson($lattes['DADOS-GERAIS'], $lattes['DADOS-COMPLEMENTARES'], $lattes['OUTRA-PRODUCAO'], $lattes['@attributes']);
-                $this->producaoBibliografica($lattes['PRODUCAO-BIBLIOGRAFICA'], $lattes['@attributes']);
-                //echo "<pre>" . print_r($lattes['@attributes'], true) . "</pre>";
+                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-PUBLICADOS'])) {
+                    $this->artigos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-PUBLICADOS'], $lattes['@attributes']);
+                }
+                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['TRABALHOS-EM-EVENTOS'])) {
+                    $this->trabalhosEmEventos($lattes['PRODUCAO-BIBLIOGRAFICA']['TRABALHOS-EM-EVENTOS'], $lattes['@attributes']);
+                }
             } catch (\Exception $e) {
-                //echo 'Erro ao processar o arquivo do Lattes';
+                echo $e->getMessage();
             }
         } else {
-            //echo 'Não foi enviado um arquivo XML do Lattes válido.';
+            echo 'Não foi enviado um arquivo XML do Lattes válido.';
         }
     }
 }
