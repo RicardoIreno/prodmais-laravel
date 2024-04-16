@@ -14,14 +14,11 @@ class PersonController extends Controller
      */
     public function index(Request $request)
     {
-        if (!$request->per_page) {
-            $request->per_page = 10;
-        }
         $query = Person::query();
         if ($request->name) {
             $query->where('name', 'iLIKE', '%' . $request->name . '%');
         }
-        $people = $query->orderBy('name')->paginate($request->per_page)->withQueryString();
+        $people = $query->orderBy('name')->paginate(10)->withQueryString();
 
         return view('people', compact('people', 'request'));
     }

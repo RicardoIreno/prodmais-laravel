@@ -14,9 +14,6 @@ class WorkController extends Controller
      */
     public function index(Request $request)
     {
-        if (!$request->per_page) {
-            $request->per_page = 10;
-        }
         $query = Work::query();
         if ($request->datePublished) {
             $query->where('datePublished', $request->datePublished);
@@ -40,7 +37,7 @@ class WorkController extends Controller
             $query->whereJsonContains('author_array', $request->author_array);
         }
 
-        $works = $query->orderByDesc('datePublished')->paginate($request->per_page)->withQueryString();
+        $works = $query->orderByDesc('datePublished')->paginate(10)->withQueryString();
 
         return view('works', compact('works', 'request'));
     }
