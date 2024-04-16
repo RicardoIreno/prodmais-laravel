@@ -73,15 +73,18 @@ class LattesController extends Controller
                 foreach ($artigo['AUTORES'] as $autores) {
                     if (isset($autores['@attributes'])) {
                         $aut_array[] = $autores['@attributes'];
+                        $aut_name_array[] = $autores['@attributes']['NOME-COMPLETO-DO-AUTOR'];
                     } else {
                         $aut_array[] = $autores;
+                        $aut_name_array[] = $autores['NOME-COMPLETO-DO-AUTOR'];
                     }
                 }
-
                 $work->fill([
                     'author' => $aut_array,
+                    'author_array' => $aut_name_array,
                 ]);
                 unset($aut_array);
+                unset($aut_name_array);
             }
 
             if (isset($artigo['PALAVRAS-CHAVE'])) {
@@ -131,15 +134,18 @@ class LattesController extends Controller
                 foreach ($trabalhoEmEventos['AUTORES'] as $autores) {
                     if (isset($autores['@attributes'])) {
                         $aut_array[] = $autores['@attributes'];
+                        $aut_name_array[] = $autores['@attributes']['NOME-COMPLETO-DO-AUTOR'];
                     } else {
                         $aut_array[] = $autores;
+                        $aut_name_array[] = $autores['NOME-COMPLETO-DO-AUTOR'];
                     }
                 }
-
                 $work->fill([
                     'author' => $aut_array,
+                    'author_array' => $aut_name_array,
                 ]);
                 unset($aut_array);
+                unset($aut_name_array);
             }
 
             if (isset($trabalhoEmEventos['PALAVRAS-CHAVE'])) {

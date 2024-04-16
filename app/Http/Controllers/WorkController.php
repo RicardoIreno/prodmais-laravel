@@ -36,6 +36,9 @@ class WorkController extends Controller
         if ($request->about) {
             $query->whereJsonContains('about', $request->about);
         }
+        if ($request->author_array) {
+            $query->whereJsonContains('author_array', $request->author_array);
+        }
 
         $works = $query->orderByDesc('datePublished')->paginate($request->per_page)->withQueryString();
 

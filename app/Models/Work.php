@@ -12,12 +12,14 @@ class Work extends Model
     protected $casts = [
         'about' => 'array',
         'author' => 'array',
+        'author_array' => 'array',
         'isbn' => 'array'
     ];
 
     protected $fillable = [
         'about',
         'author',
+        'author_array',
         'datePublished',
         'doi',
         'inLanguage',

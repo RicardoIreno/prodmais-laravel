@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->jsonb('about')->nullable();
             $table->jsonb('author')->nullable();
+            $table->jsonb('author_array')->nullable();
             $table->string('datePublished')->nullable();
             $table->string('doi')->nullable();
             $table->string('inLanguage')->nullable();

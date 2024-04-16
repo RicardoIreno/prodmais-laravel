@@ -62,6 +62,9 @@ class FacetArray extends Component
         if ($this->request->about) {
             $query->whereJsonContains('about', $this->request->about);
         }
+        if ($this->request->author_array) {
+            $query->whereJsonContains('author_array', $this->request->author_array);
+        }
         $query->groupBy('field');
         $query->selectRaw('count(*) as count');
         $query->orderBy('count', 'desc');

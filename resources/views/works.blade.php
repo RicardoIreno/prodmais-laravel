@@ -15,6 +15,7 @@
             $request->has('type')||
             $request->has('datePublished')||
             $request->has('author')||
+            $request->has('author_array')||
             $request->has('about')||
             $request->has('isPartOf_name')||
             $request->has('releasedEvent')||
@@ -32,6 +33,9 @@
                 <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
                     @php
                     if ($key == 'author') {
+                    $key_name = 'Autor';
+                    }
+                    if ($key == 'author_array') {
                     $key_name = 'Autor';
                     }
                     if ($key == 'name') {
@@ -77,6 +81,7 @@
             <div class="c-filterlist__content">
                 <div class="accordion" id="facets">
                     <x-facet field="type" fieldName="Tipo de publicação" :request="$request" />
+                    <x-facetArray field="author_array" fieldName="Autores" :request="$request" />
                     <x-facet field="datePublished" fieldName="Ano de publicação" :request="$request" />
                     <x-facet field="inLanguage" fieldName="Idioma" :request="$request" />
                     <x-facet field="isPartOf" fieldName="É parte de" :request="$request" />

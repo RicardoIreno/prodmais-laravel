@@ -60,11 +60,8 @@ class Facet extends Component
         if ($this->request->about) {
             $query->whereJsonContains('about', $this->request->about);
         }
-        if ($this->request->author) {
-            $search = $this->request->author;
-            $query->whereHas('authors', function ($query) use ($search) {
-                $query->where('name', $search);
-            });
+        if ($this->request->author_array) {
+            $query->whereJsonContains('author_array', $this->request->author_array);
         }
         if ($this->request->releasedEvent) {
             $query->where('releasedEvent', 'like', '%' . $this->request->releasedEvent . '%');
