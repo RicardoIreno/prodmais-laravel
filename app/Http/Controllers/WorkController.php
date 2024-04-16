@@ -28,7 +28,7 @@ class WorkController extends Controller
             $query->where('name', 'iLIKE', '%' . $request->name . '%');
         }
         if ($request->search) {
-            $query->where('name', 'iLIKE', '%' . $request->search . '%');
+            $query->where('name', 'iLIKE', '%' . $request->search . '%')->orWhere('author', 'iLIKE', '%' . $request->search . '%');
         }
         if ($request->type) {
             $query->where('type', $request->type);

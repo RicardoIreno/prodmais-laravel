@@ -33,6 +33,9 @@ class Facet extends Component
         if ($this->request->type) {
             $query->where('type', $this->request->type);
         }
+        if ($this->request->search) {
+            $query->where('name', 'iLIKE', '%' . $this->request->search . '%')->orWhere('author', 'iLIKE', '%' . $this->request->search . '%');
+        }
         if ($this->request->datePublished) {
             $query->where('datePublished', $this->request->datePublished);
         }
