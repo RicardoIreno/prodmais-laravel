@@ -69,6 +69,9 @@ class Facet extends Component
                 $query->where('name', $search);
             });
         }
+        if ($this->request->about) {
+            $query->where(DB::raw('json_agg(about) as about'));
+        }
         if ($this->request->releasedEvent) {
             $query->where('releasedEvent', 'like', '%' . $this->request->releasedEvent . '%');
         }

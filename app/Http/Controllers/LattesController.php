@@ -29,7 +29,7 @@ class LattesController extends Controller
         $array_result = [];
         foreach (range(1, 6) as $number) {
             if (!empty($palavras_chave['@attributes']["PALAVRA-CHAVE-$number"])) {
-                $array_result[$number] = $palavras_chave['@attributes']["PALAVRA-CHAVE-$number"];
+                $array_result[] = $palavras_chave['@attributes']["PALAVRA-CHAVE-$number"];
             }
         }
         return $array_result;

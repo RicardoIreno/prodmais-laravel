@@ -79,6 +79,7 @@
                     <x-facet field="datePublished" fieldName="Ano de publicação" :request="$request" />
                     <x-facet field="inLanguage" fieldName="Idioma" :request="$request" />
                     <x-facet field="isPartOf" fieldName="É parte de" :request="$request" />
+                    <x-facetArray field="about" fieldName="Assuntos" :request="$request" />
                 </div>
 
             </div>
