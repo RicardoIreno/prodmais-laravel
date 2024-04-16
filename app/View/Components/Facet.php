@@ -26,7 +26,7 @@ class Facet extends Component
      */
     public function render(): View|Closure|string
     {
-        $query = Work::select('' . $this->field . ' as field', DB::raw('count(*) as count'));
+        $query = Work::select($this->field . ' as field', DB::raw('count(*) as count'));
         if ($this->request->name) {
             $query->where('name', 'like', '%' . $this->request->name . '%');
         }
@@ -58,19 +58,13 @@ class Facet extends Component
             $query->where('sourceOrganization', $this->request->sourceOrganization);
         }
         if ($this->request->about) {
-            $search = $this->request->about;
-            $query->whereHas('abouts', function ($query) use ($search) {
-                $query->where('name', $search);
-            });
+            $query->whereJsonContains('about', $this->request->about);
         }
         if ($this->request->author) {
             $search = $this->request->author;
             $query->whereHas('authors', function ($query) use ($search) {
                 $query->where('name', $search);
             });
-        }
-        if ($this->request->about) {
-            $query->where(DB::raw('json_agg(about) as about'));
         }
         if ($this->request->releasedEvent) {
             $query->where('releasedEvent', 'like', '%' . $this->request->releasedEvent . '%');

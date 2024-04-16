@@ -33,6 +33,10 @@ class WorkController extends Controller
         if ($request->type) {
             $query->where('type', $request->type);
         }
+        if ($request->about) {
+            $query->whereJsonContains('about', $request->about);
+        }
+
         $works = $query->orderByDesc('datePublished')->paginate($request->per_page)->withQueryString();
 
         return view('works', compact('works', 'request'));

@@ -8,8 +8,7 @@
     <nav class="p-result-nav">
         <details id="filterlist" class="c-filterlist" onload="resizeMenu" open="">
             <summary class="c-filterlist__header">
-                <h3 class="c-filterlist__title">Refinar resultados <a href="works" class="btn btn-warning btn-sm">Limpar
-                        busca</a></h3>
+                <h3 class="c-filterlist__title">Refinar resultados</h3>
             </summary>
             @if (
             $request->has('name')||
@@ -25,7 +24,9 @@
             $request->has('publisher')
             )
             <div class="alert alert-light" role="alert">
-                Filtros ativos: <br>
+                <a href="works" class="btn btn-warning btn-sm">Limpar
+                    busca</a><br /><br /><br />
+                Filtros ativos: <br />
                 @foreach ($request->all() as $key => $work)
                 @if ($key != 'page')
                 <div class="btn-group-vertical" role="group" aria-label="Vertical button group">

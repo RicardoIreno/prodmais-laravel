@@ -16,7 +16,7 @@
                 @foreach ($facets as $facet)
                 @php
                 $searchArray = [];
-                $searchArray[] = $field . '=' . $facet->subject;
+                $searchArray[] = $field . '=' . $facet->field;
                 @endphp
                 @foreach ($request->all() as $k => $v)
                 @php
@@ -27,7 +27,7 @@
                 @endforeach
                 <li class="list-group-item">
                     <a href="works?{{ implode('&', $searchArray)}}">
-                        {{ $facet->subject }} ({{ $facet->count }})
+                        {{ $facet->field }} ({{ $facet->count }})
                     </a>
                 </li>
                 @endforeach
