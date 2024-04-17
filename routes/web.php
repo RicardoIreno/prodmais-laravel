@@ -33,3 +33,5 @@ Route::post('/lattes', [LattesController::class, 'processXML']);
 Route::get('/person/{id}', function (Person $id) {
     return view('person', compact('id'));
 });
+
+Route::get('graficos', [WorkController::class, 'graficos'])->name('graficos');

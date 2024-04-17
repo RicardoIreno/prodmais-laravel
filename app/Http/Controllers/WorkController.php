@@ -6,6 +6,7 @@ use App\Http\Requests\StoreWorkRequest;
 use App\Http\Requests\UpdateWorkRequest;
 use App\Models\Work;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class WorkController extends Controller
 {
@@ -94,5 +95,32 @@ class WorkController extends Controller
     public function destroy(Work $work)
     {
         //
+    }
+
+    public function graficos(Request $request)
+    {
+        // Gerar gráfico de datas
+        $datePublishedData = DB::table('works')->select('datePublished as year', \DB::raw('COUNT(*) as total'));
+        if ($request->datePublished) {
+            $datePublishedData = $datePublishedData->where('datePublished', $request->datePublished);
+        }
+        if ($request->type) {
+            $datePublishedData = $datePublishedData->where('type', $request->type);
+        }
+        $datePublishedData = $datePublishedData->groupBy('datePublished')->get();
+
+
+        // Gerar gráfico de tipos
+        $typeData = DB::table('works')->select('type', \DB::raw('COUNT(*) as total'));
+        if ($request->datePublished) {
+            $typeData = $typeData->where('datePublished', $request->datePublished);
+        }
+        if ($request->type) {
+            $typeData = $typeData->where('type', $request->type);
+        }
+        $typeData = $typeData->groupBy('type')->get();
+
+
+        return view('graficos', array('datePublishedData' => $datePublishedData, 'typeData' => $typeData, 'request' => $request));
     }
 }
