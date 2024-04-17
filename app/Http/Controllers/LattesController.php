@@ -65,8 +65,6 @@ class LattesController extends Controller
                 'type' => 'Artigo publicado',
                 'url' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['HOME-PAGE-DO-TRABALHO'],
                 'volumeNumber' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['VOLUME'],
-
-                //'about' => $artigo['PALAVRAS-CHAVE'],
             ]);
 
             if (isset($artigo['AUTORES'])) {
@@ -127,8 +125,6 @@ class LattesController extends Controller
                 'pageStart' => $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']['PAGINA-INICIAL'],
                 'type' => 'Trabalhos em eventos',
                 'url' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['HOME-PAGE-DO-TRABALHO'],
-
-                //'about' => $trabalhoEmEventos['PALAVRAS-CHAVE'],
             ]);
 
             if (isset($trabalhoEmEventos['AUTORES'])) {
