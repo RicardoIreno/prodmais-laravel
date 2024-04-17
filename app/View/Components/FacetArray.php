@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Illuminate\Http\Request;
 use App\Models\Work;
+use App\Models\Person;
 use Illuminate\Support\Facades\DB;
 
 class FacetArray extends Component
@@ -17,7 +18,8 @@ class FacetArray extends Component
     public function __construct(
         public Request $request,
         public string $field,
-        public string $fieldName
+        public string $fieldName,
+        public string $type
     ) {
     }
 
@@ -26,8 +28,12 @@ class FacetArray extends Component
      */
     public function render(): View|Closure|string
     {
-
-        $query = Work::select(DB::raw("jsonb_array_elements_text($this->field) as field"));
+        if ($this->type == "Work") {
+            $query = Work::select(DB::raw("jsonb_array_elements_text($this->field) as field"));
+        }
+        if ($this->type == "Person") {
+            $query = Person::select(DB::raw("jsonb_array_elements_text($this->field) as field"));
+        }
 
         if ($this->request->name) {
             $query->where('name', 'like', '%' . $this->request->name . '%');
@@ -64,6 +70,12 @@ class FacetArray extends Component
         }
         if ($this->request->author_array) {
             $query->whereJsonContains('author_array', $this->request->author_array);
+        }
+        if ($this->request->instituicao) {
+            $query->whereJsonContains('instituicao', $this->request->instituicao);
+        }
+        if ($this->request->ppg_nome) {
+            $query->whereJsonContains('ppg_nome', $this->request->ppg_nome);
         }
         $query->groupBy('field');
         $query->selectRaw('count(*) as count');

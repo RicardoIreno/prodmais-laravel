@@ -80,13 +80,13 @@
             @endif
             <div class="c-filterlist__content">
                 <div class="accordion" id="facets">
-                    <x-facet field="type" fieldName="Tipo de publicação" :request="$request" />
-                    <x-facetArray field="author_array" fieldName="Autores" :request="$request" />
-                    <x-facet field="datePublished" fieldName="Ano de publicação" :request="$request" />
-                    <x-facet field="inLanguage" fieldName="Idioma" :request="$request" />
-                    <x-facetArray field="about" fieldName="Assuntos" :request="$request" />
-                    <x-facet field="isPartOf" fieldName="É parte de" :request="$request" />
-                    <x-facet field="educationEvent" fieldName="Nome do evento" :request="$request" />
+                    <x-facet field="type" fieldName="Tipo de publicação" :request="$request" type="Work" />
+                    <x-facetArray field="author_array" fieldName="Autores" :request="$request" type="Work" />
+                    <x-facet field="datePublished" fieldName="Ano de publicação" :request="$request" type="Work" />
+                    <x-facet field="inLanguage" fieldName="Idioma" :request="$request" type="Work" />
+                    <x-facetArray field="about" fieldName="Assuntos" :request="$request" type="Work" />
+                    <x-facet field="isPartOf" fieldName="É parte de" :request="$request" type="Work" />
+                    <x-facet field="educationEvent" fieldName="Nome do evento" :request="$request" type="Work" />
                 </div>
 
             </div>

@@ -26,7 +26,7 @@
                         <input class="form-control" type="text" placeholder="Nome do PPG" name="ppg_nome">
                         <input class="form-control" type="text" placeholder="Tipo de vínculo" name="tipvin">
                         <input class="form-control" type="text" placeholder="Genero" name="genero">
-                        <input class="form-control" type="text" placeholder="Curso" name="desc_curso">
+                        <input class="form-control" type="text" placeholder="Curso" name="curso_nome">
                         <input class="form-control" type="text" placeholder="E-mail" name="email">
                     </div>
                     <div class="input-group-append">

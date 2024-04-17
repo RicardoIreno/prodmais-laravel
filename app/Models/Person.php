@@ -15,15 +15,24 @@ class Person extends Model
         'atuacao' => 'array',
         'formacao' => 'array',
         'idiomas' => 'array',
+        'instituicao' => 'array',
         'orientacoesConcluidas' => 'array',
         'orientacoesEmAndamento' => 'array',
+        'ppg_nome' => 'array',
+        'tipvin' => 'array',
+        'unidade' => 'array',
     ];
 
     protected $fillable = [
         'atuacao',
+        'curso_nome',
+        'departamento',
+        'email',
         'formacao',
+        'genero',
         'id',
         'idiomas',
+        'instituicao',
         'lattesDataAtualizacao',
         'lattesID10',
         'nacionalidade',
@@ -32,7 +41,10 @@ class Person extends Model
         'orcid',
         'orientacoesConcluidas',
         'orientacoesEmAndamento',
+        'ppg_nome',
         'resumoCVpt',
-        'resumoCVen'
+        'resumoCVen',
+        'tipvin',
+        'unidade'
     ];
 }

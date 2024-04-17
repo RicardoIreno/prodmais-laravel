@@ -168,29 +168,30 @@ class LattesController extends Controller
         }
     }
 
-    public function createPerson(array $curriculo, array $dados_complementares, array $outra_producao, array $attributes)
+    public function createPerson(array $lattes, Request $request)
     {
         //echo "<pre>" . print_r($attributes, true) . "</pre>";
         //echo "<pre>" . print_r($curriculo, true) . "</pre>";
         //echo "<pre>" . print_r($dados_complementares, true) . "</pre>";
         //echo "<pre>" . print_r($outra_producao, true) . "</pre>";
+        //echo "<pre>" . print_r($request, true) . "</pre>";
 
         $person = new Person();
 
         $person->fill([
-            'id' => $attributes['NUMERO-IDENTIFICADOR'],
-            'lattesDataAtualizacao' => $attributes['DATA-ATUALIZACAO'],
-            'resumoCVpt' => $curriculo['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH'],
-            'resumoCVen' => $curriculo['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH-EN'],
-            'name' => $curriculo['@attributes']['NOME-COMPLETO'],
-            'nacionalidade' => $curriculo['@attributes']['PAIS-DE-NACIONALIDADE'],
-            'nomeCitacoesBibliograficas' => $curriculo['@attributes']['NOME-EM-CITACOES-BIBLIOGRAFICAS'],
-            'orcid' => $curriculo['@attributes']['ORCID-ID'],
-            'idiomas' => $curriculo['IDIOMAS'],
-            'formacao' => $curriculo['FORMACAO-ACADEMICA-TITULACAO']
+            'id' => $lattes['@attributes']['NUMERO-IDENTIFICADOR'],
+            'lattesDataAtualizacao' => $lattes['@attributes']['DATA-ATUALIZACAO'],
+            'resumoCVpt' => $lattes['DADOS-GERAIS']['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH'],
+            'resumoCVen' => $lattes['DADOS-GERAIS']['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH-EN'],
+            'name' => $lattes['DADOS-GERAIS']['@attributes']['NOME-COMPLETO'],
+            'nacionalidade' => $lattes['DADOS-GERAIS']['@attributes']['PAIS-DE-NACIONALIDADE'],
+            'nomeCitacoesBibliograficas' => $lattes['DADOS-GERAIS']['@attributes']['NOME-EM-CITACOES-BIBLIOGRAFICAS'],
+            'orcid' => $lattes['DADOS-GERAIS']['@attributes']['ORCID-ID'],
+            'idiomas' => $lattes['DADOS-GERAIS']['IDIOMAS'],
+            'formacao' => $lattes['DADOS-GERAIS']['FORMACAO-ACADEMICA-TITULACAO']
         ]);
 
-        $lattesID10 = $this->lattesID10($attributes['NUMERO-IDENTIFICADOR']);
+        $lattesID10 = $this->lattesID10($lattes['@attributes']['NUMERO-IDENTIFICADOR']);
 
         if (!empty($lattesID10)) {
             $person->fill([
@@ -198,20 +199,36 @@ class LattesController extends Controller
             ]);
         }
 
-        if (isset($curriculo['ATUACOES-PROFISSIONAIS'])) {
+        if (isset($lattes['DADOS-GERAIS']['ATUACOES-PROFISSIONAIS'])) {
             $person->fill([
-                'atuacao' => $curriculo['ATUACOES-PROFISSIONAIS']
+                'atuacao' => $lattes['DADOS-GERAIS']['ATUACOES-PROFISSIONAIS']
             ]);
         }
-        if (isset($dados_complementares['ORIENTACOES-EM-ANDAMENTO'])) {
+        if (isset($lattes['DADOS-COMPLEMENTARES']['ORIENTACOES-EM-ANDAMENTO'])) {
             $person->fill([
-                'orientacoesEmAndamento' => $dados_complementares['ORIENTACOES-EM-ANDAMENTO']
+                'orientacoesEmAndamento' => $lattes['DADOS-COMPLEMENTARES']['ORIENTACOES-EM-ANDAMENTO']
             ]);
         }
-        if (isset($outra_producao['ORIENTACOES-CONCLUIDAS'])) {
+        if (isset($lattes['OUTRA-PRODUCAO']['ORIENTACOES-CONCLUIDAS'])) {
             $person->fill([
-                'orientacoesConcluidas' => $outra_producao['ORIENTACOES-CONCLUIDAS']
+                'orientacoesConcluidas' => $lattes['OUTRA-PRODUCAO']['ORIENTACOES-CONCLUIDAS']
             ]);
+        }
+
+        if (isset($request->instituicao)) {
+            $instituicoes[] = $request->instituicao;
+            $person->fill([
+                'instituicao' => $instituicoes
+            ]);
+            unset($instituicoes);
+        }
+
+        if (isset($request->ppg_nome)) {
+            $ppgs[] = $request->ppg_nome;
+            $person->fill([
+                'ppg_nome' => $ppgs
+            ]);
+            unset($ppgs);
         }
 
 
@@ -228,7 +245,7 @@ class LattesController extends Controller
             try {
                 $lattesXML = simplexml_load_file($request->file);
                 $lattes = json_decode(json_encode($lattesXML), true);
-                $this->createPerson($lattes['DADOS-GERAIS'], $lattes['DADOS-COMPLEMENTARES'], $lattes['OUTRA-PRODUCAO'], $lattes['@attributes']);
+                $this->createPerson($lattes, $request);
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-PUBLICADOS'])) {
                     $this->artigos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-PUBLICADOS'], $lattes['@attributes']);
                 }

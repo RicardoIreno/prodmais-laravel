@@ -22,6 +22,18 @@
                         {{ $id->name }}
                     </h1>
 
+                    @if(is_array($id->instituicao))
+                    @foreach ($id->instituicao as $instituicao)
+                    <h3 class="t t-prof">{{ $instituicao }}</h3>
+                    @endforeach
+                    @endif
+
+                    @if(is_array($id->ppg_nome))
+                    @foreach ($id->ppg_nome as $ppg_nome)
+                    <p class="t t-prof">Programa de Pós-Graduação: {{ $ppg_nome }}</p>
+                    @endforeach
+                    @endif
+
                     <hr class="c-line" />
 
                     <div class="p-profile-header-numbers">
