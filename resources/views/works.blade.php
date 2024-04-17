@@ -69,7 +69,8 @@
                     $key_name = 'Instituição';
                     }
                     @endphp
-                    <a type="button" class="btn btn-outline-warning mb-1" href="works?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
+                    <a type="button" class="btn btn-outline-warning mb-1"
+                        href="works?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
                         {{ $key_name }}: {{ $work }} (X)
                     </a>
                 </div>
@@ -102,7 +103,7 @@
             </h3>
             <form action="works" method="GET">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Pesquisar no título" name="name">
+                    <input type="text" class="form-control" placeholder="Buscar no campo título" name="name">
                     <button class="btn btn-primary" type="submit">Buscar</button>
                 </div>
             </form>
@@ -134,7 +135,10 @@
                         <p class='t-gray'><b class='t-subItem'>Autores: </b>
                             {!! implode(', ', array_map(function($author) {
                             return e($author['NOME-COMPLETO-DO-AUTOR']) . (!empty($author['NRO-ID-CNPQ']) ?
-                            '<a href="https://lattes.cnpq.br/' . e($author['NRO-ID-CNPQ']) . '" target="_blank" rel="external"><img class="c-socialiconalt" src="' . e(url('/')) . '/images/logos/logo_lattes.svg" alt="Lattes" title="Lattes" /></a>' : '');
+                            '<a href="https://lattes.cnpq.br/' . e($author['NRO-ID-CNPQ']) . '" target="_blank"
+                                rel="external"><img class="c-socialiconalt"
+                                    src="' . e(url('/')) . '/images/logos/logo_lattes.svg" alt="Lattes"
+                                    title="Lattes" /></a>' : '');
                             }, $work->author)) !!}
                         </p>
                         @endif
@@ -158,11 +162,11 @@
                         </p>
                         @endif
 
-                        @if(!empty($work->inLanguage))
+                        <!-- @if(!empty($work->inLanguage))
                         <p>
                             Idioma: {{ $work->inLanguage }}
                         </p>
-                        @endif
+                        @endif -->
 
                         @if(!empty($work->educationEvent))
                         <p>
@@ -174,32 +178,35 @@
                         @if(!empty($work->isPartOf))
                         <p class='t t-light'>
                             Fonte: {{ $work->isPartOf }}
+
+                            @if(!empty($work->volumeNumber))
+                            , v. {{ $work->volumeNumber }}
+                            @endif
+
+                            @if(!empty($work->issueNumber))
+                            , n. {{ $work->issueNumber }}
+                            @endif
+
+                            @if(!empty($work->pageStart) or !empty($work->pageEnd))
+
+                            , p. {{ $work->pageStart }}-{{ $work->pageEnd }}
+                            @endif
+
                         </p>
                         @endif
 
+                        <!-- 
                         @if(!empty($work->issn))
                         <p class='t t-light'>
                             ISSN: {{ $work->issn }}
                         </p>
-                        @endif
+                        @endif -->
 
-                        @if(!empty($work->volumeNumber))
-                        <p class='t t-light'>
-                            Volume: {{ $work->volumeNumber }}
-                        </p>
-                        @endif
 
-                        @if(!empty($work->issueNumber))
-                        <p class='t t-light'>
-                            Fascículo: {{ $work->issueNumber }}
-                        </p>
-                        @endif
 
-                        @if(!empty($work->pageStart) or !empty($work->pageEnd))
-                        <p class='t t-light'>
-                            Paginação: {{ $work->pageStart }} - {{ $work->pageEnd }}
-                        </p>
-                        @endif
+
+
+
 
                         @if(is_array($work->about))
                         <p class='d-linewrap t-gray'>

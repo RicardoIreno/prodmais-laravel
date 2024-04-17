@@ -48,8 +48,7 @@
         <form class="p-home-form" class="" action="{{url('works')}}" title="Pesquisa simples" method="get">
 
             <div class="c-searcher">
-                <input id="mainseach" name="search" type="search" placeholder="Pesquise por palavra chave"
-                    aria-label="Pesquisar">
+                <input id="mainseach" name="search" type="search" placeholder="Digite o termo de busca" aria-label="Pesquisar">
                 <button class="c-searcher__btn" type="submit" title="Buscar">
                     <i class="i i-lupa c-searcher__btn-ico"></i>
                 </button>
