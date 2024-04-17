@@ -7,7 +7,7 @@
 
     sudo usermod -a -G www-data userName
 
-### Rodar migration
+### Rodar migration ou resetar a base
 
     php artisan migrate:fresh
 
