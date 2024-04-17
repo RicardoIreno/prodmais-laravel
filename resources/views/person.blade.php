@@ -131,33 +131,6 @@
                         <h3 class="t t-h3">Tags mais usadas</h3>
 
                         <hr class="c-line u-my-20" />
-
-                        <div>
-                            <h3 class="t t-h3">Idiomas</h3>
-                            @foreach ($id->idiomas['IDIOMA'] as $idioma)
-
-                            <?php
-                            if (isset($idioma['@attributes'])) {
-                                $idioma = $idioma['@attributes'];
-                            }
-                            ?>
-                            <div class="s-list">
-                                <div class="s-list-content">
-                                    <p class="t t-b">{{ $idioma["DESCRICAO-DO-IDIOMA"] }}</p>
-                                    <p class="t u-mb-05">
-                                        Compreende {{ $idioma["PROFICIENCIA-DE-COMPREENSAO"]  }},
-                                        Fala {{ $idioma["PROFICIENCIA-DE-FALA"]  }},
-                                        Lê {{ $idioma["PROFICIENCIA-DE-LEITURA"]  }},
-                                        Escreve {{ $idioma["PROFICIENCIA-DE-ESCRITA"]  }}
-                                    </p>
-                                </div>
-                            </div>
-                            @endforeach
-
-                        </div>
-
-
-                        <hr class="c-line u-my-20" />
                         <h3 class="t t-h3">Formação</h3>
 
                         <!-- Livre Docência -->
@@ -355,8 +328,37 @@
 
                         @endif
 
+                        <hr class="c-line u-my-20" />
+
+                        <div>
+                            <h3 class="t t-h3">Idiomas</h3>
+                            @foreach ($id->idiomas['IDIOMA'] as $idioma)
+
+                            <?php
+                            if (isset($idioma['@attributes'])) {
+                                $idioma = $idioma['@attributes'];
+                            }
+                            ?>
+                            <div class="s-list">
+                                <div class="s-list-content">
+                                    <p class="t t-b">{{ $idioma["DESCRICAO-DO-IDIOMA"] }}</p>
+                                    <p class="t u-mb-05">
+                                        Compreende {{ $idioma["PROFICIENCIA-DE-COMPREENSAO"]  }},
+                                        Fala {{ $idioma["PROFICIENCIA-DE-FALA"]  }},
+                                        Lê {{ $idioma["PROFICIENCIA-DE-LEITURA"]  }},
+                                        Escreve {{ $idioma["PROFICIENCIA-DE-ESCRITA"]  }}
+                                    </p>
+                                </div>
+                            </div>
+                            @endforeach
+
+                        </div>
 
                     </div>
+
+
+
+
                 </transition>
                 <transition name="tabeffect">
                     <div id="tab-two" class="c-tab-content" v-if="tabOpened == '2'">
