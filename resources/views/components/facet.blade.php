@@ -22,9 +22,9 @@
                 }
                 @endphp
                 @endforeach
-                <li class="list-group-item">
+                <li class="c-filterdrop__item">
                     <a href="works?{{ implode('&', $searchArray)}}">
-                        {{ $value->field }} ({{ $value->count }})
+                        {{ $value->field }} <span class="c-filterdrop__count">{{ $value->count }}</span>
                     </a>
                 </li>
                 @endforeach

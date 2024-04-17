@@ -69,8 +69,7 @@
                     $key_name = 'Instituição';
                     }
                     @endphp
-                    <a type="button" class="btn btn-outline-warning mb-1"
-                        href="works?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
+                    <a type="button" class="btn btn-outline-warning mb-1" href="works?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
                         {{ $key_name }}: {{ $work }} (X)
                     </a>
                 </div>
@@ -135,25 +134,27 @@
                         <p class='t-gray'><b class='t-subItem'>Autores: </b>
                             {!! implode(', ', array_map(function($author) {
                             return e($author['NOME-COMPLETO-DO-AUTOR']) . (!empty($author['NRO-ID-CNPQ']) ?
-                            '<a href="https://lattes.cnpq.br/' . e($author['NRO-ID-CNPQ']) . '" target="_blank"
-                                rel="external"><img class="c-socialiconalt"
-                                    src="' . e(url('/')) . '/images/logos/logo_lattes.svg" alt="Lattes"
-                                    title="Lattes" /></a>' : '');
+                            '<a href="https://lattes.cnpq.br/' . e($author['NRO-ID-CNPQ']) . '" target="_blank" rel="external"><img class="c-socialiconalt" src="' . e(url('/')) . '/images/logos/logo_lattes.svg" alt="Lattes" title="Lattes" /></a>' : '');
                             }, $work->author)) !!}
                         </p>
                         @endif
 
 
-                        @if(!empty($work->doi))
-                        <p>
-                            DOI: <a href="https://doi.org/{{ $work->doi }}" target="_blank"
-                                rel="nofollow">{{ $work->doi }}</a>
-                        </p>
-                        @endif
+                        @if(!empty($work->doi) or !empty($work->url))
+                        <p>Acesso ao texto completo:
+                            @if(!empty($work->doi))
 
-                        @if(!empty($work->url))
-                        <p>
-                            URL: <a href="{{ $work->url }}" target="_blank" rel="nofollow">{{ $work->url }}</a>
+                            <a class="t t-a d-icon-text" href="https://doi.org/{{ $work->doi }}" target="blank">
+                                <img class="i-doi" src="{{ e(url('/')) }}/images/logos/doi.svg" title="doi" alt="doi">
+                            </a>
+
+                            @endif
+
+                            @if(!empty($work->url))
+
+                            <a href="{{ $work->url }}" target="_blank" rel="nofollow">{{ $work->url }}</a>
+
+                            @endif
                         </p>
                         @endif
 

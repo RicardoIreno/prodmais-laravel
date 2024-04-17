@@ -3,13 +3,16 @@
 @else
 <div class="accordion-item">
     <h2 class="accordion-header">
-        <button class="accordion-button collapsed" style="width:90%" type="button" data-bs-toggle="collapse" data-bs-target="#{{ hash('crc32', $fieldName) }}" aria-expanded="true" aria-controls="{{ hash('crc32', $fieldName) }}">
+        <button class="accordion-button collapsed" style="width:90%" type="button" data-bs-toggle="collapse"
+            data-bs-target="#{{ hash('crc32', $fieldName) }}" aria-expanded="true"
+            aria-controls="{{ hash('crc32', $fieldName) }}">
             {{ $fieldName }}
         </button>
     </h2>
-    <div id="{{ hash('crc32', $fieldName) }}" class="accordion-collapse collapse" data-bs-parent="#{{ hash('crc32', $fieldName) }}">
+    <div id="{{ hash('crc32', $fieldName) }}" class="accordion-collapse collapse"
+        data-bs-parent="#{{ hash('crc32', $fieldName) }}">
         <div class="accordion-body">
-            <ul>
+            <ul class="c-filterdrop__content" name="bloc1">
                 @foreach ($facets as $facet)
                 @php
                 $searchArray = [];
@@ -30,9 +33,9 @@
                 $page = "people";
                 }
                 @endphp
-                <li class="list-group-item">
+                <li class="c-filterdrop__item">
                     <a href="{{ $page }}?{{ implode('&', $searchArray)}}">
-                        {{ $facet->field }} ({{ $facet->count }})
+                        {{ $facet->field }} <span class="c-filterdrop__count">{{ $facet->count }}</span>
                     </a>
                 </li>
                 @endforeach
