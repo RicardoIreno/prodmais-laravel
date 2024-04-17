@@ -113,8 +113,6 @@
             </div>
         </div>
         <div class="row">
-
-            <h3>Resultados</h3>
             @if ($works->count() == 0)
             <div class="alert alert-warning" role="alert">
                 Nenhum registro encontrado
@@ -181,6 +179,30 @@
                         @if(!empty($work->isPartOf))
                         <p class='t t-light'>
                             Fonte: {{ $work->isPartOf }}
+                        </p>
+                        @endif
+
+                        @if(!empty($work->issn))
+                        <p class='t t-light'>
+                            ISSN: {{ $work->issn }}
+                        </p>
+                        @endif
+
+                        @if(!empty($work->volumeNumber))
+                        <p class='t t-light'>
+                            Volume: {{ $work->volumeNumber }}
+                        </p>
+                        @endif
+
+                        @if(!empty($work->issueNumber))
+                        <p class='t t-light'>
+                            Fascículo: {{ $work->issueNumber }}
+                        </p>
+                        @endif
+
+                        @if(!empty($work->pageStart) or !empty($work->pageEnd))
+                        <p class='t t-light'>
+                            Paginação: {{ $work->pageStart }} - {{ $work->pageEnd }}
                         </p>
                         @endif
 
