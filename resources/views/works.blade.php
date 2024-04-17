@@ -17,7 +17,8 @@
             $request->has('author')||
             $request->has('author_array')||
             $request->has('about')||
-            $request->has('isPartOf_name')||
+            $request->has('isPartOf')||
+            $request->has('educationEvent')||
             $request->has('releasedEvent')||
             $request->has('inLanguage')||
             $request->has('issn')||
@@ -50,8 +51,11 @@
                     if ($key == 'datePublished') {
                     $key_name = 'Ano de publicação';
                     }
-                    if ($key == 'isPartOf_name') {
+                    if ($key == 'isPartOf') {
                     $key_name = 'Publicação';
+                    }
+                    if ($key == 'educationEvent') {
+                    $key_name = 'Nome do evento';
                     }
                     if ($key == 'releasedEvent') {
                     $key_name = 'Nome do evento';
@@ -69,8 +73,7 @@
                     $key_name = 'Instituição';
                     }
                     @endphp
-                    <a type="button" class="btn btn-outline-warning mb-1"
-                        href="works?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
+                    <a type="button" class="btn btn-outline-warning mb-1" href="works?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
                         {{ $key_name }}: {{ $work }} (X)
                     </a>
                 </div>
@@ -132,13 +135,10 @@
                         <p class='t t-b t-md'>{{ $work->name }} ({{ $work->datePublished }})</p>
 
                         @if(is_array($work->author) && count($work->author) > 0)
-                        <p class='t-gray'><b class='t-subItem'>Autores: </b>
+                        <p class='t-gray mb-2 mt-2'><b class='t-subItem'>Autores: </b>
                             {!! implode(', ', array_map(function($author) {
                             return e($author['NOME-COMPLETO-DO-AUTOR']) . (!empty($author['NRO-ID-CNPQ']) ?
-                            '<a href="https://lattes.cnpq.br/' . e($author['NRO-ID-CNPQ']) . '" target="_blank"
-                                rel="external"><img class="c-socialiconalt"
-                                    src="' . e(url('/')) . '/images/logos/logo_lattes.svg" alt="Lattes"
-                                    title="Lattes" /></a>' : '');
+                            '<a href="https://lattes.cnpq.br/' . e($author['NRO-ID-CNPQ']) . '" target="_blank" rel="external"><img class="c-socialiconalt" src="' . e(url('/')) . '/images/logos/logo_lattes.svg" alt="Lattes" title="Lattes" /></a>' : '');
                             }, $work->author)) !!}
                         </p>
                         @endif
@@ -177,7 +177,7 @@
 
                         @if(!empty($work->isPartOf))
                         <p class='t t-light'>
-                            Fonte: {{ $work->isPartOf }}
+                            Publicação: {{ $work->isPartOf }}
 
                             @if(!empty($work->volumeNumber))
                             , v. {{ $work->volumeNumber }}
@@ -201,11 +201,6 @@
                             ISSN: {{ $work->issn }}
                         </p>
                         @endif -->
-
-
-
-
-
 
 
                         @if(is_array($work->about))

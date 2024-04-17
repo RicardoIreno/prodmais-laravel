@@ -30,6 +30,12 @@ class WorkController extends Controller
         if ($request->type) {
             $query->where('type', $request->type);
         }
+        if ($request->isPartOf) {
+            $query->where('isPartOf', $request->isPartOf);
+        }
+        if ($request->educationEvent) {
+            $query->where('educationEvent', $request->educationEvent);
+        }
         if ($request->about) {
             $query->whereJsonContains('about', $request->about);
         }
