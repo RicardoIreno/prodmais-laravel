@@ -25,21 +25,15 @@
             </div>
 
             <div class="row">
-                <h3>Resultados</h3>
                 @if ($people->count() == 0)
                 <div class="alert alert-warning" role="alert">
                     Nenhum registro encontrado
                 </div>
                 @endif
-                <ul>
+                <ul class='c-authors-list'>
                     @foreach($people as $key => $value)
-                    <li class='s-list-2'>
-                        <p><a href="person/{{ $value->id }}">{{ $value->name }}</a></p>
-                        <ul>
-                            @if(!empty($value->orcid))
-                            <p>ORCID: <a href="{{ $value->orcid }}">{{ $value->orcid }}</a></p>
-                            @endif
-                        </ul>
+                    <li class='c-card-author t t-b t-md'>
+                        <a href="person/{{ $value->id }}">{{ $value->name }}</a>
                     </li>
                     @endforeach
                 </ul>
