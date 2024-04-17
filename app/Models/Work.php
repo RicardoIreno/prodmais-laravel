@@ -22,6 +22,7 @@ class Work extends Model
         'author_array',
         'datePublished',
         'doi',
+        'educationEvent',
         'inLanguage',
         'isbn',
         'isPartOf',
@@ -33,6 +34,5 @@ class Work extends Model
         'type',
         'url',
         'volumeNumber'
-
     ];
 }

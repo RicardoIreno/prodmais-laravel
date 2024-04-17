@@ -84,8 +84,9 @@
                     <x-facetArray field="author_array" fieldName="Autores" :request="$request" />
                     <x-facet field="datePublished" fieldName="Ano de publicação" :request="$request" />
                     <x-facet field="inLanguage" fieldName="Idioma" :request="$request" />
-                    <x-facet field="isPartOf" fieldName="É parte de" :request="$request" />
                     <x-facetArray field="about" fieldName="Assuntos" :request="$request" />
+                    <x-facet field="isPartOf" fieldName="É parte de" :request="$request" />
+                    <x-facet field="educationEvent" fieldName="Nome do evento" :request="$request" />
                 </div>
 
             </div>
@@ -157,21 +158,27 @@
 
 
                         @if(!empty($work->doi))
-                        <p class='mt-3'>
+                        <p>
                             DOI: <a href="https://doi.org/{{ $work->doi }}" target="_blank"
                                 rel="nofollow">{{ $work->doi }}</a>
                         </p>
                         @endif
 
                         @if(!empty($work->url))
-                        <p class='mt-3'>
+                        <p>
                             URL: <a href="{{ $work->url }}" target="_blank" rel="nofollow">{{ $work->url }}</a>
                         </p>
                         @endif
 
                         @if(!empty($work->inLanguage))
-                        <p class='mt-3'>
+                        <p>
                             Idioma: {{ $work->inLanguage }}
+                        </p>
+                        @endif
+
+                        @if(!empty($work->educationEvent))
+                        <p>
+                            Nome do evento: {{ $work->educationEvent }}
                         </p>
                         @endif
 
