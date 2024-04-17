@@ -18,6 +18,12 @@ class PersonController extends Controller
         if ($request->name) {
             $query->where('name', 'iLIKE', '%' . $request->name . '%');
         }
+        if ($request->instituicao) {
+            $query->whereJsonContains('instituicao', $request->instituicao);
+        }
+        if ($request->ppg_nome) {
+            $query->whereJsonContains('ppg_nome', $request->ppg_nome);
+        }
         $people = $query->orderBy('name')->paginate(10)->withQueryString();
 
         return view('people', compact('people', 'request'));

@@ -3,14 +3,11 @@
 @else
 <div class="accordion-item">
     <h2 class="accordion-header">
-        <button class="accordion-button collapsed" style="width:90%" type="button" data-bs-toggle="collapse"
-            data-bs-target="#{{ hash('crc32', $fieldName) }}" aria-expanded="true"
-            aria-controls="{{ hash('crc32', $fieldName) }}">
+        <button class="accordion-button collapsed" style="width:90%" type="button" data-bs-toggle="collapse" data-bs-target="#{{ hash('crc32', $fieldName) }}" aria-expanded="true" aria-controls="{{ hash('crc32', $fieldName) }}">
             {{ $fieldName }}
         </button>
     </h2>
-    <div id="{{ hash('crc32', $fieldName) }}" class="accordion-collapse collapse"
-        data-bs-parent="#{{ hash('crc32', $fieldName) }}">
+    <div id="{{ hash('crc32', $fieldName) }}" class="accordion-collapse collapse" data-bs-parent="#{{ hash('crc32', $fieldName) }}">
         <div class="accordion-body">
             <ul>
                 @foreach ($facets as $facet)
@@ -25,8 +22,16 @@
                 }
                 @endphp
                 @endforeach
+                @php
+                if($type == "Work"){
+                $page = "works";
+                }
+                if($type == "Person"){
+                $page = "people";
+                }
+                @endphp
                 <li class="list-group-item">
-                    <a href="works?{{ implode('&', $searchArray)}}">
+                    <a href="{{ $page }}?{{ implode('&', $searchArray)}}">
                         {{ $facet->field }} ({{ $facet->count }})
                     </a>
                 </li>
