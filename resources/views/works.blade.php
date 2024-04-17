@@ -131,28 +131,15 @@
                     <div class='s-list-content'>
                         <p class='t t-b t-md'>{{ $work->name }} ({{ $work->datePublished }})</p>
 
-                        @if(is_array($work->author))
-                        <p class='t t-b t-md'>
-                        <ul>
-                            @foreach($work->author as $author)
-                            @if(!empty($author['NRO-ID-CNPQ']))
-                            <li class='s-nobullet'>
-                                {{ $author['NOME-COMPLETO-DO-AUTOR'] }}
-
-                                <a href="https://lattes.cnpq.br/{{ $author['NRO-ID-CNPQ'] }}" target="_blank"
-                                    rel="external">
-                                    <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_lattes.svg"
-                                        alt="Lattes" title="Lattes" height="15px" />
-                                </a>
-                            </li>
-                            @else
-                            <li class='s-nobullet'>
-                                {{ $author['NOME-COMPLETO-DO-AUTOR'] }}
-                            </li>
-                            @endif
-                            @endforeach
-                        </ul>
-
+                        @if(is_array($work->author) && count($work->author) > 0)
+                        <p class='t-gray'><b class='t-subItem'>Autores: </b>
+                            {!! implode(', ', array_map(function($author) {
+                            return e($author['NOME-COMPLETO-DO-AUTOR']) . (!empty($author['NRO-ID-CNPQ']) ?
+                            '<a href="https://lattes.cnpq.br/' . e($author['NRO-ID-CNPQ']) . '" target="_blank"
+                                rel="external"><img class="c-socialiconalt"
+                                    src="' . e(url('/')) . '/images/logos/logo_lattes.svg" alt="Lattes"
+                                    title="Lattes" /></a>' : '');
+                            }, $work->author)) !!}
                         </p>
                         @endif
 

@@ -1983,6 +1983,11 @@ h5 a {
   }
 }
 
+.c-socialiconalt {
+  margin: 0 0.2rem;
+  height: 15px;
+}
+
 .c-numbers {
   padding-block: 10px;
 }
