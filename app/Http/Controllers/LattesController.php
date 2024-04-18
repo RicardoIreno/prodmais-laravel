@@ -294,6 +294,69 @@ class LattesController extends Controller
         }
     }
 
+    public function jornais(array $jornais, array $attributes)
+    {
+        foreach ($jornais as $jornal_array) {
+            if (isset($jornal_array['DADOS-BASICOS-DO-TEXTO'])) {
+                $this->processJornal($jornal_array);
+            } else {
+                foreach ($jornal_array as $jornal) {
+                    $this->processJornal($jornal);
+                }
+            }
+        }
+    }
+
+    function processJornal(array $jornal)
+    {
+        $journal = new Work;
+        $journal->fill([
+            'name' => $jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['TITULO-DO-TEXTO'],
+            'datePublished' => $jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['ANO-DO-TEXTO'],
+            'doi' => $jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['DOI'],
+            'inLanguage' => $jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['IDIOMA'],
+            'type' => 'Textos em jornais de notícias/revistas',
+        ]);
+
+        if (isset($jornal['AUTORES'])) {
+            foreach ($jornal['AUTORES'] as $autores) {
+                if (isset($autores['@attributes'])) {
+                    $aut_array[] = $autores['@attributes'];
+                    $aut_name_array[] = $autores['@attributes']['NOME-COMPLETO-DO-AUTOR'];
+                } else {
+                    $aut_array[] = $autores;
+                    $aut_name_array[] = $autores['NOME-COMPLETO-DO-AUTOR'];
+                }
+            }
+            $journal->fill([
+                'author' => $aut_array,
+                'author_array' => $aut_name_array,
+            ]);
+            unset($aut_array);
+            unset($aut_name_array);
+        }
+
+        if (isset($jornal['PALAVRAS-CHAVE'])) {
+            $about_array = LattesController::processaPalavrasChaveLattes($jornal['PALAVRAS-CHAVE']);
+            $journal->fill([
+                'about' => $about_array,
+            ]);
+        }
+
+        if (isset($jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['HOME-PAGE-DO-TRABALHO'])) {
+            $url = LattesController::processaURL($jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['HOME-PAGE-DO-TRABALHO']);
+            $journal->fill([
+                'url' => $url,
+            ]);
+        }
+
+        try {
+            $journal->save();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public function createPerson(array $lattes, Request $request)
     {
         //echo "<pre>" . print_r($attributes, true) . "</pre>";
@@ -383,6 +446,9 @@ class LattesController extends Controller
                 }
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['CAPITULOS-DE-LIVROS-PUBLICADOS'])) {
                     $this->capitulos($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['CAPITULOS-DE-LIVROS-PUBLICADOS'], $lattes['@attributes']);
+                }
+                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['TEXTOS-EM-JORNAIS-OU-REVISTAS'])) {
+                    $this->jornais($lattes['PRODUCAO-BIBLIOGRAFICA']['TEXTOS-EM-JORNAIS-OU-REVISTAS'], $lattes['@attributes']);
                 }
             } catch (\Exception $e) {
                 echo $e->getMessage();
