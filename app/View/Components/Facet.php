@@ -70,9 +70,9 @@ class Facet extends Component
             $query->where('isPartOf_name', 'like', '%' . $this->request->isPartOf_name . '%');
         }
         if ($this->field == 'datePublished') {
-            $query->groupBy($this->field)->orderByDesc('field')->limit(10);
+            $query->groupBy($this->field)->orderByDesc('field')->limit(50);
         } else {
-            $query->groupBy($this->field)->orderByDesc('count')->orderByDesc($this->field)->limit(10);
+            $query->groupBy($this->field)->orderByDesc('count')->orderByDesc($this->field)->limit(50);
         }
 
         $facets = $query->get();

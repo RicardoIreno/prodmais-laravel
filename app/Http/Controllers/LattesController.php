@@ -357,6 +357,149 @@ class LattesController extends Controller
         }
     }
 
+    public function demais(array $demais, array $attributes)
+    {
+        foreach ($demais as $demais_array) {
+            if (isset($demais_array['DADOS-BASICOS-DE-OUTRA-PRODUCAO'])) {
+                $this->processDemais($demais_array);
+            } else {
+                foreach ($demais_array as $outra) {
+                    $this->processDemais($outra);
+                }
+            }
+        }
+    }
+
+    function processDemais(array $outra)
+    {
+        $other = new Work;
+        if (isset($outra['DADOS-BASICOS-DO-PREFACIO-POSFACIO'])) {
+            $other->fill([
+                'name' => $outra['DADOS-BASICOS-DO-PREFACIO-POSFACIO']['@attributes']['TITULO'],
+                'datePublished' => $outra['DADOS-BASICOS-DO-PREFACIO-POSFACIO']['@attributes']['ANO'],
+                'doi' => $outra['DADOS-BASICOS-DO-PREFACIO-POSFACIO']['@attributes']['DOI'],
+                'inLanguage' => $outra['DADOS-BASICOS-DO-PREFACIO-POSFACIO']['@attributes']['IDIOMA'],
+                'type' => 'Demais tipos - ' . $outra['DADOS-BASICOS-DO-PREFACIO-POSFACIO']['@attributes']['NATUREZA'],
+            ]);
+            if (isset($outra['DADOS-BASICOS-DO-PREFACIO-POSFACIO']['@attributes']['HOME-PAGE-DO-TRABALHO'])) {
+                $url = LattesController::processaURL($outra['DADOS-BASICOS-DO-PREFACIO-POSFACIO']['@attributes']['HOME-PAGE-DO-TRABALHO']);
+                $other->fill([
+                    'url' => $url,
+                ]);
+            }
+        } else {
+            $other->fill([
+                'name' => $outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['TITULO'],
+                'datePublished' => $outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['ANO'],
+                'doi' => $outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['DOI'],
+                'inLanguage' => $outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['IDIOMA'],
+                'type' => 'Demais tipos - ' . $outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['NATUREZA'],
+            ]);
+            if (isset($outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['HOME-PAGE-DO-TRABALHO'])) {
+                $url = LattesController::processaURL($outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['HOME-PAGE-DO-TRABALHO']);
+                $other->fill([
+                    'url' => $url,
+                ]);
+            }
+        }
+
+
+        if (isset($outra['AUTORES'])) {
+            foreach ($outra['AUTORES'] as $autores) {
+                if (isset($autores['@attributes'])) {
+                    $aut_array[] = $autores['@attributes'];
+                    $aut_name_array[] = $autores['@attributes']['NOME-COMPLETO-DO-AUTOR'];
+                } else {
+                    $aut_array[] = $autores;
+                    $aut_name_array[] = $autores['NOME-COMPLETO-DO-AUTOR'];
+                }
+            }
+            $other->fill([
+                'author' => $aut_array,
+                'author_array' => $aut_name_array,
+            ]);
+            unset($aut_array);
+            unset($aut_name_array);
+        }
+
+        if (isset($outra['PALAVRAS-CHAVE'])) {
+            $about_array = LattesController::processaPalavrasChaveLattes($outra['PALAVRAS-CHAVE']);
+            $other->fill([
+                'about' => $about_array,
+            ]);
+        }
+
+
+        try {
+            $other->save();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function artigosAceitos(array $artigosAceitos, array $attributes)
+    {
+        foreach ($artigosAceitos as $artigosAceitos_array) {
+            if (isset($artigosAceitos_array['DADOS-BASICOS-DO-ARTIGO'])) {
+                $this->processArtigosAceitos($artigosAceitos_array);
+            } else {
+                foreach ($artigosAceitos_array as $artigoAceito) {
+                    $this->processArtigosAceitos($artigoAceito);
+                }
+            }
+        }
+    }
+
+    function processArtigosAceitos(array $artigoAceito)
+    {
+        $articleAcepted = new Work;
+        $articleAcepted->fill([
+            'name' => $artigoAceito['DADOS-BASICOS-DO-ARTIGO']['@attributes']['TITULO-DO-ARTIGO'],
+            'datePublished' => $artigoAceito['DADOS-BASICOS-DO-ARTIGO']['@attributes']['ANO-DO-ARTIGO'],
+            'doi' => $artigoAceito['DADOS-BASICOS-DO-ARTIGO']['@attributes']['DOI'],
+            'inLanguage' => $artigoAceito['DADOS-BASICOS-DO-ARTIGO']['@attributes']['IDIOMA'],
+            'type' => 'Artigos aceitos para publicação',
+        ]);
+
+        if (isset($artigoAceito['AUTORES'])) {
+            foreach ($artigoAceito['AUTORES'] as $autores) {
+                if (isset($autores['@attributes'])) {
+                    $aut_array[] = $autores['@attributes'];
+                    $aut_name_array[] = $autores['@attributes']['NOME-COMPLETO-DO-AUTOR'];
+                } else {
+                    $aut_array[] = $autores;
+                    $aut_name_array[] = $autores['NOME-COMPLETO-DO-AUTOR'];
+                }
+            }
+            $articleAcepted->fill([
+                'author' => $aut_array,
+                'author_array' => $aut_name_array,
+            ]);
+            unset($aut_array);
+            unset($aut_name_array);
+        }
+
+        if (isset($artigoAceito['PALAVRAS-CHAVE'])) {
+            $about_array = LattesController::processaPalavrasChaveLattes($artigoAceito['PALAVRAS-CHAVE']);
+            $articleAcepted->fill([
+                'about' => $about_array,
+            ]);
+        }
+
+        if (isset($artigoAceito['DADOS-BASICOS-DO-ARTIGO']['@attributes']['HOME-PAGE-DO-TRABALHO'])) {
+            $url = LattesController::processaURL($artigoAceito['DADOS-BASICOS-DO-ARTIGO']['@attributes']['HOME-PAGE-DO-TRABALHO']);
+            $articleAcepted->fill([
+                'url' => $url,
+            ]);
+        }
+
+        try {
+            $articleAcepted->save();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public function createPerson(array $lattes, Request $request)
     {
         //echo "<pre>" . print_r($attributes, true) . "</pre>";
@@ -449,6 +592,12 @@ class LattesController extends Controller
                 }
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['TEXTOS-EM-JORNAIS-OU-REVISTAS'])) {
                     $this->jornais($lattes['PRODUCAO-BIBLIOGRAFICA']['TEXTOS-EM-JORNAIS-OU-REVISTAS'], $lattes['@attributes']);
+                }
+                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['DEMAIS-TIPOS-DE-PRODUCAO-BIBLIOGRAFICA'])) {
+                    $this->demais($lattes['PRODUCAO-BIBLIOGRAFICA']['DEMAIS-TIPOS-DE-PRODUCAO-BIBLIOGRAFICA'], $lattes['@attributes']);
+                }
+                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'])) {
+                    $this->artigosAceitos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'], $lattes['@attributes']);
                 }
             } catch (\Exception $e) {
                 echo $e->getMessage();
