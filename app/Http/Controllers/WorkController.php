@@ -118,7 +118,7 @@ class WorkController extends Controller
         if ($request->type) {
             $typeData = $typeData->where('type', $request->type);
         }
-        $typeData = $typeData->groupBy('type')->get();
+        $typeData = $typeData->groupBy('type')->orderBy('total', 'desc')->get();
 
 
         return view('graficos', array('datePublishedData' => $datePublishedData, 'typeData' => $typeData, 'request' => $request));
