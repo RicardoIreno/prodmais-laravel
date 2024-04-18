@@ -64,7 +64,7 @@
                     {{ $key_name }}: {{ $value }} (X)
                 </a>
             </div>
-            <a href="{{ route('works.graficos') }}" class="btn btn-warning">Limpar todos os filtros</a>
+            <a href="{{ route('graficos') }}" class="btn btn-warning">Limpar todos os filtros</a>
             @endif
             @endforeach
         </div>
