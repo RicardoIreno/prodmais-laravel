@@ -63,7 +63,6 @@ class LattesController extends Controller
                 'pageEnd' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-FINAL'],
                 'pageStart' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-INICIAL'],
                 'type' => 'Artigo publicado',
-                'url' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['HOME-PAGE-DO-TRABALHO'],
                 'volumeNumber' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['VOLUME'],
             ]);
 
@@ -123,8 +122,7 @@ class LattesController extends Controller
                 'name' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['TITULO-DO-TRABALHO'],
                 'pageEnd' => $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']['PAGINA-FINAL'],
                 'pageStart' => $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']['PAGINA-INICIAL'],
-                'type' => 'Trabalhos em eventos',
-                'url' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['HOME-PAGE-DO-TRABALHO'],
+                'type' => 'Trabalhos em eventos'
             ]);
 
             if (isset($trabalhoEmEventos['AUTORES'])) {
@@ -165,6 +163,71 @@ class LattesController extends Controller
             } catch (\Exception $e) {
                 echo $e->getMessage();
             }
+        }
+    }
+
+    public function livros(array $livros, array $attributes)
+    {
+        foreach ($livros as $livro_array) {
+            if (isset($livro_array['DADOS-BASICOS-DO-LIVRO'])) {
+                $this->processLivro($livro_array);
+            } else {
+                foreach ($livro_array as $livro) {
+                    $this->processLivro($livro);
+                }
+            }
+        }
+    }
+
+    function processLivro(array $livro)
+    {
+        $book = new Work;
+        $book->fill([
+            'name' => $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['TITULO-DO-LIVRO'],
+            'datePublished' => $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['ANO'],
+            'doi' => $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['DOI'],
+            'inLanguage' => $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['IDIOMA'],
+            'isbn' => $livro['DETALHAMENTO-DO-LIVRO']['@attributes']['ISBN'],
+            'type' => 'Livro publicado ou organizado',
+            'url' => $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['HOME-PAGE-DO-TRABALHO'],
+        ]);
+
+        if (isset($livro['AUTORES'])) {
+            foreach ($livro['AUTORES'] as $autores) {
+                if (isset($autores['@attributes'])) {
+                    $aut_array[] = $autores['@attributes'];
+                    $aut_name_array[] = $autores['@attributes']['NOME-COMPLETO-DO-AUTOR'];
+                } else {
+                    $aut_array[] = $autores;
+                    $aut_name_array[] = $autores['NOME-COMPLETO-DO-AUTOR'];
+                }
+            }
+            $book->fill([
+                'author' => $aut_array,
+                'author_array' => $aut_name_array,
+            ]);
+            unset($aut_array);
+            unset($aut_name_array);
+        }
+
+        if (isset($livro['PALAVRAS-CHAVE'])) {
+            $about_array = LattesController::processaPalavrasChaveLattes($livro['PALAVRAS-CHAVE']);
+            $book->fill([
+                'about' => $about_array,
+            ]);
+        }
+
+        if (isset($livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['HOME-PAGE-DO-TRABALHO'])) {
+            $url = LattesController::processaURL($livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['HOME-PAGE-DO-TRABALHO']);
+            $book->fill([
+                'url' => $url,
+            ]);
+        }
+
+        try {
+            $book->save();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
         }
     }
 
@@ -251,6 +314,9 @@ class LattesController extends Controller
                 }
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['TRABALHOS-EM-EVENTOS'])) {
                     $this->trabalhosEmEventos($lattes['PRODUCAO-BIBLIOGRAFICA']['TRABALHOS-EM-EVENTOS'], $lattes['@attributes']);
+                }
+                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['LIVROS-PUBLICADOS-OU-ORGANIZADOS'])) {
+                    $this->livros($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['LIVROS-PUBLICADOS-OU-ORGANIZADOS'], $lattes['@attributes']);
                 }
             } catch (\Exception $e) {
                 echo $e->getMessage();

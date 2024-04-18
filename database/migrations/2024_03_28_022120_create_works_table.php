@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('educationEvent')->nullable();
             $table->string('inLanguage')->nullable();
             $table->string('isPartOf')->nullable();
+            $table->string('isbn')->nullable();
             $table->string('issn')->nullable();
             $table->string('issueNumber')->nullable();
             $table->string('name');

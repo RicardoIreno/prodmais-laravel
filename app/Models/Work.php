@@ -13,7 +13,8 @@ class Work extends Model
         'about' => 'array',
         'author' => 'array',
         'author_array' => 'array',
-        'isbn' => 'array'
+        'isbn' => 'array',
+        'publisher' => 'array'
     ];
 
     protected $fillable = [
@@ -31,6 +32,7 @@ class Work extends Model
         'name',
         'pageEnd',
         'pageStart',
+        'publisher',
         'type',
         'url',
         'volumeNumber'
