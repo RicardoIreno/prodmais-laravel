@@ -189,7 +189,6 @@ class LattesController extends Controller
             'inLanguage' => $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['IDIOMA'],
             'isbn' => $livro['DETALHAMENTO-DO-LIVRO']['@attributes']['ISBN'],
             'type' => 'Livro publicado ou organizado',
-            'url' => $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['HOME-PAGE-DO-TRABALHO'],
         ]);
 
         if (isset($livro['AUTORES'])) {
@@ -226,6 +225,70 @@ class LattesController extends Controller
 
         try {
             $book->save();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function capitulos(array $capitulos, array $attributes)
+    {
+        foreach ($capitulos as $capitulo_array) {
+            if (isset($capitulo_array['DADOS-BASICOS-DO-CAPITULO'])) {
+                $this->processCapitulo($capitulo_array);
+            } else {
+                foreach ($capitulo_array as $capitulo) {
+                    $this->processCapitulo($capitulo);
+                }
+            }
+        }
+    }
+
+    function processCapitulo(array $capitulo)
+    {
+        $chapter = new Work;
+        $chapter->fill([
+            'name' => $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['TITULO-DO-CAPITULO-DO-LIVRO'],
+            'datePublished' => $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['ANO'],
+            'doi' => $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['DOI'],
+            'inLanguage' => $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['IDIOMA'],
+            'isbn' => $capitulo['DETALHAMENTO-DO-CAPITULO']['@attributes']['ISBN'],
+            'type' => 'Capítulo de livro publicado',
+        ]);
+
+        if (isset($capitulo['AUTORES'])) {
+            foreach ($capitulo['AUTORES'] as $autores) {
+                if (isset($autores['@attributes'])) {
+                    $aut_array[] = $autores['@attributes'];
+                    $aut_name_array[] = $autores['@attributes']['NOME-COMPLETO-DO-AUTOR'];
+                } else {
+                    $aut_array[] = $autores;
+                    $aut_name_array[] = $autores['NOME-COMPLETO-DO-AUTOR'];
+                }
+            }
+            $chapter->fill([
+                'author' => $aut_array,
+                'author_array' => $aut_name_array,
+            ]);
+            unset($aut_array);
+            unset($aut_name_array);
+        }
+
+        if (isset($capitulo['PALAVRAS-CHAVE'])) {
+            $about_array = LattesController::processaPalavrasChaveLattes($capitulo['PALAVRAS-CHAVE']);
+            $chapter->fill([
+                'about' => $about_array,
+            ]);
+        }
+
+        if (isset($capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['HOME-PAGE-DO-TRABALHO'])) {
+            $url = LattesController::processaURL($capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['HOME-PAGE-DO-TRABALHO']);
+            $chapter->fill([
+                'url' => $url,
+            ]);
+        }
+
+        try {
+            $chapter->save();
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
@@ -317,6 +380,9 @@ class LattesController extends Controller
                 }
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['LIVROS-PUBLICADOS-OU-ORGANIZADOS'])) {
                     $this->livros($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['LIVROS-PUBLICADOS-OU-ORGANIZADOS'], $lattes['@attributes']);
+                }
+                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['CAPITULOS-DE-LIVROS-PUBLICADOS'])) {
+                    $this->capitulos($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['CAPITULOS-DE-LIVROS-PUBLICADOS'], $lattes['@attributes']);
                 }
             } catch (\Exception $e) {
                 echo $e->getMessage();
