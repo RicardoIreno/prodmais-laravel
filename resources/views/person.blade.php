@@ -47,8 +47,24 @@
                         </div>
 
                         <div class="d-icon-text">
-                            <i class="i i-sm i-orientation" title="Orientações " alt="Orientações"></i>
+                            @php
+                            if (isset($id->orientacoesEmAndamento) && isset($id->orientacoesConcluidas)) {
+                            $totalOrientacoesEmAndamento = array_sum(array_map("count", $id->orientacoesEmAndamento));
+                            $totalOrientacoesConcluidas = array_sum(array_map("count", $id->orientacoesConcluidas));
+                            $totalOrientacoes = $totalOrientacoesEmAndamento + $totalOrientacoesConcluidas;
+                            echo $totalOrientacoes;
+                            } elseif (isset($id->orientacoesEmAndamento)) {
+                            $totalOrientacoesEmAndamento = array_sum(array_map("count", $id->orientacoesEmAndamento));
+                            echo $totalOrientacoesEmAndamento;
+                            } elseif (isset($id->orientacoesConcluidas)) {
+                            $totalOrientacoesConcluidas = array_sum(array_map("count", $id->orientacoesConcluidas));
+                            echo $totalOrientacoesConcluidas;
+                            } else {
+                            echo "0";
+                            }
 
+                            @endphp
+                            <i class="i i-sm i-orientation" title="Orientações " alt="Orientações"></i>
                         </div>
                     </div>
 
