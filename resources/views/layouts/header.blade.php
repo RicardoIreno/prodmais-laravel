@@ -19,9 +19,14 @@
                             class="nav-link px-2 text-white">Obras <i class="i i-about sitemenu-ico"></i></a>
                     </li>
                     <li class=" sitemenu-item"><a class="sitemenu-link" href="{{url('/')}}/upload"
-                            class="nav-link px-2 text-white">Upload <i class="i i-about sitemenu-ico"></i></a></li>
+                            class="nav-link px-2 text-white">Upload <i class="i i-about sitemenu-ico"></i></a>
+                    </li>
                     <li class=" sitemenu-item"><a class="sitemenu-link" href="{{url('/')}}/graficos"
-                            class="nav-link px-2 text-white">Gráficos <i class="i i-about sitemenu-ico"></i></a></li>
+                            class="nav-link px-2 text-white">Gráficos <i class="i i-about sitemenu-ico"></i></a>
+                    </li>
+                    <li class=" sitemenu-item"><a class="sitemenu-link" href="{{url('/')}}/sobre"
+                            class="nav-link px-2 text-white">Sobre <i class="i i-about sitemenu-ico"></i></a>
+                    </li>
                 </ul>
             </nav>
         </div>

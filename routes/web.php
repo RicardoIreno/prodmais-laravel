@@ -38,3 +38,7 @@ Route::get('/person/{id}', function (Person $id) {
 });
 
 Route::get('graficos', [WorkController::class, 'graficos'])->name('graficos');
+
+Route::get('/sobre', function () {
+    return view('sobre');
+});
