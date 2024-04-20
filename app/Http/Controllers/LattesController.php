@@ -627,6 +627,7 @@ class LattesController extends Controller
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'])) {
                     $this->artigosAceitos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'], $lattes['@attributes']);
                 }
+                return redirect('/person' . '/' . $lattes['@attributes']['NUMERO-IDENTIFICADOR']);
             } catch (\Exception $e) {
                 echo $e->getMessage();
             }
