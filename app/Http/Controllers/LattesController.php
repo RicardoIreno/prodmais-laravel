@@ -410,6 +410,7 @@ class LattesController extends Controller
             }
         } else {
             $other->fill([
+                'authorLattesIds' => $authorLattesIds,
                 'name' => $outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['TITULO'],
                 'datePublished' => $outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['ANO'],
                 'doi' => $outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['DOI'],
