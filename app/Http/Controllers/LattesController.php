@@ -51,8 +51,11 @@ class LattesController extends Controller
         //echo "<pre>" . print_r($attributes, true) . "</pre>";
         //echo "<pre>" . print_r($artigos, true) . "</pre>";
         foreach ($artigos['ARTIGO-PUBLICADO'] as $artigo) {
+
+            $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
             $work = new Work;
             $work->fill([
+                'authorLattesIds' => $authorLattesIds,
                 'datePublished' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['ANO-DO-ARTIGO'],
                 'doi' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['DOI'],
                 'inLanguage' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['IDIOMA'],
@@ -100,7 +103,8 @@ class LattesController extends Controller
 
             try {
                 $work->save();
-                unset($array_result_pc);
+                WorkController::indexRelations($work->id);
+                unset($authorLattesIds);
             } catch (\Exception $e) {
                 echo $e->getMessage();
             }
@@ -112,8 +116,10 @@ class LattesController extends Controller
         //echo "<pre>" . print_r($attributes, true) . "</pre>";
         //echo "<pre>" . print_r($trabalhoEmEventoss, true) . "</pre>";
         foreach ($trabalhosEmEventos['TRABALHO-EM-EVENTOS'] as $trabalhoEmEventos) {
+            $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
             $work = new Work;
             $work->fill([
+                'authorLattesIds' => $authorLattesIds,
                 'datePublished' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['ANO-DO-TRABALHO'],
                 'doi' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['DOI'],
                 'educationEvent' => $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["NOME-DO-EVENTO"],
@@ -159,7 +165,8 @@ class LattesController extends Controller
 
             try {
                 $work->save();
-                unset($array_result_pc);
+                WorkController::indexRelations($work->id);
+                unset($authorLattesIds);
             } catch (\Exception $e) {
                 echo $e->getMessage();
             }
@@ -170,19 +177,21 @@ class LattesController extends Controller
     {
         foreach ($livros as $livro_array) {
             if (isset($livro_array['DADOS-BASICOS-DO-LIVRO'])) {
-                $this->processLivro($livro_array);
+                $this->processLivro($livro_array, $attributes);
             } else {
                 foreach ($livro_array as $livro) {
-                    $this->processLivro($livro);
+                    $this->processLivro($livro, $attributes);
                 }
             }
         }
     }
 
-    function processLivro(array $livro)
+    function processLivro(array $livro, array $attributes)
     {
+        $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
         $book = new Work;
         $book->fill([
+            'authorLattesIds' => $authorLattesIds,
             'name' => $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['TITULO-DO-LIVRO'],
             'datePublished' => $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['ANO'],
             'doi' => $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['DOI'],
@@ -225,6 +234,8 @@ class LattesController extends Controller
 
         try {
             $book->save();
+            WorkController::indexRelations($book->id);
+            unset($authorLattesIds);
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
@@ -234,19 +245,21 @@ class LattesController extends Controller
     {
         foreach ($capitulos as $capitulo_array) {
             if (isset($capitulo_array['DADOS-BASICOS-DO-CAPITULO'])) {
-                $this->processCapitulo($capitulo_array);
+                $this->processCapitulo($capitulo_array, $attributes);
             } else {
                 foreach ($capitulo_array as $capitulo) {
-                    $this->processCapitulo($capitulo);
+                    $this->processCapitulo($capitulo, $attributes);
                 }
             }
         }
     }
 
-    function processCapitulo(array $capitulo)
+    function processCapitulo(array $capitulo, array $attributes)
     {
+        $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
         $chapter = new Work;
         $chapter->fill([
+            'authorLattesIds' => $authorLattesIds,
             'name' => $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['TITULO-DO-CAPITULO-DO-LIVRO'],
             'datePublished' => $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['ANO'],
             'doi' => $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['DOI'],
@@ -289,6 +302,8 @@ class LattesController extends Controller
 
         try {
             $chapter->save();
+            WorkController::indexRelations($chapter->id);
+            unset($authorLattesIds);
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
@@ -298,19 +313,21 @@ class LattesController extends Controller
     {
         foreach ($jornais as $jornal_array) {
             if (isset($jornal_array['DADOS-BASICOS-DO-TEXTO'])) {
-                $this->processJornal($jornal_array);
+                $this->processJornal($jornal_array, $attributes);
             } else {
                 foreach ($jornal_array as $jornal) {
-                    $this->processJornal($jornal);
+                    $this->processJornal($jornal, $attributes);
                 }
             }
         }
     }
 
-    function processJornal(array $jornal)
+    function processJornal(array $jornal, array $attributes)
     {
+        $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
         $journal = new Work;
         $journal->fill([
+            'authorLattesIds' => $authorLattesIds,
             'name' => $jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['TITULO-DO-TEXTO'],
             'datePublished' => $jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['ANO-DO-TEXTO'],
             'doi' => $jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['DOI'],
@@ -352,6 +369,8 @@ class LattesController extends Controller
 
         try {
             $journal->save();
+            WorkController::indexRelations($journal->id);
+            unset($authorLattesIds);
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
@@ -361,20 +380,22 @@ class LattesController extends Controller
     {
         foreach ($demais as $demais_array) {
             if (isset($demais_array['DADOS-BASICOS-DE-OUTRA-PRODUCAO'])) {
-                $this->processDemais($demais_array);
+                $this->processDemais($demais_array, $attributes);
             } else {
                 foreach ($demais_array as $outra) {
-                    $this->processDemais($outra);
+                    $this->processDemais($outra, $attributes);
                 }
             }
         }
     }
 
-    function processDemais(array $outra)
+    function processDemais(array $outra, array $attributes)
     {
+        $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
         $other = new Work;
         if (isset($outra['DADOS-BASICOS-DO-PREFACIO-POSFACIO'])) {
             $other->fill([
+                'authorLattesIds' => $authorLattesIds,
                 'name' => $outra['DADOS-BASICOS-DO-PREFACIO-POSFACIO']['@attributes']['TITULO'],
                 'datePublished' => $outra['DADOS-BASICOS-DO-PREFACIO-POSFACIO']['@attributes']['ANO'],
                 'doi' => $outra['DADOS-BASICOS-DO-PREFACIO-POSFACIO']['@attributes']['DOI'],
@@ -432,6 +453,8 @@ class LattesController extends Controller
 
         try {
             $other->save();
+            WorkController::indexRelations($other->id);
+            unset($authorLattesIds);
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
@@ -441,19 +464,21 @@ class LattesController extends Controller
     {
         foreach ($artigosAceitos as $artigosAceitos_array) {
             if (isset($artigosAceitos_array['DADOS-BASICOS-DO-ARTIGO'])) {
-                $this->processArtigosAceitos($artigosAceitos_array);
+                $this->processArtigosAceitos($artigosAceitos_array, $attributes);
             } else {
                 foreach ($artigosAceitos_array as $artigoAceito) {
-                    $this->processArtigosAceitos($artigoAceito);
+                    $this->processArtigosAceitos($artigoAceito, $attributes);
                 }
             }
         }
     }
 
-    function processArtigosAceitos(array $artigoAceito)
+    function processArtigosAceitos(array $artigoAceito, array $attributes)
     {
+        $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
         $articleAcepted = new Work;
         $articleAcepted->fill([
+            'authorLattesIds' => $authorLattesIds,
             'name' => $artigoAceito['DADOS-BASICOS-DO-ARTIGO']['@attributes']['TITULO-DO-ARTIGO'],
             'datePublished' => $artigoAceito['DADOS-BASICOS-DO-ARTIGO']['@attributes']['ANO-DO-ARTIGO'],
             'doi' => $artigoAceito['DADOS-BASICOS-DO-ARTIGO']['@attributes']['DOI'],
@@ -495,6 +520,8 @@ class LattesController extends Controller
 
         try {
             $articleAcepted->save();
+            WorkController::indexRelations($articleAcepted->id);
+            unset($authorLattesIds);
         } catch (\Exception $e) {
             echo $e->getMessage();
         }

@@ -31,6 +31,9 @@ Route::resource('works', WorkController::class);
 Route::post('/lattes', [LattesController::class, 'processXML']);
 
 Route::get('/person/{id}', function (Person $id) {
+    $id->load(['works' => function ($query) {
+        $query->orderBy('datePublished', 'desc');
+    }]);
     return view('person', compact('id'));
 });
 

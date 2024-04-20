@@ -47,4 +47,9 @@ class Person extends Model
         'tipvin',
         'unidade'
     ];
+
+    public function works()
+    {
+        return $this->belongsToMany(Work::class, 'person_work');
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreWorkRequest;
 use App\Http\Requests\UpdateWorkRequest;
 use App\Models\Work;
+use App\Models\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -122,5 +123,17 @@ class WorkController extends Controller
 
 
         return view('graficos', array('datePublishedData' => $datePublishedData, 'typeData' => $typeData, 'request' => $request));
+    }
+
+
+    public static function indexRelations($id)
+    {
+        $record = Work::find($id);
+        $record->authors()->detach();
+
+        foreach ($record->authorLattesIds as $authorLattesId) {
+            $person = Person::find($authorLattesId);
+            $record->authors()->attach($person);
+        }
     }
 }

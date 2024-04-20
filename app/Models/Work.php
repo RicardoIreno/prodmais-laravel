@@ -13,6 +13,7 @@ class Work extends Model
         'about' => 'array',
         'author' => 'array',
         'author_array' => 'array',
+        'authorLattesIds' => 'array',
         'isbn' => 'array',
         'publisher' => 'array'
     ];
@@ -21,6 +22,7 @@ class Work extends Model
         'about',
         'author',
         'author_array',
+        'authorLattesIds',
         'datePublished',
         'doi',
         'educationEvent',
@@ -37,4 +39,11 @@ class Work extends Model
         'url',
         'volumeNumber'
     ];
+
+    protected $with = ['authors'];
+
+    public function authors()
+    {
+        return $this->belongsToMany(Person::class, 'person_work')->withTimestamps();
+    }
 }

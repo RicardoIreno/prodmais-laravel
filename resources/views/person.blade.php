@@ -7,6 +7,7 @@
 <main id="profile" class="c-wrapper-container">
     <div class="c-wrapper-paper">
         <div class="c-wrapper-inner">
+
             <div id="top"></div>
             <div class="p-profile-header">
                 <div class="p-profile-header-one">
@@ -39,6 +40,7 @@
                     <div class="p-profile-header-numbers">
 
                         <div class="d-icon-text u-mx-10">
+                            {{ count($id->works) }}
                             <i class="i i-sm i-articlePublished" title="Trabalhos publicados"
                                 alt="Trabalhos publicados"></i>
                             <span class="t">
@@ -392,6 +394,90 @@
                     <div id="tab-two" class="c-tab-content" v-if="tabOpened == '2'">
                         <div class="profile-pi">
                             <h3 class="t t-h3 u-mb-20">Produção</h3>
+
+
+                            @foreach ($id->works as $work)
+
+                            <li class='s-list-2'>
+
+                                <div class='s-list-bullet'>
+                                    <i>{{ $work->type }}</i><i class='i i-articlePublished s-list-ico'
+                                        title='articlePublished'></i>
+                                </div>
+
+                                <div class='s-list-content'>
+                                    <p class='t t-b t-md'>{{ $work->name }} ({{ $work->datePublished }})</p>
+
+                                    @if(is_array($work->author) && count($work->author) > 0)
+                                    <p class='t-gray mb-2 mt-2'><b class='t-subItem'>Autores: </b>
+                                        {!! implode(', ', array_map(function($author) {
+                                        return e($author['NOME-COMPLETO-DO-AUTOR']) . (!empty($author['NRO-ID-CNPQ']) ?
+                                        '<a href="https://lattes.cnpq.br/' . e($author['NRO-ID-CNPQ']) . '"
+                                            target="_blank" rel="external"><img class="c-socialiconalt"
+                                                src="' . e(url('/')) . '/images/logos/logo_lattes.svg" alt="Lattes"
+                                                title="Lattes" /></a>' : '');
+                                        }, $work->author)) !!}
+                                    </p>
+                                    @endif
+
+
+                                    @if(!empty($work->doi) or !empty($work->url))
+                                    <p>Acesso ao texto completo:
+                                        @if(!empty($work->doi))
+
+                                        <a class="t t-a d-icon-text" href="https://doi.org/{{ $work->doi }}"
+                                            target="blank">
+                                            <img class="i-doi" src="{{ e(url('/')) }}/images/logos/doi.svg" title="doi"
+                                                alt="doi">
+                                        </a>
+
+                                        @endif
+
+                                        @if(!empty($work->url))
+
+                                        <a href="{{ $work->url }}" target="_blank" rel="nofollow">{{ $work->url }}</a>
+
+                                        @endif
+                                    </p>
+                                    @endif
+
+                                    @if(!empty($work->educationEvent))
+                                    <p>
+                                        Nome do evento: {{ $work->educationEvent }}
+                                    </p>
+                                    @endif
+
+
+                                    @if(!empty($work->isPartOf))
+                                    <p class='t t-light'>
+                                        Publicação: {{ $work->isPartOf }}
+
+                                        @if(!empty($work->volumeNumber))
+                                        , v. {{ $work->volumeNumber }}
+                                        @endif
+
+                                        @if(!empty($work->issueNumber))
+                                        , n. {{ $work->issueNumber }}
+                                        @endif
+
+                                        @if(!empty($work->pageStart) or !empty($work->pageEnd))
+
+                                        , p. {{ $work->pageStart }}-{{ $work->pageEnd }}
+                                        @endif
+
+                                    </p>
+                                    @endif
+
+
+                                    @if(is_array($work->about))
+                                    <p class='d-linewrap t-gray'>
+                                        Assuntos: {{ implode(", ", $work->about) }}
+                                    </p>
+                                    @endif
+
+                                </div>
+                            </li>
+                            @endforeach
 
                         </div>
                     </div>
