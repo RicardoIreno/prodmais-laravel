@@ -292,10 +292,24 @@ class LattesController extends Controller
         $chapter->fill([
             'authorLattesIds' => $authorLattesIds,
             'name' => $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['TITULO-DO-CAPITULO-DO-LIVRO'],
+            'country' => $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['PAIS-DE-PUBLICACAO'],
             'datePublished' => $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['ANO'],
             'doi' => $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['DOI'],
             'inLanguage' => $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['IDIOMA'],
             'type' => 'Capítulo de livro publicado',
+        ]);
+
+        $isPartOfBook['name'] = $capitulo['DETALHAMENTO-DO-CAPITULO']['@attributes']['TITULO-DO-LIVRO'];
+        $isPartOfBook['org'] = $capitulo['DETALHAMENTO-DO-CAPITULO']['@attributes']['ORGANIZADORES'];
+        $isPartOfBook['isbn'] = $capitulo['DETALHAMENTO-DO-CAPITULO']['@attributes']['ISBN'];
+        $isPartOfBook['pageStart'] = $capitulo['DETALHAMENTO-DO-CAPITULO']['@attributes']['PAGINA-INICIAL'];
+        $isPartOfBook['pageEnd'] = $capitulo['DETALHAMENTO-DO-CAPITULO']['@attributes']['PAGINA-FINAL'];
+        $isPartOfBook['bookEdition'] = $capitulo['DETALHAMENTO-DO-CAPITULO']['@attributes']['NUMERO-DA-EDICAO-REVISAO'];
+        $isPartOfBook['publisher']['name'] = $capitulo['DETALHAMENTO-DO-CAPITULO']['@attributes']['NOME-DA-EDITORA'];
+        $isPartOfBook['publisher']['city'] = $capitulo['DETALHAMENTO-DO-CAPITULO']['@attributes']['CIDADE-DA-EDITORA'];
+
+        $chapter->fill([
+            'isPartOf' => $isPartOfBook,
         ]);
 
         if (isset($capitulo['AUTORES'])) {

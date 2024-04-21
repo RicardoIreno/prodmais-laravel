@@ -448,8 +448,12 @@
                                         <li>Ano: {{ $work->educationEvent['year'] }}</li>
                                         <li>Classificação do evento: {{ $work->educationEvent['classification'] }}</li>
                                         <li>Título da publicação: {{ $work->educationEvent['isPartOf'] }}</li>
+                                        @if(isset($work->educationEvent['volumeNumber']))
                                         <li>Volume: {{ $work->educationEvent['volumeNumber'] }}</li>
+                                        @endif
+                                        @if(isset($work->educationEvent['issueNumber']))
                                         <li>Fascículo: {{ $work->educationEvent['issueNumber'] }}</li>
+                                        @endif
                                         <li>Paginação:
                                             {{ $work->educationEvent['pageStart'] }}-{{ $work->educationEvent['pageEnd'] }}
                                         </li>
@@ -466,13 +470,31 @@
                                     <p class='t t-light'>
                                     <ul>
                                         <li>Publicação: {{ $work->isPartOf['name'] }}</li>
+                                        @if (isset($work->isPartOf['issn']))
                                         <li>ISSN: {{ $work->isPartOf['issn'] }}</li>
+                                        @endif
+                                        @if (isset($work->isPartOf['isbn']))
+                                        <li>ISBN: {{ $work->isPartOf['isbn'] }}</li>
+                                        @endif
+                                        @if (isset($work->isPartOf['volumeNumber']))
                                         <li>Volume: {{ $work->isPartOf['volumeNumber'] }}</li>
+                                        @endif
+                                        @if (isset($work->isPartOf['issueNumber']))
                                         <li>Fascículo: {{ $work->isPartOf['issueNumber'] }}</li>
+                                        @endif
                                         <li>
                                             Paginação:
                                             {{ $work->isPartOf['pageStart'] }}-{{ $work->isPartOf['pageEnd'] }}
                                         </li>
+                                        @if (isset($work->isPartOf['bookEdition']))
+                                        <li>Edição: {{ $work->isPartOf['bookEdition'] }}</li>
+                                        @endif
+                                        @if (isset($work->isPartOf['publisher']['name']))
+                                        <li>Editora: {{ $work->isPartOf['publisher']['name'] }}</li>
+                                        @endif
+                                        @if (isset($work->isPartOf['publisher']['city']))
+                                        <li>Cidade da editora: {{ $work->isPartOf['publisher']['city'] }}</li>
+                                        @endif
                                     </ul>
                                     </p>
                                     @endif
