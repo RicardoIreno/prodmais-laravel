@@ -373,10 +373,24 @@ class LattesController extends Controller
         $journal->fill([
             'authorLattesIds' => $authorLattesIds,
             'name' => $jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['TITULO-DO-TEXTO'],
+            'country' => $jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['PAIS-DE-PUBLICACAO'],
             'datePublished' => $jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['ANO-DO-TEXTO'],
             'doi' => $jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['DOI'],
             'inLanguage' => $jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['IDIOMA'],
             'type' => 'Textos em jornais de notícias/revistas',
+        ]);
+
+        $isPartOfJournal['name'] = $jornal['DETALHAMENTO-DO-TEXTO']['@attributes']['TITULO-DO-JORNAL-OU-REVISTA'];
+        $isPartOfJournal['issn'] = $jornal['DETALHAMENTO-DO-TEXTO']['@attributes']['ISSN'];
+        $isPartOfJournal['volumeNumber'] = $jornal['DETALHAMENTO-DO-TEXTO']['@attributes']['VOLUME'];
+        $isPartOfJournal['datePublished'] = $jornal['DETALHAMENTO-DO-TEXTO']['@attributes']['DATA-DE-PUBLICACAO'];
+        $isPartOfJournal['pageStart'] = $jornal['DETALHAMENTO-DO-TEXTO']['@attributes']['PAGINA-INICIAL'];
+        $isPartOfJournal['pageEnd'] = $jornal['DETALHAMENTO-DO-TEXTO']['@attributes']['PAGINA-FINAL'];
+        $isPartOfJournal['city'] = $jornal['DETALHAMENTO-DO-TEXTO']['@attributes']['LOCAL-DE-PUBLICACAO'];
+
+
+        $journal->fill([
+            'isPartOf' => $isPartOfJournal,
         ]);
 
         if (isset($jornal['AUTORES'])) {
