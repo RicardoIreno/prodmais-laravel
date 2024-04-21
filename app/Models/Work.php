@@ -16,6 +16,7 @@ class Work extends Model
         'authorLattesIds' => 'array',
         'educationEvent' => 'array',
         'isbn' => 'array',
+        'isPartOf' => 'array',
         'publisher' => 'array'
     ];
 

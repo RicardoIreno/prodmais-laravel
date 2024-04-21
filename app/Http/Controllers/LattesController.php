@@ -59,14 +59,20 @@ class LattesController extends Controller
                 'datePublished' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['ANO-DO-ARTIGO'],
                 'doi' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['DOI'],
                 'inLanguage' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['IDIOMA'],
-                'isPartOf' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['TITULO-DO-PERIODICO-OU-REVISTA'],
-                'issn' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['ISSN'],
-                'issueNumber' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['SERIE'],
                 'name' => $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['TITULO-DO-ARTIGO'],
-                'pageEnd' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-FINAL'],
-                'pageStart' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-INICIAL'],
                 'type' => 'Artigo publicado',
-                'volumeNumber' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['VOLUME'],
+            ]);
+
+            $isPartOf['name'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['TITULO-DO-PERIODICO-OU-REVISTA'];
+            $isPartOf['issn'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['ISSN'];
+            $isPartOf['volumeNumber'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['VOLUME'];
+            $isPartOf['issueNumber'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['SERIE'];
+            $isPartOf['pageStart'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-INICIAL'];
+            $isPartOf['pageEnd'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-FINAL'];
+            $isPartOf['city'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['LOCAL-DE-PUBLICACAO'];
+
+            $work->fill([
+                'isPartOf' => $isPartOf,
             ]);
 
             if (isset($artigo['AUTORES'])) {
@@ -125,7 +131,6 @@ class LattesController extends Controller
                 'doi' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['DOI'],
                 'educationEvent' => $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["NOME-DO-EVENTO"],
                 'inLanguage' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['IDIOMA'],
-                'isPartOf' => $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']['TITULO-DOS-ANAIS-OU-PROCEEDINGS'],
                 'name' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['TITULO-DO-TRABALHO'],
                 'type' => 'Trabalhos em eventos'
             ]);

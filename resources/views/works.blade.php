@@ -195,21 +195,15 @@
 
                         @if(!empty($work->isPartOf))
                         <p class='t t-light'>
-                            Publicação: {{ $work->isPartOf }}
-
-                            @if(!empty($work->volumeNumber))
-                            , v. {{ $work->volumeNumber }}
-                            @endif
-
-                            @if(!empty($work->issueNumber))
-                            , n. {{ $work->issueNumber }}
-                            @endif
-
-                            @if(!empty($work->pageStart) or !empty($work->pageEnd))
-
-                            , p. {{ $work->pageStart }}-{{ $work->pageEnd }}
-                            @endif
-
+                        <ul>
+                            <li>Publicação: {{ $work->isPartOf['name'] }}</li>
+                            <li>ISSN: {{ $work->isPartOf['issn'] }}</li>
+                            <li>Volume: {{ $work->isPartOf['volumeNumber'] }}</li>
+                            <li>Fascículo: {{ $work->isPartOf['issueNumber'] }}</li>
+                            <li>
+                                Paginação: {{ $work->isPartOf['pageStart'] }}-{{ $work->isPartOf['pageEnd'] }}
+                            </li>
+                        </ul>
                         </p>
                         @endif
 
