@@ -14,6 +14,7 @@ class Work extends Model
         'author' => 'array',
         'author_array' => 'array',
         'authorLattesIds' => 'array',
+        'educationEvent' => 'array',
         'isbn' => 'array',
         'publisher' => 'array'
     ];
@@ -23,6 +24,7 @@ class Work extends Model
         'author',
         'author_array',
         'authorLattesIds',
+        'country',
         'datePublished',
         'doi',
         'educationEvent',

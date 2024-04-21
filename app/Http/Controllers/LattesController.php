@@ -120,15 +120,31 @@ class LattesController extends Controller
             $work = new Work;
             $work->fill([
                 'authorLattesIds' => $authorLattesIds,
+                'country' =>  $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['PAIS-DO-EVENTO'],
                 'datePublished' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['ANO-DO-TRABALHO'],
                 'doi' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['DOI'],
                 'educationEvent' => $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["NOME-DO-EVENTO"],
                 'inLanguage' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['IDIOMA'],
                 'isPartOf' => $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']['TITULO-DOS-ANAIS-OU-PROCEEDINGS'],
                 'name' => $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['TITULO-DO-TRABALHO'],
-                'pageEnd' => $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']['PAGINA-FINAL'],
-                'pageStart' => $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']['PAGINA-INICIAL'],
                 'type' => 'Trabalhos em eventos'
+            ]);
+
+            $educationEvent['name'] = $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["NOME-DO-EVENTO"];
+            $educationEvent['city'] = $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["CIDADE-DO-EVENTO"];
+            $educationEvent['year'] = $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["ANO-DE-REALIZACAO"];
+            $educationEvent['classification'] = $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["CLASSIFICACAO-DO-EVENTO"];
+            $educationEvent['isPartOf'] = $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["TITULO-DOS-ANAIS-OU-PROCEEDINGS"];
+            $educationEvent['volumeNumber'] = $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["VOLUME"];
+            $educationEvent['issueNumber'] = $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["FASCICULO"];
+            $educationEvent['pageStart'] = $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["PAGINA-INICIAL"];
+            $educationEvent['pageEnd'] = $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["PAGINA-INICIAL"];
+            $educationEvent['isbn'] = $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["ISBN"];
+            $educationEvent['publisher']['name'] = $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["NOME-DA-EDITORA"];
+            $educationEvent['publisher']['city'] = $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["CIDADE-DA-EDITORA"];
+
+            $work->fill([
+                'educationEvent' => $educationEvent,
             ]);
 
             if (isset($trabalhoEmEventos['AUTORES'])) {

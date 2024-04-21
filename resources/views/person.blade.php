@@ -442,9 +442,23 @@
                                     @endif
 
                                     @if(!empty($work->educationEvent))
-                                    <p>
-                                        Nome do evento: {{ $work->educationEvent }}
-                                    </p>
+                                    <ul>
+                                        <li>Nome do evento: {{ $work->educationEvent['name'] }}</li>
+                                        <li>Cidade do evento: {{ $work->educationEvent['city'] }}</li>
+                                        <li>Ano: {{ $work->educationEvent['year'] }}</li>
+                                        <li>Classificação do evento: {{ $work->educationEvent['classification'] }}</li>
+                                        <li>Título da publicação: {{ $work->educationEvent['isPartOf'] }}</li>
+                                        <li>Volume: {{ $work->educationEvent['volumeNumber'] }}</li>
+                                        <li>Fascículo: {{ $work->educationEvent['issueNumber'] }}</li>
+                                        <li>Paginação:
+                                            {{ $work->educationEvent['pageStart'] }}-{{ $work->educationEvent['pageEnd'] }}
+                                        </li>
+                                        <li>ISBN: {{ $work->educationEvent['isbn'] }}</li>
+                                        <li>
+                                            Editora / Cidade: {{ $work->educationEvent['publisher']['name'] }} /
+                                            {{ $work->educationEvent['publisher']['city'] }}
+                                        </li>
+                                    </ul>
                                     @endif
 
 

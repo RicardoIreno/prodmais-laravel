@@ -73,7 +73,8 @@
                     $key_name = 'Instituição';
                     }
                     @endphp
-                    <a type="button" class="btn btn-outline-warning mb-1" href="works?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
+                    <a type="button" class="btn btn-outline-warning mb-1"
+                        href="works?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
                         {{ $key_name }}: {{ $work }} (X)
                     </a>
                 </div>
@@ -138,7 +139,10 @@
                         <p class='t-gray mb-2 mt-2'><b class='t-subItem'>Autores: </b>
                             {!! implode(', ', array_map(function($author) {
                             return e($author['NOME-COMPLETO-DO-AUTOR']) . (!empty($author['NRO-ID-CNPQ']) ?
-                            '<a href="https://lattes.cnpq.br/' . e($author['NRO-ID-CNPQ']) . '" target="_blank" rel="external"><img class="c-socialiconalt" src="' . e(url('/')) . '/images/logos/logo_lattes.svg" alt="Lattes" title="Lattes" /></a>' : '');
+                            '<a href="https://lattes.cnpq.br/' . e($author['NRO-ID-CNPQ']) . '" target="_blank"
+                                rel="external"><img class="c-socialiconalt"
+                                    src="' . e(url('/')) . '/images/logos/logo_lattes.svg" alt="Lattes"
+                                    title="Lattes" /></a>' : '');
                             }, $work->author)) !!}
                         </p>
                         @endif
@@ -169,9 +173,23 @@
                         @endif -->
 
                         @if(!empty($work->educationEvent))
-                        <p>
-                            Nome do evento: {{ $work->educationEvent }}
-                        </p>
+                        <ul>
+                            <li>Nome do evento: {{ $work->educationEvent['name'] }}</li>
+                            <li>Cidade do evento: {{ $work->educationEvent['city'] }}</li>
+                            <li>Ano: {{ $work->educationEvent['year'] }}</li>
+                            <li>Classificação do evento: {{ $work->educationEvent['classification'] }}</li>
+                            <li>Título da publicação: {{ $work->educationEvent['isPartOf'] }}</li>
+                            <li>Volume: {{ $work->educationEvent['volumeNumber'] }}</li>
+                            <li>Fascículo: {{ $work->educationEvent['issueNumber'] }}</li>
+                            <li>Paginação:
+                                {{ $work->educationEvent['pageStart'] }}-{{ $work->educationEvent['pageEnd'] }}
+                            </li>
+                            <li>ISBN: {{ $work->educationEvent['isbn'] }}</li>
+                            <li>
+                                Editora / Cidade: {{ $work->educationEvent['publisher']['name'] }} /
+                                {{ $work->educationEvent['publisher']['city'] }}
+                            </li>
+                        </ul>
                         @endif
 
 
