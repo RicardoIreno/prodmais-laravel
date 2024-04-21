@@ -214,11 +214,21 @@ class LattesController extends Controller
         $book->fill([
             'authorLattesIds' => $authorLattesIds,
             'name' => $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['TITULO-DO-LIVRO'],
+            'bookEdition' => $livro['DETALHAMENTO-DO-LIVRO']['@attributes']['NUMERO-DA-EDICAO-REVISAO'],
+            'country' => $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['PAIS-DE-PUBLICACAO'],
             'datePublished' => $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['ANO'],
             'doi' => $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['DOI'],
             'inLanguage' => $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['IDIOMA'],
             'isbn' => $livro['DETALHAMENTO-DO-LIVRO']['@attributes']['ISBN'],
             'type' => 'Livro publicado ou organizado',
+            'numberOfPages' => $livro['DETALHAMENTO-DO-LIVRO']['@attributes']['NUMERO-DE-PAGINAS']
+        ]);
+
+        $publisher['name'] = $livro['DETALHAMENTO-DO-LIVRO']['@attributes']['NOME-DA-EDITORA'];
+        $publisher['city'] = $livro['DETALHAMENTO-DO-LIVRO']['@attributes']['CIDADE-DA-EDITORA'];
+
+        $book->fill([
+            'publisher' => $publisher,
         ]);
 
         if (isset($livro['AUTORES'])) {
@@ -285,7 +295,6 @@ class LattesController extends Controller
             'datePublished' => $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['ANO'],
             'doi' => $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['DOI'],
             'inLanguage' => $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['IDIOMA'],
-            'isbn' => $capitulo['DETALHAMENTO-DO-CAPITULO']['@attributes']['ISBN'],
             'type' => 'Capítulo de livro publicado',
         ]);
 

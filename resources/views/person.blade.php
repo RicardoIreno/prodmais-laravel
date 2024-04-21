@@ -477,6 +477,19 @@
                                     </p>
                                     @endif
 
+                                    @if(!empty($work->isbn))
+                                    <p class='t t-light'>
+                                    <ul>
+                                        <li>ISBN: {{ $work->isbn }}</li>
+                                        <li>Edição: {{ $work->bookEdition }}</li>
+                                        <li>País: {{ $work->country }}</li>
+                                        <li>Número de páginas: {{ $work->numberOfPages }}</li>
+                                        <li>Editora: {{ $work->publisher['name'] }}</li>
+                                        <li>Cidade da editora: {{ $work->publisher['city'] }}</li>
+                                    </ul>
+                                    </p>
+                                    @endif
+
 
                                     @if(is_array($work->about))
                                     <p class='d-linewrap t-gray'>

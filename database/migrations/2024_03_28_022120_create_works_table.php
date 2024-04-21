@@ -17,6 +17,7 @@ return new class extends Migration
             $table->jsonb('author')->nullable();
             $table->jsonb('author_array')->nullable();
             $table->jsonb('authorLattesIds')->nullable();
+            $table->string('bookEdition')->nullable();
             $table->string('country')->nullable();
             $table->string('datePublished')->nullable();
             $table->string('doi')->nullable();
@@ -27,8 +28,10 @@ return new class extends Migration
             $table->string('issn')->nullable();
             $table->string('issueNumber')->nullable();
             $table->string('name');
+            $table->string('numberOfPages')->nullable();
             $table->string('pageEnd')->nullable();
             $table->string('pageStart')->nullable();
+            $table->jsonb('publisher')->nullable();
             $table->string('type');
             $table->string('url')->nullable();
             $table->string('volumeNumber')->nullable();
