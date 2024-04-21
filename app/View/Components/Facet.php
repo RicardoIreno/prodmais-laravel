@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Illuminate\Http\Request;
+use App\Models\Person;
 use App\Models\Work;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +18,8 @@ class Facet extends Component
     public function __construct(
         public Request $request,
         public string $field,
-        public string $fieldName
+        public string $fieldName,
+        public string $type
     ) {
     }
 
@@ -26,7 +28,12 @@ class Facet extends Component
      */
     public function render(): View|Closure|string
     {
-        $query = Work::select($this->field . ' as field', DB::raw('count(*) as count'));
+        if ($this->type == "Work") {
+            $query = Work::select($this->field . ' as field', DB::raw('count(*) as count'));
+        }
+        if ($this->type == "Person") {
+            $query = Person::select($this->field . ' as field', DB::raw('count(*) as count'));
+        }
         if ($this->request->name) {
             $query->where('name', 'like', '%' . $this->request->name . '%');
         }

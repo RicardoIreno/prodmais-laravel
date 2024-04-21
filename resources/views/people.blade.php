@@ -37,7 +37,8 @@
                     $key_name = 'Programa de Pós-Graduação';
                     }
                     @endphp
-                    <a type="button" class="btn btn-outline-warning mb-1" href="people?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
+                    <a type="button" class="btn btn-outline-warning mb-1"
+                        href="people?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
                         {{ $key_name }}: {{ $work }} (X)
                     </a>
                 </div>
@@ -48,7 +49,9 @@
             <div class="c-filterlist__content">
                 <div class="accordion" id="facets">
                     <x-facetArray field="instituicao" fieldName="Instituição" :request="$request" type="Person" />
-                    <x-facetArray field="ppg_nome" fieldName="Programa de Pós-Graduação" :request="$request" type="Person" />
+                    <x-facetArray field="ppg_nome" fieldName="Programa de Pós-Graduação" :request="$request"
+                        type="Person" />
+                    <x-facet field="genero" fieldName="Gênero" type="Person" :request="$request" />
                 </div>
             </div>
         </details>

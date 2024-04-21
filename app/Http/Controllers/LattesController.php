@@ -649,6 +649,12 @@ class LattesController extends Controller
             unset($ppgs);
         }
 
+        if (isset($request->genero)) {
+            $person->fill([
+                'genero' => $request->genero
+            ]);
+        }
+
 
         try {
             $person->save();
