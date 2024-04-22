@@ -54,6 +54,10 @@ Editar desta maneira:
         CustomLog ${APACHE_LOG_DIR}/access.log combined
     </VirtualHost>
 
+Desabilitar o Default:
+
+    sudo a2dissite 000-default.conf
+
 ### Clonagem do repositório do Prodmais
 
 Você pode clonar em qualquer pasta, mas é recomendável clonar na pasta pública do apache (ex. /var/www/html):
