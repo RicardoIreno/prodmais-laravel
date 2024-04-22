@@ -870,6 +870,12 @@ class LattesController extends Controller
                 ]);
             }
 
+            if (isset($request->email)) {
+                $person->fill([
+                    'email' => $request->email
+                ]);
+            }
+
             try {
                 $person->save();
             } catch (\Exception $e) {

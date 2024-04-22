@@ -35,6 +35,14 @@
                     @endforeach
                     @endif
 
+
+                    @if(isset($id->email))
+                    <p class="t t-prof">E-Mail:
+                        {{ $id->email }}
+                    </p>
+                    @endif
+
+
                     <hr class="c-line" />
 
                     <div class="p-profile-header-numbers">
