@@ -75,7 +75,7 @@ Copiar o arquivo .env
 
 Criar a chave .env
 
-php artisan key:generate
+    php artisan key:generate
 
 Editar o arquivo .env com as informações do PostgreSQL
 
