@@ -1,5 +1,7 @@
 ## Prodmais - Laravel
 
+Esquema de metadados utilizado: Schema.org (https://schema.org/)
+
 ### Permissões
 
     sudo chown -R www-data:www-data /path/to/your/project/vendor
