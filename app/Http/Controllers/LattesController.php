@@ -603,72 +603,90 @@ class LattesController extends Controller
         //echo "<pre>" . print_r($outra_producao, true) . "</pre>";
         //echo "<pre>" . print_r($request, true) . "</pre>";
 
-        $person = new Person();
+        $person = Person::find($lattes['@attributes']['NUMERO-IDENTIFICADOR']);
 
-        $person->fill([
-            'id' => $lattes['@attributes']['NUMERO-IDENTIFICADOR'],
-            'lattesDataAtualizacao' => $lattes['@attributes']['DATA-ATUALIZACAO'],
-            'resumoCVpt' => $lattes['DADOS-GERAIS']['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH'],
-            'resumoCVen' => $lattes['DADOS-GERAIS']['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH-EN'],
-            'name' => $lattes['DADOS-GERAIS']['@attributes']['NOME-COMPLETO'],
-            'nacionalidade' => $lattes['DADOS-GERAIS']['@attributes']['PAIS-DE-NACIONALIDADE'],
-            'nomeCitacoesBibliograficas' => $lattes['DADOS-GERAIS']['@attributes']['NOME-EM-CITACOES-BIBLIOGRAFICAS'],
-            'orcid' => $lattes['DADOS-GERAIS']['@attributes']['ORCID-ID'],
-            'idiomas' => $lattes['DADOS-GERAIS']['IDIOMAS'],
-            'formacao' => $lattes['DADOS-GERAIS']['FORMACAO-ACADEMICA-TITULACAO']
-        ]);
+        if ($person) {
+            if (isset($request->instituicao)) {
 
-        $lattesID10 = $this->lattesID10($lattes['@attributes']['NUMERO-IDENTIFICADOR']);
+                $person->instituicao = array_merge($person->instituicao, [$request->instituicao]);
+                $person->instituicao = array_unique($person->instituicao);
+            }
 
-        if (!empty($lattesID10)) {
-            $person->fill([
-                'lattesID10' => $lattesID10
-            ]);
-        }
+            if (isset($request->ppg_nome)) {
+                $person->ppg_nome = array_merge($person->ppg_nome, [$request->ppg_nome]);
+                $person->ppg_nome = array_unique($person->ppg_nome);
+            }
 
-        if (isset($lattes['DADOS-GERAIS']['ATUACOES-PROFISSIONAIS'])) {
-            $person->fill([
-                'atuacao' => $lattes['DADOS-GERAIS']['ATUACOES-PROFISSIONAIS']
-            ]);
-        }
-        if (isset($lattes['DADOS-COMPLEMENTARES']['ORIENTACOES-EM-ANDAMENTO'])) {
-            $person->fill([
-                'orientacoesEmAndamento' => $lattes['DADOS-COMPLEMENTARES']['ORIENTACOES-EM-ANDAMENTO']
-            ]);
-        }
-        if (isset($lattes['OUTRA-PRODUCAO']['ORIENTACOES-CONCLUIDAS'])) {
-            $person->fill([
-                'orientacoesConcluidas' => $lattes['OUTRA-PRODUCAO']['ORIENTACOES-CONCLUIDAS']
-            ]);
-        }
-
-        if (isset($request->instituicao)) {
-            $instituicoes[] = $request->instituicao;
-            $person->fill([
-                'instituicao' => $instituicoes
-            ]);
-            unset($instituicoes);
-        }
-
-        if (isset($request->ppg_nome)) {
-            $ppgs[] = $request->ppg_nome;
-            $person->fill([
-                'ppg_nome' => $ppgs
-            ]);
-            unset($ppgs);
-        }
-
-        if (isset($request->genero)) {
-            $person->fill([
-                'genero' => $request->genero
-            ]);
-        }
-
-
-        try {
             $person->save();
-        } catch (\Exception $e) {
-            echo $e->getMessage();
+            exit;
+        } else {
+            $person = new Person();
+
+            $person->fill([
+                'id' => $lattes['@attributes']['NUMERO-IDENTIFICADOR'],
+                'lattesDataAtualizacao' => $lattes['@attributes']['DATA-ATUALIZACAO'],
+                'resumoCVpt' => $lattes['DADOS-GERAIS']['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH'],
+                'resumoCVen' => $lattes['DADOS-GERAIS']['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH-EN'],
+                'name' => $lattes['DADOS-GERAIS']['@attributes']['NOME-COMPLETO'],
+                'nacionalidade' => $lattes['DADOS-GERAIS']['@attributes']['PAIS-DE-NACIONALIDADE'],
+                'nomeCitacoesBibliograficas' => $lattes['DADOS-GERAIS']['@attributes']['NOME-EM-CITACOES-BIBLIOGRAFICAS'],
+                'orcid' => $lattes['DADOS-GERAIS']['@attributes']['ORCID-ID'],
+                'idiomas' => $lattes['DADOS-GERAIS']['IDIOMAS'],
+                'formacao' => $lattes['DADOS-GERAIS']['FORMACAO-ACADEMICA-TITULACAO']
+            ]);
+
+            $lattesID10 = $this->lattesID10($lattes['@attributes']['NUMERO-IDENTIFICADOR']);
+
+            if (!empty($lattesID10)) {
+                $person->fill([
+                    'lattesID10' => $lattesID10
+                ]);
+            }
+
+            if (isset($lattes['DADOS-GERAIS']['ATUACOES-PROFISSIONAIS'])) {
+                $person->fill([
+                    'atuacao' => $lattes['DADOS-GERAIS']['ATUACOES-PROFISSIONAIS']
+                ]);
+            }
+            if (isset($lattes['DADOS-COMPLEMENTARES']['ORIENTACOES-EM-ANDAMENTO'])) {
+                $person->fill([
+                    'orientacoesEmAndamento' => $lattes['DADOS-COMPLEMENTARES']['ORIENTACOES-EM-ANDAMENTO']
+                ]);
+            }
+            if (isset($lattes['OUTRA-PRODUCAO']['ORIENTACOES-CONCLUIDAS'])) {
+                $person->fill([
+                    'orientacoesConcluidas' => $lattes['OUTRA-PRODUCAO']['ORIENTACOES-CONCLUIDAS']
+                ]);
+            }
+
+            if (isset($request->instituicao)) {
+                $instituicoes[] = $request->instituicao;
+                $person->fill([
+                    'instituicao' => $instituicoes
+                ]);
+                unset($instituicoes);
+            }
+
+            if (isset($request->ppg_nome)) {
+                $ppgs[] = $request->ppg_nome;
+                $person->fill([
+                    'ppg_nome' => $ppgs
+                ]);
+                unset($ppgs);
+            }
+
+            if (isset($request->genero)) {
+                $person->fill([
+                    'genero' => $request->genero
+                ]);
+            }
+
+
+            try {
+                $person->save();
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+            }
         }
     }
 
