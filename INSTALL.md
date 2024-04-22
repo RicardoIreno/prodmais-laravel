@@ -15,7 +15,7 @@ Criar a base de dados:
 
     CREATE DATABASE prodmais;
     CREATE USER prodmais WITH ENCRYPTED PASSWORD 'prodmais';
-    GRANT ALL PRIVILEGES ON DATABASE laravel TO laravel;
+    GRANT ALL PRIVILEGES ON DATABASE prodmais TO prodmais;
     \q
 
 ### Instalação do PHP 8.2
@@ -35,14 +35,14 @@ Criar a base de dados:
 ### Configurar o Apache
 
     cd /etc/apache2/sites-available
-    sudo cp 000-default.conf laravel.conf
-    sudo nano laravel.conf
+    sudo cp 000-default.conf prodmais.conf
+    sudo nano prodmais.conf
 
 Editar desta maneira:
 
     <VirtualHost *:80>
         ServerAdmin admin@example.com
-        ServerName laravel.example.com
+        ServerName prodmais.example.com
         DocumentRoot /var/www/html/prodmais/public/
 
         <Directory /var/www/html/prodmais/public/>
@@ -78,9 +78,9 @@ Editar o arquivo .env com as informações do PostgreSQL
     DB_CONNECTION=pgsql
     DB_HOST=127.0.0.1
     DB_PORT=5432
-    DB_DATABASE=laravel
-    DB_USERNAME=laravel
-    DB_PASSWORD=laravel
+    DB_DATABASE=prodmais
+    DB_USERNAME=prodmais
+    DB_PASSWORD=prodmais
 
 ### Permissões
 
