@@ -12,6 +12,7 @@
             </summary>
             @if (
             $request->has('name')||
+            $request->has('genero')||
             $request->has('type')||
             $request->has('instituicao')||
             $request->has('ppg_nome')
@@ -26,6 +27,9 @@
                     @php
                     if ($key == 'name') {
                     $key_name = 'Pesquisador';
+                    }
+                    if ($key == 'genero') {
+                    $key_name = 'Gênero';
                     }
                     if ($key == 'type') {
                     $key_name = 'Tipo';

@@ -18,6 +18,9 @@ class PersonController extends Controller
         if ($request->name) {
             $query->where('name', 'iLIKE', '%' . $request->name . '%');
         }
+        if ($request->genero) {
+            $query->where('genero', $request->genero);
+        }
         if ($request->instituicao) {
             $query->whereJsonContains('instituicao', $request->instituicao);
         }
