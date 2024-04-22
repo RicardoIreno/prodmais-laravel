@@ -17,8 +17,8 @@
             $request->has('author')||
             $request->has('author_array')||
             $request->has('about')||
-            $request->has('isPartOf')||
-            $request->has('educationEvent')||
+            $request->has('isPartOfName')||
+            $request->has('educationEventName')||
             $request->has('releasedEvent')||
             $request->has('inLanguage')||
             $request->has('issn')||
@@ -51,10 +51,10 @@
                     if ($key == 'datePublished') {
                     $key_name = 'Ano de publicação';
                     }
-                    if ($key == 'isPartOf') {
+                    if ($key == 'isPartOfName') {
                     $key_name = 'Publicação';
                     }
-                    if ($key == 'educationEvent') {
+                    if ($key == 'educationEventName') {
                     $key_name = 'Nome do evento';
                     }
                     if ($key == 'releasedEvent') {
