@@ -709,6 +709,18 @@ class LattesController extends Controller
             'type' => 'Artigos aceitos para publicação',
         ]);
 
+        $isPartOf['name'] = $artigoAceito['DETALHAMENTO-DO-ARTIGO']['@attributes']['TITULO-DO-PERIODICO-OU-REVISTA'];
+        $isPartOf['issn'] = $artigoAceito['DETALHAMENTO-DO-ARTIGO']['@attributes']['ISSN'];
+        $isPartOf['volumeNumber'] = $artigoAceito['DETALHAMENTO-DO-ARTIGO']['@attributes']['VOLUME'];
+        $isPartOf['issueNumber'] = $artigoAceito['DETALHAMENTO-DO-ARTIGO']['@attributes']['SERIE'];
+        $isPartOf['pageStart'] = $artigoAceito['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-INICIAL'];
+        $isPartOf['pageEnd'] = $artigoAceito['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-FINAL'];
+        $isPartOf['city'] = $artigoAceito['DETALHAMENTO-DO-ARTIGO']['@attributes']['LOCAL-DE-PUBLICACAO'];
+
+        $work->fill([
+            'isPartOf' => $isPartOf,
+        ]);
+
         if (isset($artigoAceito['AUTORES'])) {
             foreach ($artigoAceito['AUTORES'] as $autores) {
                 if (isset($autores['@attributes'])) {
