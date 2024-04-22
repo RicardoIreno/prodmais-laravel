@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('pageEnd')->nullable();
             $table->string('pageStart')->nullable();
             $table->jsonb('publisher')->nullable();
+            $table->string('sha256');
             $table->string('type');
             $table->string('url')->nullable();
             $table->string('volumeNumber')->nullable();

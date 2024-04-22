@@ -42,6 +42,7 @@ class Work extends Model
         'pageEnd',
         'pageStart',
         'publisher',
+        'sha256',
         'type',
         'url',
         'volumeNumber'
