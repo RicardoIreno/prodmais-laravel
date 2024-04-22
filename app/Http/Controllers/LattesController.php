@@ -129,6 +129,7 @@ class LattesController extends Controller
             $existingWork = Work::where('sha256', $sha256)->first();
 
             if ($existingWork) {
+                unset($existingWork);
                 exit;
             } else {
                 try {
@@ -232,6 +233,7 @@ class LattesController extends Controller
             $existingWork = Work::where('sha256', $sha256)->first();
 
             if ($existingWork) {
+                unset($existingWork);
                 exit;
             } else {
                 try {
@@ -331,6 +333,7 @@ class LattesController extends Controller
         $existingWork = Work::where('sha256', $sha256)->first();
 
         if ($existingWork) {
+            unset($existingWork);
             exit;
         } else {
             try {
@@ -432,6 +435,7 @@ class LattesController extends Controller
         $existingWork = Work::where('sha256', $sha256)->first();
 
         if ($existingWork) {
+            unset($existingWork);
             exit;
         } else {
             try {
@@ -533,6 +537,7 @@ class LattesController extends Controller
         $existingWork = Work::where('sha256', $sha256)->first();
 
         if ($existingWork) {
+            unset($existingWork);
             exit;
         } else {
             try {
@@ -649,6 +654,7 @@ class LattesController extends Controller
         $existingWork = Work::where('sha256', $sha256)->first();
 
         if ($existingWork) {
+            unset($existingWork);
             exit;
         } else {
             try {
@@ -735,6 +741,7 @@ class LattesController extends Controller
         $existingWork = Work::where('sha256', $sha256)->first();
 
         if ($existingWork) {
+            unset($existingWork);
             exit;
         } else {
             try {
