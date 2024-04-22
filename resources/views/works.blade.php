@@ -151,7 +151,6 @@
                                 </p>
                                 @endif
 
-
                                 @if(!empty($work->doi) or !empty($work->url))
                                 <p>Acesso ao texto completo:
                                     @if(!empty($work->doi))
@@ -171,32 +170,6 @@
                                 </p>
                                 @endif
 
-                                <!-- @if(!empty($work->inLanguage))
-                        <p>
-                            Idioma: {{ $work->inLanguage }}
-                        </p>
-                        @endif -->
-
-
-
-
-
-
-
-                                @if(!empty($work->isbn))
-                                <p class='t t-light'>
-                                <ul>
-                                    <li>ISBN: {{ $work->isbn }}</li>
-                                    <li>Edição: {{ $work->bookEdition }}</li>
-                                    <li>País: {{ $work->country }}</li>
-                                    <li>Número de páginas: {{ $work->numberOfPages }}</li>
-                                    <li>Editora: {{ $work->publisher['name'] }}</li>
-                                    <li>Cidade da editora: {{ $work->publisher['city'] }}</li>
-                                </ul>
-                                </p>
-                                @endif
-
-
                                 @if(is_array($work->about))
                                 <p class='d-linewrap t-gray mt-2'>
                                     Assuntos: {{ implode(", ", $work->about) }}
@@ -205,6 +178,26 @@
 
                             </div>
                             <div class="col col-lg-6">
+
+                                @if(!empty($work->isbn))
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Imprenta</h5>
+                                        <p class="card-text">
+                                        <ul class="c-authors-list">
+                                            <li>ISBN: {{ $work->isbn }}</li>
+                                            <li>Edição: {{ $work->bookEdition }}</li>
+                                            <li>País: {{ $work->country }}</li>
+                                            <li>Número de páginas: {{ $work->numberOfPages }}</li>
+                                            <li>Editora: {{ $work->publisher['name'] }}</li>
+                                            <li>Cidade da editora: {{ $work->publisher['city'] }}</li>
+                                        </ul>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                @endif
 
                                 @if(!empty($work->educationEvent))
 
