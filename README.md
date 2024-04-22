@@ -31,6 +31,7 @@ O Prodmais é uma ferramenta que agrega informações sobre produções acadêmi
 
 🖥️ [Instalação](/INSTALL.md)
 
+Nesta versão, o Prodmais está baseado no framework Laravel (https://laravel.com/)
 Esquema de metadados utilizado: Schema.org (https://schema.org/)
 
 ## Autores:
