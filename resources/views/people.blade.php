@@ -15,6 +15,7 @@
             $request->has('genero')||
             $request->has('type')||
             $request->has('instituicao')||
+            $request->has('unidade')||
             $request->has('ppg_nome')
             )
             <div class="alert alert-light" role="alert">
@@ -36,6 +37,9 @@
                     }
                     if ($key == 'instituicao') {
                     $key_name = 'Instituição';
+                    }
+                    if ($key == 'unidade') {
+                    $key_name = 'Unidade';
                     }
                     if ($key == 'ppg_nome') {
                     $key_name = 'Programa de Pós-Graduação';
