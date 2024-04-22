@@ -126,12 +126,18 @@ class LattesController extends Controller
                 'sha256' => $sha256,
             ]);
 
-            try {
-                $work->save();
-                WorkController::indexRelations($work->id);
-                unset($authorLattesIds);
-            } catch (\Exception $e) {
-                echo $e->getMessage();
+            $existingWork = Work::where('sha256', $sha256)->first();
+
+            if ($existingWork) {
+                exit;
+            } else {
+                try {
+                    $work->save();
+                    WorkController::indexRelations($work->id);
+                    unset($authorLattesIds);
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                }
             }
         }
     }
@@ -223,12 +229,18 @@ class LattesController extends Controller
                 'sha256' => $sha256,
             ]);
 
-            try {
-                $work->save();
-                WorkController::indexRelations($work->id);
-                unset($authorLattesIds);
-            } catch (\Exception $e) {
-                echo $e->getMessage();
+            $existingWork = Work::where('sha256', $sha256)->first();
+
+            if ($existingWork) {
+                exit;
+            } else {
+                try {
+                    $work->save();
+                    WorkController::indexRelations($work->id);
+                    unset($authorLattesIds);
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                }
             }
         }
     }
@@ -316,12 +328,18 @@ class LattesController extends Controller
             'sha256' => $sha256,
         ]);
 
-        try {
-            $work->save();
-            WorkController::indexRelations($work->id);
-            unset($authorLattesIds);
-        } catch (\Exception $e) {
-            echo $e->getMessage();
+        $existingWork = Work::where('sha256', $sha256)->first();
+
+        if ($existingWork) {
+            exit;
+        } else {
+            try {
+                $work->save();
+                WorkController::indexRelations($work->id);
+                unset($authorLattesIds);
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+            }
         }
     }
 
@@ -411,12 +429,18 @@ class LattesController extends Controller
             'sha256' => $sha256,
         ]);
 
-        try {
-            $work->save();
-            WorkController::indexRelations($work->id);
-            unset($authorLattesIds);
-        } catch (\Exception $e) {
-            echo $e->getMessage();
+        $existingWork = Work::where('sha256', $sha256)->first();
+
+        if ($existingWork) {
+            exit;
+        } else {
+            try {
+                $work->save();
+                WorkController::indexRelations($work->id);
+                unset($authorLattesIds);
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+            }
         }
     }
 
@@ -506,12 +530,18 @@ class LattesController extends Controller
             'sha256' => $sha256,
         ]);
 
-        try {
-            $work->save();
-            WorkController::indexRelations($work->id);
-            unset($authorLattesIds);
-        } catch (\Exception $e) {
-            echo $e->getMessage();
+        $existingWork = Work::where('sha256', $sha256)->first();
+
+        if ($existingWork) {
+            exit;
+        } else {
+            try {
+                $work->save();
+                WorkController::indexRelations($work->id);
+                unset($authorLattesIds);
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+            }
         }
     }
 
@@ -616,12 +646,18 @@ class LattesController extends Controller
             ]);
         }
 
-        try {
-            $work->save();
-            WorkController::indexRelations($work->id);
-            unset($authorLattesIds);
-        } catch (\Exception $e) {
-            echo $e->getMessage();
+        $existingWork = Work::where('sha256', $sha256)->first();
+
+        if ($existingWork) {
+            exit;
+        } else {
+            try {
+                $work->save();
+                WorkController::indexRelations($work->id);
+                unset($authorLattesIds);
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+            }
         }
     }
 
@@ -696,12 +732,18 @@ class LattesController extends Controller
             'sha256' => $sha256,
         ]);
 
-        try {
-            $work->save();
-            WorkController::indexRelations($work->id);
-            unset($authorLattesIds);
-        } catch (\Exception $e) {
-            echo $e->getMessage();
+        $existingWork = Work::where('sha256', $sha256)->first();
+
+        if ($existingWork) {
+            exit;
+        } else {
+            try {
+                $work->save();
+                WorkController::indexRelations($work->id);
+                unset($authorLattesIds);
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+            }
         }
     }
 
