@@ -129,8 +129,9 @@ class LattesController extends Controller
             $existingWork = Work::where('sha256', $sha256)->first();
 
             if ($existingWork) {
-                unset($existingWork);
-                exit;
+                $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
+                $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+                WorkController::indexRelations($existingWork->id);
             } else {
                 try {
                     $work->save();
@@ -233,8 +234,9 @@ class LattesController extends Controller
             $existingWork = Work::where('sha256', $sha256)->first();
 
             if ($existingWork) {
-                unset($existingWork);
-                exit;
+                $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
+                $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+                WorkController::indexRelations($existingWork->id);
             } else {
                 try {
                     $work->save();
@@ -333,8 +335,9 @@ class LattesController extends Controller
         $existingWork = Work::where('sha256', $sha256)->first();
 
         if ($existingWork) {
-            unset($existingWork);
-            exit;
+            $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
+            $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+            WorkController::indexRelations($existingWork->id);
         } else {
             try {
                 $work->save();
@@ -435,8 +438,9 @@ class LattesController extends Controller
         $existingWork = Work::where('sha256', $sha256)->first();
 
         if ($existingWork) {
-            unset($existingWork);
-            exit;
+            $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
+            $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+            WorkController::indexRelations($existingWork->id);
         } else {
             try {
                 $work->save();
@@ -537,8 +541,9 @@ class LattesController extends Controller
         $existingWork = Work::where('sha256', $sha256)->first();
 
         if ($existingWork) {
-            unset($existingWork);
-            exit;
+            $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
+            $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+            WorkController::indexRelations($existingWork->id);
         } else {
             try {
                 $work->save();
@@ -654,8 +659,9 @@ class LattesController extends Controller
         $existingWork = Work::where('sha256', $sha256)->first();
 
         if ($existingWork) {
-            unset($existingWork);
-            exit;
+            $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
+            $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+            WorkController::indexRelations($existingWork->id);
         } else {
             try {
                 $work->save();
@@ -741,8 +747,9 @@ class LattesController extends Controller
         $existingWork = Work::where('sha256', $sha256)->first();
 
         if ($existingWork) {
-            unset($existingWork);
-            exit;
+            $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
+            $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+            WorkController::indexRelations($existingWork->id);
         } else {
             try {
                 $work->save();
@@ -839,7 +846,6 @@ class LattesController extends Controller
                     'genero' => $request->genero
                 ]);
             }
-
 
             try {
                 $person->save();
