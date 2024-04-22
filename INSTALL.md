@@ -18,6 +18,70 @@ Criar a base de dados:
     GRANT ALL PRIVILEGES ON DATABASE laravel TO laravel;
     \q
 
+### Instalação do PHP 8.2
+
+    sudo apt -y install lsb-release apt-transport-https ca-certificates
+    sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+    echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+    sudo apt update
+    sudo apt -y install php8.2
+    sudo apt-get install php8.2-{cgi,curl,mbstring,zip,xml}
+
+### Instalação do Apache2
+
+    sudo apt update
+    sudo apt install apache2
+
+### Configurar o Apache
+
+    cd /etc/apache2/sites-available
+    sudo cp 000-default.conf laravel.conf
+    sudo nano laravel.conf
+
+Editar desta maneira:
+
+    <VirtualHost *:80>
+        ServerAdmin admin@example.com
+        ServerName laravel.example.com
+        DocumentRoot /var/www/html/prodmais/public/
+
+        <Directory /var/www/html/prodmais/public/>
+                AllowOverride All
+                Require all granted
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+    </VirtualHost>
+
+### Clonagem do repositório do Prodmais
+
+Você pode clonar em qualquer pasta, mas é recomendável clonar na pasta pública do apache (ex. /var/www/html):
+
+    git clone https://github.com/trmurakami/prodmais-laravel.git prodmais
+
+Na pasta do repositório, rodar:
+
+    curl -s https://getcomposer.org/installer | php
+    php composer.phar install --no-dev
+
+Copiar o arquivo .env
+
+    cp .env.example .env
+
+Criar a chave .env
+
+php artisan key:generate
+
+Editar o arquivo .env com as informações do PostgreSQL
+
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=laravel
+DB_USERNAME=laravel
+DB_PASSWORD=laravel
+
 ### Permissões
 
     sudo chown -R www-data:www-data /path/to/your/project/vendor
