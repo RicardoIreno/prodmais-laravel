@@ -22,8 +22,10 @@ return new class extends Migration
             $table->string('datePublished')->nullable();
             $table->string('doi')->nullable();
             $table->jsonb('educationEvent')->nullable();
+            $table->string('educationEventName')->nullable();
             $table->string('inLanguage')->nullable();
             $table->jsonb('isPartOf')->nullable();
+            $table->string('isPartOfName')->nullable();
             $table->string('isbn')->nullable();
             $table->string('issn')->nullable();
             $table->string('issueNumber')->nullable();

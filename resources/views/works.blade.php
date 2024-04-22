@@ -89,8 +89,8 @@
                     <x-facet field="datePublished" fieldName="Ano de publicação" type="Work" :request="$request" />
                     <x-facet field="inLanguage" fieldName="Idioma" type="Work" :request="$request" />
                     <x-facetArray field="about" fieldName="Assuntos" :request="$request" type="Work" />
-                    <x-facet field="isPartOf" fieldName="É parte de" type="Work" :request="$request" />
-                    <x-facet field="educationEvent" fieldName="Nome do evento" type="Work" :request="$request" />
+                    <x-facet field="isPartOfName" fieldName="É parte de" type="Work" :request="$request" />
+                    <x-facet field="educationEventName" fieldName="Nome do evento" type="Work" :request="$request" />
                 </div>
 
             </div>

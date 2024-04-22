@@ -75,6 +75,10 @@ class LattesController extends Controller
                 'isPartOf' => $isPartOf,
             ]);
 
+            $work->fill([
+                'isPartOfName' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['TITULO-DO-PERIODICO-OU-REVISTA'],
+            ]);
+
             if (isset($artigo['AUTORES'])) {
                 foreach ($artigo['AUTORES'] as $autores) {
                     if (isset($autores['@attributes'])) {
@@ -150,6 +154,11 @@ class LattesController extends Controller
 
             $work->fill([
                 'educationEvent' => $educationEvent,
+            ]);
+
+            $work->fill([
+                'isPartOfName' => $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["TITULO-DOS-ANAIS-OU-PROCEEDINGS"],
+                'educationEventName' => $trabalhoEmEventos['DETALHAMENTO-DO-TRABALHO']['@attributes']["NOME-DO-EVENTO"]
             ]);
 
             if (isset($trabalhoEmEventos['AUTORES'])) {
