@@ -18,9 +18,7 @@ class Person extends Model
         'instituicao' => 'array',
         'orientacoesConcluidas' => 'array',
         'orientacoesEmAndamento' => 'array',
-        'ppg_nome' => 'array',
-        'tipvin' => 'array',
-        'unidade' => 'array',
+        'ppg_nome' => 'array'
     ];
 
     protected $fillable = [

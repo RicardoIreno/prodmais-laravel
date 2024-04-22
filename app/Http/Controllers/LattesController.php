@@ -876,6 +876,12 @@ class LattesController extends Controller
                 ]);
             }
 
+            if (isset($request->unidade)) {
+                $person->fill([
+                    'unidade' => $request->unidade
+                ]);
+            }
+
             try {
                 $person->save();
             } catch (\Exception $e) {

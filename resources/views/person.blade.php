@@ -29,6 +29,12 @@
                     @endforeach
                     @endif
 
+                    @if(isset($id->unidade))
+                    <p class="t t-prof">
+                        {{ $id->unidade }}
+                    </p>
+                    @endif
+
                     @if(is_array($id->ppg_nome))
                     @foreach ($id->ppg_nome as $ppg_nome)
                     <p class="t t-prof">Programa de Pós-Graduação: {{ $ppg_nome }}</p>

@@ -32,8 +32,8 @@ return new class extends Migration
             $table->jsonb('ppg_nome')->nullable();
             $table->longText('resumoCVpt');
             $table->longText('resumoCVen');
-            $table->jsonb('tipvin')->nullable();
-            $table->jsonb('unidade')->nullable();
+            $table->string('tipvin')->nullable();
+            $table->string('unidade')->nullable();
             $table->timestamps();
         });
     }

@@ -55,6 +55,7 @@
                     <x-facetArray field="instituicao" fieldName="Instituição" :request="$request" type="Person" />
                     <x-facetArray field="ppg_nome" fieldName="Programa de Pós-Graduação" :request="$request"
                         type="Person" />
+                    <x-facet field="unidade" fieldName="Unidade" type="Person" :request="$request" />
                     <x-facet field="genero" fieldName="Gênero" type="Person" :request="$request" />
                 </div>
             </div>
