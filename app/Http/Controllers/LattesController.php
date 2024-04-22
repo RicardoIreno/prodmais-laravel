@@ -51,7 +51,7 @@ class LattesController extends Controller
         //echo "<pre>" . print_r($attributes, true) . "</pre>";
         //echo "<pre>" . print_r($artigos, true) . "</pre>";
         foreach ($artigos['ARTIGO-PUBLICADO'] as $artigo) {
-
+            $authorLattesIds = [];
             $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
             $work = new Work;
             $work->fill([
@@ -117,8 +117,8 @@ class LattesController extends Controller
                 $sha256_array[] = $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['TITULO-DO-ARTIGO'];
                 $sha256_array[] = $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['ANO-DO-ARTIGO'];
                 $sha256_array[] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['TITULO-DO-PERIODICO-OU-REVISTA'];
+                $sha256_array[] = $artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['HOME-PAGE-DO-TRABALHO'];
                 $sha256_array[] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-INICIAL'];
-                $sha256_array[] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-FINAL'];
                 $sha256 = hash('sha256', '' . implode("", $sha256_array) . '');
             }
 
@@ -131,12 +131,12 @@ class LattesController extends Controller
             if ($existingWork) {
                 $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
                 $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+                $existingWork->save();
                 WorkController::indexRelations($existingWork->id);
             } else {
                 try {
                     $work->save();
                     WorkController::indexRelations($work->id);
-                    unset($authorLattesIds);
                 } catch (\Exception $e) {
                     echo $e->getMessage();
                 }
@@ -147,8 +147,9 @@ class LattesController extends Controller
     public function trabalhosEmEventos(array $trabalhosEmEventos, array $attributes)
     {
         //echo "<pre>" . print_r($attributes, true) . "</pre>";
-        //echo "<pre>" . print_r($trabalhoEmEventoss, true) . "</pre>";
+        //echo "<pre>" . print_r($trabalhosEmEventos, true) . "</pre>";
         foreach ($trabalhosEmEventos['TRABALHO-EM-EVENTOS'] as $trabalhoEmEventos) {
+            $authorLattesIds = [];
             $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
             $work = new Work;
             $work->fill([
@@ -236,12 +237,12 @@ class LattesController extends Controller
             if ($existingWork) {
                 $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
                 $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+                $existingWork->save();
                 WorkController::indexRelations($existingWork->id);
             } else {
                 try {
                     $work->save();
                     WorkController::indexRelations($work->id);
-                    unset($authorLattesIds);
                 } catch (\Exception $e) {
                     echo $e->getMessage();
                 }
@@ -264,6 +265,7 @@ class LattesController extends Controller
 
     function processLivro(array $livro, array $attributes)
     {
+        $authorLattesIds = [];
         $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
         $work = new Work;
         $work->fill([
@@ -337,6 +339,7 @@ class LattesController extends Controller
         if ($existingWork) {
             $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
             $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+            $existingWork->save();
             WorkController::indexRelations($existingWork->id);
         } else {
             try {
@@ -364,6 +367,7 @@ class LattesController extends Controller
 
     function processCapitulo(array $capitulo, array $attributes)
     {
+        $authorLattesIds = [];
         $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
         $work = new Work;
         $work->fill([
@@ -440,6 +444,7 @@ class LattesController extends Controller
         if ($existingWork) {
             $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
             $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+            $existingWork->save();
             WorkController::indexRelations($existingWork->id);
         } else {
             try {
@@ -467,6 +472,7 @@ class LattesController extends Controller
 
     function processJornal(array $jornal, array $attributes)
     {
+        $authorLattesIds = [];
         $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
         $work = new Work;
         $work->fill([
@@ -543,6 +549,7 @@ class LattesController extends Controller
         if ($existingWork) {
             $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
             $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+            $existingWork->save();
             WorkController::indexRelations($existingWork->id);
         } else {
             try {
@@ -570,6 +577,7 @@ class LattesController extends Controller
 
     function processDemais(array $outra, array $attributes)
     {
+        $authorLattesIds = [];
         $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
         $work = new Work;
         if (isset($outra['DADOS-BASICOS-DO-PREFACIO-POSFACIO'])) {
@@ -661,6 +669,7 @@ class LattesController extends Controller
         if ($existingWork) {
             $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
             $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+            $existingWork->save();
             WorkController::indexRelations($existingWork->id);
         } else {
             try {
@@ -688,6 +697,7 @@ class LattesController extends Controller
 
     function processArtigosAceitos(array $artigoAceito, array $attributes)
     {
+        $authorLattesIds = [];
         $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
         $work = new Work;
         $work->fill([
@@ -749,6 +759,7 @@ class LattesController extends Controller
         if ($existingWork) {
             $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
             $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+            $existingWork->save();
             WorkController::indexRelations($existingWork->id);
         } else {
             try {
@@ -883,7 +894,7 @@ class LattesController extends Controller
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'])) {
                     $this->artigosAceitos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'], $lattes['@attributes']);
                 }
-                return redirect('/person' . '/' . $lattes['@attributes']['NUMERO-IDENTIFICADOR']);
+                //return redirect('/person' . '/' . $lattes['@attributes']['NUMERO-IDENTIFICADOR']);
             } catch (\Exception $e) {
                 echo $e->getMessage();
             }
