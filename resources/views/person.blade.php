@@ -591,6 +591,7 @@
                         <h3 class="t t-h3 u-mb-20">Atuações</h3>
                         @foreach($id->atuacao['ATUACAO-PROFISSIONAL'] as $atuacao_profissional)
                         <h4 class="t t-subtitle">{{ $atuacao_profissional['@attributes']['NOME-INSTITUICAO'] }}</h4>
+                        @if(isset($atuacao_profissional['VINCULOS']))
                         @foreach($atuacao_profissional['VINCULOS'] as $vinculos)
                         <?php
                         if (isset($vinculos['@attributes'])) {
@@ -618,6 +619,7 @@
                             </div>
                         </li>
                         @endforeach
+                        @endif
                         @endforeach
 
 
