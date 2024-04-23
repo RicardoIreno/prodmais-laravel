@@ -632,7 +632,6 @@
                         @if(isset($atuacao_profissional['ATIVIDADES-DE-ENSINO']))
                         <h4 class="t t-subtitle">{{ $atuacao_profissional['@attributes']['NOME-INSTITUICAO'] }}</h4>
                         @foreach($atuacao_profissional['ATIVIDADES-DE-ENSINO']['ENSINO'] as $ensino )
-
                         @if(is_array($ensino))
                         <li class='s-nobullet'>
                             <div class='s-list'>
@@ -656,11 +655,21 @@
                                         {{ $ensino['@attributes']['ANO-FIM']  }}
                                     </p>
                                     @else
+
+                                    @if(isset($ensino['NOME-CURSO']))
                                     <p class='t t-gray'>Nome do curso: {{ $ensino['NOME-CURSO']  }}</p>
                                     <p class='t t-gray'>Grau: {{ $ensino['TIPO-ENSINO']  }}</p>
                                     <p class='t t-gray'>{{ $ensino['ANO-INICIO']  }} -
                                         {{ $ensino['ANO-FIM']  }}
                                     </p>
+                                    @else
+                                    @foreach ($ensino as $disciplina)
+                                    <p class='t t-gray'>Nome da disciplina: {{ $disciplina }}</p>
+                                    @endforeach
+
+                                    @endif
+
+
                                     @endif
                                 </div>
                             </div>
