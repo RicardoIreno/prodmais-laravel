@@ -15,8 +15,11 @@ class Work extends Model
         'author_array' => 'array',
         'authorLattesIds' => 'array',
         'educationEvent' => 'array',
+        'genero' => 'array',
         'isbn' => 'array',
         'isPartOf' => 'array',
+        'instituicao' => 'array',
+        'ppg_nome' => 'array',
         'publisher' => 'array'
     ];
 
@@ -31,7 +34,9 @@ class Work extends Model
         'doi',
         'educationEvent',
         'educationEventName',
+        'genero',
         'inLanguage',
+        'instituicao',
         'isbn',
         'isPartOf',
         'isPartOfName',
@@ -41,6 +46,7 @@ class Work extends Model
         'numberOfPages',
         'pageEnd',
         'pageStart',
+        'ppg_nome',
         'publisher',
         'sha256',
         'type',

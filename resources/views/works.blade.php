@@ -22,7 +22,9 @@
             $request->has('releasedEvent')||
             $request->has('inLanguage')||
             $request->has('issn')||
+            $request->has('instituicao')||
             $request->has('sourceOrganization')||
+            $request->has('ppg_nome')||
             $request->has('publisher')
             )
             <div class="alert alert-light" role="alert">
@@ -57,8 +59,8 @@
                     if ($key == 'educationEventName') {
                     $key_name = 'Nome do evento';
                     }
-                    if ($key == 'releasedEvent') {
-                    $key_name = 'Nome do evento';
+                    if ($key == 'genero') {
+                    $key_name = 'Gênero';
                     }
                     if ($key == 'inLanguage') {
                     $key_name = 'Idioma';
@@ -66,8 +68,17 @@
                     if ($key == 'issn') {
                     $key_name = 'ISSN';
                     }
+                    if ($key == 'instituicao') {
+                    $key_name = 'Instituição';
+                    }
+                    if ($key == 'ppg_nome') {
+                    $key_name = 'Programa de Pós-Graduação';
+                    }
                     if ($key == 'publisher') {
                     $key_name = 'Editora';
+                    }
+                    if ($key == 'releasedEvent') {
+                    $key_name = 'Nome do evento';
                     }
                     if ($key == 'sourceOrganization') {
                     $key_name = 'Instituição';
@@ -85,12 +96,16 @@
             <div class="c-filterlist__content">
                 <div class="accordion" id="facets">
                     <x-facet field="type" fieldName="Tipo de publicação" type="Work" :request="$request" />
-                    <x-facetArray field="author_array" fieldName="Autores" :request="$request" type="Work" />
+                    <x-facetArray field="instituicao" fieldName="Instituição" type="Work" :request="$request" />
+                    <x-facetArray field="ppg_nome" fieldName="Programa de Pós-Graduação" type="Work"
+                        :request="$request" />
+                    <x-facetArray field="author_array" fieldName="Autores" type="Work" :request="$request" />
                     <x-facet field="datePublished" fieldName="Ano de publicação" type="Work" :request="$request" />
                     <x-facet field="inLanguage" fieldName="Idioma" type="Work" :request="$request" />
-                    <x-facetArray field="about" fieldName="Assuntos" :request="$request" type="Work" />
+                    <x-facetArray field="about" fieldName="Assuntos" type="Work" :request="$request" />
                     <x-facet field="isPartOfName" fieldName="É parte de" type="Work" :request="$request" />
                     <x-facet field="educationEventName" fieldName="Nome do evento" type="Work" :request="$request" />
+                    <x-facetArray field="genero" fieldName="Gênero" type="Work" :request="$request" />
                 </div>
 
             </div>

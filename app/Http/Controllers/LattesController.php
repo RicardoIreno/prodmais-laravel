@@ -46,7 +46,7 @@ class LattesController extends Controller
         }
     }
 
-    public function artigos(array $artigos, array $attributes)
+    public function artigos(array $artigos, array $attributes, Request $request)
     {
         //echo "<pre>" . print_r($attributes, true) . "</pre>";
         //echo "<pre>" . print_r($artigos, true) . "</pre>";
@@ -109,6 +109,30 @@ class LattesController extends Controller
                 $work->fill([
                     'url' => $url,
                 ]);
+            }
+
+            if (isset($request->instituicao)) {
+                $instituicoes[] = $request->instituicao;
+                $work->fill([
+                    'instituicao' => $instituicoes
+                ]);
+                unset($instituicoes);
+            }
+
+            if (isset($request->ppg_nome)) {
+                $ppgs[] = $request->ppg_nome;
+                $work->fill([
+                    'ppg_nome' => $ppgs
+                ]);
+                unset($ppgs);
+            }
+
+            if (isset($request->genero)) {
+                $generos[] = $request->genero;
+                $work->fill([
+                    'genero' => $generos
+                ]);
+                unset($generos);
             }
 
             if (!empty($artigo['DADOS-BASICOS-DO-ARTIGO']['@attributes']['DOI'])) {
@@ -946,7 +970,7 @@ class LattesController extends Controller
                 $lattes = json_decode(json_encode($lattesXML), true);
                 $this->createPerson($lattes, $request);
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-PUBLICADOS'])) {
-                    $this->artigos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-PUBLICADOS'], $lattes['@attributes']);
+                    $this->artigos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-PUBLICADOS'], $lattes['@attributes'], $request);
                 }
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['TRABALHOS-EM-EVENTOS'])) {
                     $this->trabalhosEmEventos($lattes['PRODUCAO-BIBLIOGRAFICA']['TRABALHOS-EM-EVENTOS'], $lattes['@attributes']);
