@@ -109,19 +109,35 @@
                         <span class="c-profmenu-text">Atuação</span>
                     </button>
 
-
+                    <?php $tab_ensino = false; ?>
+                    @foreach($id->atuacao['ATUACAO-PROFISSIONAL'] as $atuacao_profissional)
+                    @if(isset($atuacao_profissional['ATIVIDADES-DE-ENSINO']))
+                    <?php $tab_ensino = true; ?>
+                    @endif
+                    @endforeach
+                    @if($tab_ensino)
                     <button id="tab-btn-4" class="c-profmenu-btn" v-on:click="changeTab('4')" title="Ensino"
                         alt="Ensino">
                         <i class="i i-sm i-teaching c-profmenu-ico"></i>
                         <span class="c-profmenu-text">Ensino</span>
                     </button>
+                    @endif
 
+                    <?php $tab_gestao = false; ?>
+                    @foreach($id->atuacao['ATUACAO-PROFISSIONAL'] as $atuacao_profissional)
+                    @if(isset($atuacao_profissional['ATIVIDADES-DE-DIRECAO-E-ADMINISTRACAO']))
+                    <?php $tab_gestao = true; ?>
+                    @endif
+                    @endforeach
 
+                    @if($tab_gestao)
                     <button id="tab-btn-5" class="c-profmenu-btn" v-on:click="changeTab('5')" title="Gestão"
                         alt="Gestão">
                         <div class="i i-sm i-managment c-profmenu-ico"></div>
                         <span class="c-profmenu-text">Gestão</span>
                     </button>
+                    @endif
+
                     <button id="tab-btn-6" class="c-profmenu-btn" v-on:click="changeTab('6')" title="Pesquisa"
                         alt="Pesquisa">
                         <div class="i i-sm i-research c-profmenu-ico"></div>
@@ -965,17 +981,8 @@
                         </ul>
 
                         @endif
-
-
-
-
-
                         @endforeach
                         @endforeach
-
-
-
-
                         @endif
 
 
