@@ -25,7 +25,7 @@ Criar a base de dados:
     echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
     sudo apt update
     sudo apt -y install php8.2
-    sudo apt-get install php8.2-{cgi,curl,mbstring,zip,xml}
+    sudo apt-get install php8.2-{cgi,curl,mbstring,zip,xml,pgsql}
 
 ### Instalação do Apache2
 
