@@ -855,7 +855,7 @@ class LattesController extends Controller
             $person = new Person();
 
             $person->fill([
-                'id' => $lattes['@attributes']['NUMERO-IDENTIFICADOR'],
+                'id' => (string)$lattes['@attributes']['NUMERO-IDENTIFICADOR'],
                 'lattesDataAtualizacao' => $lattes['@attributes']['DATA-ATUALIZACAO'],
                 'resumoCVpt' => $lattes['DADOS-GERAIS']['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH'],
                 'resumoCVen' => $lattes['DADOS-GERAIS']['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH-EN'],
