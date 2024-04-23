@@ -374,6 +374,8 @@
 
                         <hr class="c-line u-my-20" />
 
+                        @if(isset($id->idiomas['IDIOMA']))
+
                         <div>
                             <h3 class="t t-h3">Idiomas</h3>
                             @foreach ($id->idiomas['IDIOMA'] as $idioma)
@@ -397,6 +399,8 @@
                             @endforeach
 
                         </div>
+
+                        @endif
 
                     </div>
 

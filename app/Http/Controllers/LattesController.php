@@ -609,7 +609,7 @@ class LattesController extends Controller
             $work->fill([
                 'sha256' => $sha256,
             ]);
-        } else {
+        } elseif ($outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['TITULO']) {
             $work->fill([
                 'authorLattesIds' => $authorLattesIds,
                 'name' => $outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['TITULO'],
@@ -637,6 +637,7 @@ class LattesController extends Controller
             $work->fill([
                 'sha256' => $sha256,
             ]);
+        } else {
         }
 
         if (isset($outra['AUTORES'])) {
@@ -820,7 +821,6 @@ class LattesController extends Controller
                 'nacionalidade' => $lattes['DADOS-GERAIS']['@attributes']['PAIS-DE-NACIONALIDADE'],
                 'nomeCitacoesBibliograficas' => $lattes['DADOS-GERAIS']['@attributes']['NOME-EM-CITACOES-BIBLIOGRAFICAS'],
                 'orcid' => $lattes['DADOS-GERAIS']['@attributes']['ORCID-ID'],
-                'idiomas' => $lattes['DADOS-GERAIS']['IDIOMAS'],
                 'formacao' => $lattes['DADOS-GERAIS']['FORMACAO-ACADEMICA-TITULACAO']
             ]);
 
@@ -829,6 +829,12 @@ class LattesController extends Controller
             if (!empty($lattesID10)) {
                 $person->fill([
                     'lattesID10' => $lattesID10
+                ]);
+            }
+
+            if (isset($lattes['DADOS-GERAIS']['IDIOMAS'])) {
+                $person->fill([
+                    'idiomas' => $lattes['DADOS-GERAIS']['IDIOMAS'],
                 ]);
             }
 
