@@ -609,7 +609,50 @@ class LattesController extends Controller
             $work->fill([
                 'sha256' => $sha256,
             ]);
-        } elseif ($outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['TITULO']) {
+
+            if (isset($outra['AUTORES'])) {
+                foreach ($outra['AUTORES'] as $autores) {
+                    if (isset($autores['@attributes'])) {
+                        $aut_array[] = $autores['@attributes'];
+                        $aut_name_array[] = $autores['@attributes']['NOME-COMPLETO-DO-AUTOR'];
+                    } else {
+                        $aut_array[] = $autores;
+                        $aut_name_array[] = $autores['NOME-COMPLETO-DO-AUTOR'];
+                    }
+                }
+                $work->fill([
+                    'author' => $aut_array,
+                    'author_array' => $aut_name_array,
+                ]);
+                unset($aut_array);
+                unset($aut_name_array);
+            }
+
+            if (isset($outra['PALAVRAS-CHAVE'])) {
+                $about_array = LattesController::processaPalavrasChaveLattes($outra['PALAVRAS-CHAVE']);
+                $work->fill([
+                    'about' => $about_array,
+                ]);
+            }
+
+            $existingWork = Work::where('sha256', $sha256)->first();
+
+            if ($existingWork) {
+                $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
+                $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+                $existingWork->save();
+                WorkController::indexRelations($existingWork->id);
+            } else {
+                try {
+                    $work->save();
+                    WorkController::indexRelations($work->id);
+                    unset($authorLattesIds);
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                }
+            }
+        }
+        if (isset($outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO'])) {
             $work->fill([
                 'authorLattesIds' => $authorLattesIds,
                 'name' => $outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['TITULO'],
@@ -637,48 +680,47 @@ class LattesController extends Controller
             $work->fill([
                 'sha256' => $sha256,
             ]);
-        } else {
-        }
 
-        if (isset($outra['AUTORES'])) {
-            foreach ($outra['AUTORES'] as $autores) {
-                if (isset($autores['@attributes'])) {
-                    $aut_array[] = $autores['@attributes'];
-                    $aut_name_array[] = $autores['@attributes']['NOME-COMPLETO-DO-AUTOR'];
-                } else {
-                    $aut_array[] = $autores;
-                    $aut_name_array[] = $autores['NOME-COMPLETO-DO-AUTOR'];
+            if (isset($outra['AUTORES'])) {
+                foreach ($outra['AUTORES'] as $autores) {
+                    if (isset($autores['@attributes'])) {
+                        $aut_array[] = $autores['@attributes'];
+                        $aut_name_array[] = $autores['@attributes']['NOME-COMPLETO-DO-AUTOR'];
+                    } else {
+                        $aut_array[] = $autores;
+                        $aut_name_array[] = $autores['NOME-COMPLETO-DO-AUTOR'];
+                    }
                 }
+                $work->fill([
+                    'author' => $aut_array,
+                    'author_array' => $aut_name_array,
+                ]);
+                unset($aut_array);
+                unset($aut_name_array);
             }
-            $work->fill([
-                'author' => $aut_array,
-                'author_array' => $aut_name_array,
-            ]);
-            unset($aut_array);
-            unset($aut_name_array);
-        }
 
-        if (isset($outra['PALAVRAS-CHAVE'])) {
-            $about_array = LattesController::processaPalavrasChaveLattes($outra['PALAVRAS-CHAVE']);
-            $work->fill([
-                'about' => $about_array,
-            ]);
-        }
+            if (isset($outra['PALAVRAS-CHAVE'])) {
+                $about_array = LattesController::processaPalavrasChaveLattes($outra['PALAVRAS-CHAVE']);
+                $work->fill([
+                    'about' => $about_array,
+                ]);
+            }
 
-        $existingWork = Work::where('sha256', $sha256)->first();
+            $existingWork = Work::where('sha256', $sha256)->first();
 
-        if ($existingWork) {
-            $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
-            $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
-            $existingWork->save();
-            WorkController::indexRelations($existingWork->id);
-        } else {
-            try {
-                $work->save();
-                WorkController::indexRelations($work->id);
-                unset($authorLattesIds);
-            } catch (\Exception $e) {
-                echo $e->getMessage();
+            if ($existingWork) {
+                $existingWork->authorLattesIds = array_merge($existingWork->authorLattesIds, [$attributes['NUMERO-IDENTIFICADOR']]);
+                $existingWork->authorLattesIds = array_unique($existingWork->authorLattesIds);
+                $existingWork->save();
+                WorkController::indexRelations($existingWork->id);
+            } else {
+                try {
+                    $work->save();
+                    WorkController::indexRelations($work->id);
+                    unset($authorLattesIds);
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                }
             }
         }
     }
