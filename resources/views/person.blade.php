@@ -968,8 +968,7 @@
 
 
 
-                        <?php //echo "<pre>" . print_r($outraOrientacao, true) . "</pre>";
-                        ?>
+
 
                         @endforeach
                         @endforeach
@@ -986,6 +985,41 @@
                 <transition name="tabeffect">
                     <div id="tab-five" class="c-tab-content" v-if="tabOpened == '5'">
                         <h3 class="t t-h3 u-mb-20">Gestão</h3>
+
+                        @foreach($id->atuacao['ATUACAO-PROFISSIONAL'] as $atuacao_profissional)
+
+                        @if(isset($atuacao_profissional['ATIVIDADES-DE-DIRECAO-E-ADMINISTRACAO']))
+
+                        <h4 class="t t-subtitle">{{ $atuacao_profissional['@attributes']['NOME-INSTITUICAO'] }}</h4>
+
+                        @foreach($atuacao_profissional['ATIVIDADES-DE-DIRECAO-E-ADMINISTRACAO']['DIRECAO-E-ADMINISTRACAO']
+                        as $direcao)
+
+                        @if(isset($direcao['@attributes']))
+                        <?php $direcao = $direcao['@attributes']; ?>
+                        @endif
+
+
+                        <li class='s-nobullet'>
+                            <div class='s-list'>
+                                <div class='s-list-bullet'>
+
+                                </div>
+
+                                <div class='s-list-content'>
+                                    <p class='t t-b'>{{ $direcao['NOME-ORGAO'] }}</p>
+                                    <p class='ty'>Cargo: {{ $direcao['CARGO-OU-FUNCAO'] }}</p>
+                                    <p class='t t-gray'>{{ $direcao['ANO-INICIO'] }} - {{ $direcao['ANO-FIM'] }}</p>
+                                </div>
+                            </div>
+                        </li>
+
+
+                        @endforeach
+
+                        @endif
+
+                        @endforeach
 
 
                     </div>
