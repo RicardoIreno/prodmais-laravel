@@ -152,10 +152,10 @@
                         <h3 class="t t-h3">Nomes em citações bibliográficas</h3>
 
                         <p class="t-prof">{{ $id->nomeCitacoesBibliograficas }}</p>
-                        <hr class="c-line u-my-20" />
+                        <!-- <hr class="c-line u-my-20" />
                         <h3 class="t t-h3">Exportar dados</h3>
                         <p><a href="tools/export_old.php?&format=bibtex&search=vinculo.lattes_id:{{ $id->id }}"
-                                target="_blank" rel="nofollow">Exportar produção no formato BIBTEX</a></p>
+                                target="_blank" rel="nofollow">Exportar produção no formato BIBTEX</a></p> -->
                         <hr class="c-line u-my-20" />
                         <p class="t t-b">Perfis na web</p>
                         <div class="dh">
@@ -171,8 +171,8 @@
                             @endif
                         </div>
 
-                        <hr class="c-line u-my-20" />
-                        <h3 class="t t-h3">Tags mais usadas</h3>
+                        <!-- <hr class="c-line u-my-20" />
+                        <h3 class="t t-h3">Tags mais usadas</h3> -->
 
                         <hr class="c-line u-my-20" />
                         <h3 class="t t-h3">Formação</h3>
