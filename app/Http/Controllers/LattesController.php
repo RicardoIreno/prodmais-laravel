@@ -1033,11 +1033,11 @@ class LattesController extends Controller
                 if (isset($atuacao_profissional1['ATIVIDADES-DE-PARTICIPACAO-EM-PROJETO']['PARTICIPACAO-EM-PROJETO'])) {
                     foreach ($atuacao_profissional1['ATIVIDADES-DE-PARTICIPACAO-EM-PROJETO']['PARTICIPACAO-EM-PROJETO'] as $projeto_de_pesquisa) {
                         if (isset($projeto_de_pesquisa['PROJETO-DE-PESQUISA'])) {
-                            //dd($projeto_de_pesquisa);
                             $project = new Projeto;
                             $project->fill([
                                 'name' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['NOME-DO-PROJETO'],
                                 'description' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['DESCRICAO-DO-PROJETO'],
+                                'instituicao' => $atuacao_profissional1['@attributes']['NOME-INSTITUICAO'],
                                 'projectYearStart' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['ANO-INICIO'],
                                 'projectYearEnd' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['ANO-INICIO'],
                                 'situacao' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['SITUACAO'],
@@ -1046,7 +1046,6 @@ class LattesController extends Controller
                                 $integrantes = [];
                                 foreach ($projeto_de_pesquisa['PROJETO-DE-PESQUISA']['EQUIPE-DO-PROJETO'] as $integrante) {
                                     foreach ($integrante as $integrante1) {
-                                        //dd($integrante1);
                                         $integrantes[] = $integrante1['@attributes']['NOME-COMPLETO'];
                                     }
                                 }

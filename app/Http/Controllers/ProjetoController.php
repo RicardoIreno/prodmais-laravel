@@ -18,6 +18,9 @@ class ProjetoController extends Controller
         if ($request->name) {
             $query->where('name', 'iLIKE', '%' . $request->name . '%');
         }
+        if ($request->instituicao) {
+            $query->where('instituicao', $request->instituicao);
+        }
         if ($request->situacao) {
             $query->where('situacao', $request->situacao);
         }

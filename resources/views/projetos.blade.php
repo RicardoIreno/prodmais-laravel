@@ -49,8 +49,7 @@
                     $key_name = 'Programa de Pós-Graduação';
                     }
                     @endphp
-                    <a type="button" class="btn btn-outline-warning mb-1"
-                        href="projetos?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
+                    <a type="button" class="btn btn-outline-warning mb-1" href="projetos?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
                         {{ $key_name }}: {{ $work }} (X)
                     </a>
                 </div>
@@ -60,6 +59,7 @@
             @endif
             <div class="c-filterlist__content">
                 <div class="accordion" id="facets">
+                    <x-facet field="instituicao" fieldName="Instituição" type="Projeto" :request="$request" />
                     <x-facet field="situacao" fieldName="Situação" type="Projeto" :request="$request" />
                 </div>
             </div>
@@ -106,6 +106,10 @@
                             <div class="row">
 
                                 <div class="col">
+
+                                    <p class='d-linewrap t-gray mt-2 mb-2'>
+                                        {{ $value->instituicao }}
+                                    </p>
 
                                     <p class='d-linewrap t-gray mt-2'>
                                         Integrantes: {{ implode(", ", $value->integrantes) }}
