@@ -87,7 +87,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <h2>Tag Cloud</h2>
+                    <h2 class="mb-3">Tag Cloud</h2>
                     <div id="tagCloud"></div>
                 </div>
             </div>
