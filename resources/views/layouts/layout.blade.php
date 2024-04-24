@@ -23,7 +23,7 @@ error_reporting(E_ALL);
     @yield('head')
 </head>
 
-<body ref="body">
+<body ref="body" data-theme="Blueberry">
     @include('layouts.ga')
     @include('layouts.header')
 

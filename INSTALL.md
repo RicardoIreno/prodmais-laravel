@@ -101,3 +101,14 @@ Editar o arquivo .env com as informações do PostgreSQL
 
     php artisan db:seed --class=PersonSeeder
     php artisan db:seed --class=WorkSeeder
+
+## Para alterar o tema
+
+Editar o arquivo resources > views > layouts > layout.blade.php na linha 26:
+
+    data-theme="Blueberry"
+
+Temas disponíveis:
+Waterbeach (Verde)
+Tomaton (Vermelho)
+Blueberry (Roxo)
