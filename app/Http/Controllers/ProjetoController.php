@@ -15,6 +15,9 @@ class ProjetoController extends Controller
     public function index(Request $request)
     {
         $query = Projeto::query();
+        if ($request->name) {
+            $query->where('name', 'iLIKE', '%' . $request->name . '%');
+        }
         if ($request->situacao) {
             $query->where('situacao', $request->situacao);
         }

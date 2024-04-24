@@ -1112,6 +1112,9 @@
 
                                 <div class='s-list-content'>
                                     <p class='t t-b'>{{ $projeto->name }}</p>
+                                    <p class='d-linewrap t-gray mt-2 mb-2'>
+                                        Integrantes: {{ implode(", ", $projeto->integrantes) }}
+                                    </p>
                                     <p class='ty mt-3 mb-3'>Descrição{{ $projeto->description }}</p>
 
                                     <p class='t t-gray'>Ano de início: {{ $projeto->projectYearStart }}</p>

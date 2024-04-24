@@ -9,8 +9,13 @@ class Projeto extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'integrantes' => 'array'
+    ];
+
     protected $fillable = [
         'description',
+        'integrantes',
         'name',
         'projectYearEnd',
         'projectYearStart',

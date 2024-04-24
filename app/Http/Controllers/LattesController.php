@@ -1042,6 +1042,18 @@ class LattesController extends Controller
                                 'projectYearEnd' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['ANO-INICIO'],
                                 'situacao' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['SITUACAO'],
                             ]);
+                            if (isset($projeto_de_pesquisa['PROJETO-DE-PESQUISA']['EQUIPE-DO-PROJETO'])) {
+                                $integrantes = [];
+                                foreach ($projeto_de_pesquisa['PROJETO-DE-PESQUISA']['EQUIPE-DO-PROJETO'] as $integrante) {
+                                    foreach ($integrante as $integrante1) {
+                                        //dd($integrante1);
+                                        $integrantes[] = $integrante1['@attributes']['NOME-COMPLETO'];
+                                    }
+                                }
+                                $project->fill([
+                                    'integrantes' => $integrantes,
+                                ]);
+                            }
                             try {
                                 $project->save();
                                 $project->authors()->attach($person);

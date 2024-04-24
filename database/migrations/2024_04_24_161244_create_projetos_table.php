@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('projetos', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->jsonb('integrantes')->nullable();
             $table->longText('description')->nullable();
             $table->string('projectYearEnd')->nullable();
             $table->string('projectYearStart')->nullable();

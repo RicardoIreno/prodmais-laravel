@@ -28,7 +28,7 @@
                 <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
                     @php
                     if ($key == 'name') {
-                    $key_name = 'Pesquisador';
+                    $key_name = 'Projetos';
                     }
                     if ($key == 'genero') {
                     $key_name = 'Gênero';
@@ -73,7 +73,7 @@
                     {{ $projeto->firstItem() }}
                     a {{ $projeto->lastItem() }} de {{ $projeto->total() }} registros</span>
             </h3>
-            <form action="people" method="GET">
+            <form action="projetos" method="GET">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Pesquisar no título" name="name">
                     <button class="btn btn-primary" type="submit">Buscar</button>
@@ -107,11 +107,16 @@
 
                                 <div class="col">
 
+                                    <p class='d-linewrap t-gray mt-2'>
+                                        Integrantes: {{ implode(", ", $value->integrantes) }}
+                                    </p>
+
                                     @if(isset($value->description))
                                     <p class='d-linewrap t-gray mt-2'>
                                         Descrição: {{ $value->description }}
                                     </p>
                                     @endif
+
                                     <p class='t t-gray'>Ano de início: {{ $value->projectYearStart }}</p>
                                     <p class='t t-gray'>Ano de término: {{ $value->projectYearEnd }}</p>
                                     <p class='t t-gray'>Situação: {{ $value->situacao }}</p>
