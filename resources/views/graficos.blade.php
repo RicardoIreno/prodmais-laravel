@@ -85,6 +85,12 @@
                     <svg id="chart2"></svg>
                 </div>
             </div>
+            <div class="row">
+                <div class="col">
+                    <h2>Tag Cloud</h2>
+                    <div id="tagCloud"></div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -345,6 +351,81 @@
             return d.type;
         })
         .call(wrap, 150);
+    </script>
+
+    <script>
+    // Dados de exemplo para o gráfico de tag cloud
+    var tags = @json($aboutData);
+
+    // Configurações do gráfico de tag cloud
+    var width = 1200;
+    var height = 500;
+
+    // Cria a escala de tamanhos para as tags
+    var scale = d3.scaleLinear()
+        .domain([0, d3.max(tags, function(d) {
+            return d.count;
+        })])
+        .range([10, 40]); // Tamanho mínimo e máximo das tags
+
+    // Função para gerar uma cor aleatória em formato hexadecimal
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    // Cria o layout de nuvem de tags
+    d3.layout.cloud().size([width, height])
+        .words(tags.map(function(d) {
+            return {
+                text: d.about,
+                size: scale(d.count)
+            };
+        }))
+        .padding(5) // Espaçamento entre as tags
+        .rotate(function() {
+            return ~~(Math.random() * 2) * 90;
+        }) // Rotaciona as tags em ângulos aleatórios
+        .fontSize(function(d) {
+            return d.size;
+        })
+        .on("end", draw) // Chama a função de desenho quando o layout é concluído
+        .start();
+
+    // Função de desenho das tags
+    function draw(words) {
+        d3.select("#tagCloud").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+            .selectAll("text")
+            .data(words)
+            .enter()
+            .append("text")
+            .style("font-size", function(d) {
+                return d.size + "px";
+            })
+            .style("fill", function() {
+                return getRandomColor();
+            }) // Gerar cor aleatória
+            .attr("class", "tag") // Classe CSS para estilização das tags
+            .attr("text-anchor", "middle")
+            .attr("transform", function(d) {
+                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+            })
+            .append("a")
+            .attr("xlink:href", function(d) {
+                return "works?about=" + d.text;
+            })
+            .text(function(d) {
+                return d.text;
+            });
+    }
     </script>
 
 </div>

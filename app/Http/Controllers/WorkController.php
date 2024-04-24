@@ -130,8 +130,34 @@ class WorkController extends Controller
         }
         $typeData = $typeData->groupBy('type')->orderBy('total', 'desc')->get();
 
+        // Gerar gráfico de tag cloud
 
-        return view('graficos', array('datePublishedData' => $datePublishedData, 'typeData' => $typeData, 'request' => $request));
+        $queryAbout = DB::table('works')->select(DB::raw("jsonb_array_elements_text(about) as about"));
+        if ($request->type) {
+            $queryAbout->where('type', $request->type);
+        }
+        if ($request->datePublished) {
+            $queryAbout->where('datePublished', $request->datePublished);
+        }
+        if ($request->about) {
+            $queryAbout->whereJsonContains('about', $request->about);
+        }
+        if ($request->instituicao) {
+            $queryAbout->whereJsonContains('instituicao', $request->instituicao);
+        }
+        if ($request->ppg_nome) {
+            $queryAbout->whereJsonContains('ppg_nome', $request->ppg_nome);
+        }
+
+        $queryAbout->selectRaw('count(*) as count');
+        $queryAbout->groupBy('about');
+        $queryAbout->orderBy('count', 'desc');
+
+        $aboutData = $queryAbout->limit(200)->get();
+        //$aboutData = json_encode($aboutData);
+
+
+        return view('graficos', array('aboutData' => $aboutData, 'datePublishedData' => $datePublishedData, 'typeData' => $typeData, 'request' => $request));
     }
 
 
