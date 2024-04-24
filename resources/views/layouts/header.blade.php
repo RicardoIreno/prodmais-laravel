@@ -48,12 +48,12 @@
                         </a>
                     </li>
 
-                    <li class=" sitemenu-item">
+                    <!-- <li class=" sitemenu-item">
                         <a class="sitemenu-link" href="{{url('/')}}/upload" title="Upload">
                             Upload
                             <i class="i i-project sitemenu-ico"></i>
                         </a>
-                    </li>
+                    </li> -->
 
                     <li class="sitemenu-item">
                         <a class="sitemenu-link" href="{{url('/')}}/graficos" title="Gráficos">
