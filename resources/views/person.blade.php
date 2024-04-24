@@ -90,6 +90,64 @@
 
                 </div>
                 <div class="p-profile-header-three">
+
+                    <a class="u-skip" href=”#skipc-graph”>Pular gráfico</a>
+
+                    <div class="c-graph">
+                        <div class="c-graph-line">
+                            <div class="c-graph-icon"></div>
+                            <div class="c-graph-label">De <?php echo date("Y", strtotime("-9 year")); ?> a
+                                <?php echo date("Y"); ?>
+                            </div>
+                        </div>
+
+                        <div class="c-graph-line">
+                            <?php
+
+                            $j = 0;
+                            $years_array_values = [];
+                            for ($i = date("Y"); $i >= date("Y", strtotime("-9 year")); $i--) {
+                                if (isset($works[$i])) {
+                                    $trabalhos_publicados[$j]['total'] = count($works[$i]);
+                                } else {
+                                    $trabalhos_publicados[$j]['total'] = 0;
+                                }
+                                $years_array_values[] = $trabalhos_publicados[$j]['total'];
+                                $trabalhos_publicados[$j]['year'] = $i;
+                                $j++;
+                            }
+                            if (count($years_array_values) == 0) {
+                                $years_array_max = 1;
+                            } else {
+                                $years_array_max = max($years_array_values);
+                            }
+
+                            foreach ($trabalhos_publicados as $trabalhos_publicado) {
+                                $total_year = $trabalhos_publicado['total'];
+                                $this_year = $trabalhos_publicado['year'];
+                                if ($total_year / $years_array_max <= 1 && $total_year / $years_array_max > 0.8) {
+                                    $weight = 4;
+                                } elseif ($total_year / $years_array_max <= 0.8 && $total_year / $years_array_max > 0.6) {
+                                    $weight = 3;
+                                } elseif ($total_year / $years_array_max <= 0.6 && $total_year / $years_array_max > 0.4) {
+                                    $weight = 2;
+                                } elseif ($total_year / $years_array_max <= 0.4 && $total_year / $years_array_max > 0.2) {
+                                    $weight = 1;
+                                } else {
+                                    $weight = 0;
+                                }
+                                echo "<div class='c-graph-unit' data-weight='{$weight}' title='{$this_year} — total: {$total_year}'></div>";
+                            }
+                            unset($i);
+                            unset($j);
+                            unset($weight);
+                            ?>
+                            <span class="c-graph-label">Trabalhos publicados</span>
+                        </div>
+
+                    </div>
+                    <span class="u-skip" id="skipc-graph”"></span>
+
                 </div>
             </div>
 
