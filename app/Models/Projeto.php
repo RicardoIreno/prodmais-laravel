@@ -10,7 +10,11 @@ class Projeto extends Model
     use HasFactory;
 
     protected $fillable = [
+        'description',
         'name',
+        'projectYearEnd',
+        'projectYearStart',
+        'situacao'
     ];
 
     protected $with = ['authors'];

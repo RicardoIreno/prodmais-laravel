@@ -5,15 +5,22 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProjetoRequest;
 use App\Http\Requests\UpdateProjetoRequest;
 use App\Models\Projeto;
+use Illuminate\Http\Request;
 
 class ProjetoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Projeto::query();
+        if ($request->situacao) {
+            $query->where('situacao', $request->situacao);
+        }
+        $projeto = $query->orderBy('projectYearStart', 'desc')->paginate(10)->withQueryString();
+
+        return view('projetos', compact('projeto', 'request'));
     }
 
     /**

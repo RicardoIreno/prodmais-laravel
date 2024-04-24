@@ -26,13 +26,13 @@ return new class extends Migration
             $table->string('lattesID16')->nullable();
             $table->string('nacionalidade')->nullable();
             $table->string('name');
-            $table->longText('nomeCitacoesBibliograficas');
-            $table->string('orcid');
+            $table->longText('nomeCitacoesBibliograficas')->nullable();
+            $table->string('orcid')->nullable();
             $table->jsonb('orientacoesConcluidas')->nullable();
             $table->jsonb('orientacoesEmAndamento')->nullable();
             $table->jsonb('ppg_nome')->nullable();
-            $table->longText('resumoCVpt');
-            $table->longText('resumoCVen');
+            $table->longText('resumoCVpt')->nullable();
+            $table->longText('resumoCVen')->nullable();
             $table->string('tipvin')->nullable();
             $table->string('unidade')->nullable();
             $table->timestamps();

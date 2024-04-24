@@ -17,8 +17,7 @@
                 <div class="p-profile-header-one">
 
                     <div class="c-who-s">
-                        <img class="c-who-s-pic"
-                            src="https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&amp;bcv=true&amp;id={{ $id->lattesID10 }}" />
+                        <img class="c-who-s-pic" src="https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&amp;bcv=true&amp;id={{ $id->lattesID10 }}" />
                     </div>
 
                 </div>
@@ -59,8 +58,7 @@
 
                         <div class="d-icon-text u-mx-10">
                             {{ count($id->works) }}
-                            <i class="i i-sm i-articlePublished" title="Trabalhos publicados"
-                                alt="Trabalhos publicados"></i>
+                            <i class="i i-sm i-articlePublished" title="Trabalhos publicados" alt="Trabalhos publicados"></i>
                             <span class="t">
 
                             </span>
@@ -159,14 +157,12 @@
                         <span class="c-profmenu-text">Sobre</span>
                     </button>
 
-                    <button id=" tab-btn-2" class="c-profmenu-btn" v-on:click="changeTab('2')" title="Produção"
-                        alt="Produção">
+                    <button id=" tab-btn-2" class="c-profmenu-btn" v-on:click="changeTab('2')" title="Produção" alt="Produção">
                         <i class="i i-sm i-prodsymbol c-profmenu-ico"></i>
                         <span class="c-profmenu-text">Produção</span>
                     </button>
 
-                    <button id="tab-btn-3" class="c-profmenu-btn" v-on:click="changeTab('3')" title="Atuação"
-                        alt="Atuação">
+                    <button id="tab-btn-3" class="c-profmenu-btn" v-on:click="changeTab('3')" title="Atuação" alt="Atuação">
                         <i class="i i-sm i-working c-profmenu-ico"></i>
                         <span class="c-profmenu-text">Atuação</span>
                     </button>
@@ -178,8 +174,7 @@
                     @endif
                     @endforeach
                     @if($tab_ensino)
-                    <button id="tab-btn-4" class="c-profmenu-btn" v-on:click="changeTab('4')" title="Ensino"
-                        alt="Ensino">
+                    <button id="tab-btn-4" class="c-profmenu-btn" v-on:click="changeTab('4')" title="Ensino" alt="Ensino">
                         <i class="i i-sm i-teaching c-profmenu-ico"></i>
                         <span class="c-profmenu-text">Ensino</span>
                     </button>
@@ -193,16 +188,14 @@
                     @endforeach
 
                     @if($tab_gestao)
-                    <button id="tab-btn-5" class="c-profmenu-btn" v-on:click="changeTab('5')" title="Gestão"
-                        alt="Gestão">
+                    <button id="tab-btn-5" class="c-profmenu-btn" v-on:click="changeTab('5')" title="Gestão" alt="Gestão">
                         <div class="i i-sm i-managment c-profmenu-ico"></div>
                         <span class="c-profmenu-text">Gestão</span>
                     </button>
                     @endif
 
                     @if(count($id->projetos) > 0)
-                    <button id="tab-btn-6" class="c-profmenu-btn" v-on:click="changeTab('6')" title="Pesquisa"
-                        alt="Pesquisa">
+                    <button id="tab-btn-6" class="c-profmenu-btn" v-on:click="changeTab('6')" title="Pesquisa" alt="Pesquisa">
                         <div class="i i-sm i-research c-profmenu-ico"></div>
                         <span class="c-profmenu-text">Pesquisa</span>
                     </button>
@@ -234,21 +227,18 @@
                         <p class="t-prof">{{ $id->nomeCitacoesBibliograficas }}</p>
                         <hr class="c-line u-my-20" />
                         <h3 class="t t-h3">Exportar dados</h3>
-                        <p><a href="{{url('/')}}/exporters/bibtex/{{ $id->lattesID16 }}" target="_blank"
-                                rel="nofollow">Exportar
+                        <p><a href="{{url('/')}}/exporters/bibtex/{{ $id->lattesID16 }}" target="_blank" rel="nofollow">Exportar
                                 produção no
                                 formato BIBTEX (Clique aqui)</a></p>
                         <hr class="c-line u-my-20" />
                         <p class="t t-b">Perfis na web</p>
                         <div class="dh">
                             <a href="https://lattes.cnpq.br/{{ $id->lattesID16 }}" target="_blank" rel="external">
-                                <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_lattes.svg" alt="Lattes"
-                                    title="Lattes" />
+                                <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_lattes.svg" alt="Lattes" title="Lattes" />
                             </a>
                             @if(!empty($id->orcid))
                             <a href="{{ $id->orcid }}" target="_blank" rel="external">
-                                <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_orcid.svg" alt="ORCID"
-                                    title="ORCID" />
+                                <img class="c-socialicon" src="{{url('/')}}/images/logos/logo_orcid.svg" alt="ORCID" title="ORCID" />
                             </a>
                             @endif
                         </div>
@@ -514,8 +504,7 @@
                                 <li class='s-list-2'>
 
                                     <div class='s-list-bullet'>
-                                        <i>{{ $work->type }}</i><i class='i i-articlePublished s-list-ico'
-                                            title='articlePublished'></i>
+                                        <i>{{ $work->type }}</i><i class='i i-articlePublished s-list-ico' title='articlePublished'></i>
                                     </div>
 
                                     <div class='s-list-content'>
@@ -530,10 +519,7 @@
                                                     {!! implode(', ', array_map(function($author) {
                                                     return e($author['NOME-COMPLETO-DO-AUTOR']) .
                                                     (!empty($author['NRO-ID-CNPQ']) ?
-                                                    '<a href="https://lattes.cnpq.br/' . e($author['NRO-ID-CNPQ']) . '"
-                                                        target="_blank" rel="external"><img class="c-socialiconalt"
-                                                            src="' . e(url('/')) . '/images/logos/logo_lattes.svg"
-                                                            alt="Lattes" title="Lattes" /></a>' : '');
+                                                    '<a href="https://lattes.cnpq.br/' . e($author['NRO-ID-CNPQ']) . '" target="_blank" rel="external"><img class="c-socialiconalt" src="' . e(url('/')) . '/images/logos/logo_lattes.svg" alt="Lattes" title="Lattes" /></a>' : '');
                                                     }, $work->author)) !!}
                                                 </p>
                                                 @endif
@@ -543,18 +529,15 @@
                                                 <p>Acesso ao texto completo:
                                                     @if(!empty($work->doi))
 
-                                                    <a class="t t-a d-icon-text" href="https://doi.org/{{ $work->doi }}"
-                                                        target="blank">
-                                                        <img class="i-doi" src="{{ e(url('/')) }}/images/logos/doi.svg"
-                                                            title="doi" alt="doi">
+                                                    <a class="t t-a d-icon-text" href="https://doi.org/{{ $work->doi }}" target="blank">
+                                                        <img class="i-doi" src="{{ e(url('/')) }}/images/logos/doi.svg" title="doi" alt="doi">
                                                     </a>
 
                                                     @endif
 
                                                     @if(!empty($work->url))
 
-                                                    <a href="{{ $work->url }}" target="_blank"
-                                                        rel="nofollow">{{ $work->url }}</a>
+                                                    <a href="{{ $work->url }}" target="_blank" rel="nofollow">{{ $work->url }}</a>
 
                                                     @endif
                                                 </p>
@@ -709,8 +692,7 @@
 
                                 <div class='s-list-content'>
                                     @if(!empty($vinculos['OUTRO-ENQUADRAMENTO-FUNCIONAL-INFORMADO']))
-                                    <p class='t t-b'><a
-                                            class='t-a'>{{ $vinculos['OUTRO-ENQUADRAMENTO-FUNCIONAL-INFORMADO']  }} </a>
+                                    <p class='t t-b'><a class='t-a'>{{ $vinculos['OUTRO-ENQUADRAMENTO-FUNCIONAL-INFORMADO']  }} </a>
                                     </p>
                                     @endif
                                     @if(!empty($vinculos['OUTRO-VINCULO-INFORMADO']))
@@ -805,8 +787,7 @@
 
                                         <p class='t t-b'>
                                             @if(!empty($orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO']['@attributes']['NUMERO-ID-ORIENTADO']))
-                                            <a class='t-a'
-                                                href="https://lattes.cnpq.br/{{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO']['@attributes']['NUMERO-ID-ORIENTADO'] }}">
+                                            <a class='t-a' href="https://lattes.cnpq.br/{{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO']['@attributes']['NUMERO-ID-ORIENTADO'] }}">
                                                 {{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-DOUTORADO']['@attributes']['NOME-DO-ORIENTANDO'] }}
                                             </a>
                                             @else
@@ -857,8 +838,7 @@
 
                                         <p class='t t-b'>
                                             @if(!empty($orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['NUMERO-ID-ORIENTADO']))
-                                            <a class='t-a'
-                                                href="https://lattes.cnpq.br/{{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['NUMERO-ID-ORIENTADO'] }}">
+                                            <a class='t-a' href="https://lattes.cnpq.br/{{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['NUMERO-ID-ORIENTADO'] }}">
                                                 {{ $orientacao['DETALHAMENTO-DA-ORIENTACAO-EM-ANDAMENTO-DE-MESTRADO']['@attributes']['NOME-DO-ORIENTANDO'] }}
                                             </a>
                                             @else
@@ -929,8 +909,7 @@
 
                                         <p class='t t-b'>
                                             @if(!empty($outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO']['@attributes']['NUMERO-ID-ORIENTADO']))
-                                            <a class='t-a'
-                                                href="https://lattes.cnpq.br/{{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO']['@attributes']['NUMERO-ID-ORIENTADO'] }}">
+                                            <a class='t-a' href="https://lattes.cnpq.br/{{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO']['@attributes']['NUMERO-ID-ORIENTADO'] }}">
                                                 {{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO']['@attributes']['NOME-DO-ORIENTADO'] }}
                                             </a>
                                             @else
@@ -982,8 +961,7 @@
 
                                         <p class='t t-b'>
                                             @if(!empty($outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO']['@attributes']['NUMERO-ID-ORIENTADO']))
-                                            <a class='t-a'
-                                                href="https://lattes.cnpq.br/{{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO']['@attributes']['NUMERO-ID-ORIENTADO'] }}">
+                                            <a class='t-a' href="https://lattes.cnpq.br/{{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO']['@attributes']['NUMERO-ID-ORIENTADO'] }}">
                                                 {{ $outraOrientacao['DETALHAMENTO-DE-ORIENTACOES-CONCLUIDAS-PARA-MESTRADO']['@attributes']['NOME-DO-ORIENTADO'] }}
                                             </a>
                                             @else
@@ -1034,8 +1012,7 @@
 
                                         <p class='t t-b'>
                                             @if(!empty($outraOrientacao['DETALHAMENTO-DE-OUTRAS-ORIENTACOES-CONCLUIDAS']['@attributes']['NUMERO-ID-ORIENTADO']))
-                                            <a class='t-a'
-                                                href="https://lattes.cnpq.br/{{ $outraOrientacao['DETALHAMENTO-DE-OUTRAS-ORIENTACOES-CONCLUIDAS']['@attributes']['NUMERO-ID-ORIENTADO'] }}">
+                                            <a class='t-a' href="https://lattes.cnpq.br/{{ $outraOrientacao['DETALHAMENTO-DE-OUTRAS-ORIENTACOES-CONCLUIDAS']['@attributes']['NUMERO-ID-ORIENTADO'] }}">
                                                 {{ $outraOrientacao['DETALHAMENTO-DE-OUTRAS-ORIENTACOES-CONCLUIDAS']['@attributes']['NOME-DO-ORIENTADO'] }}
                                             </a>
                                             @else
@@ -1135,15 +1112,11 @@
 
                                 <div class='s-list-content'>
                                     <p class='t t-b'>{{ $projeto->name }}</p>
-                                    <p class='ty'>itemInfoA</p>
+                                    <p class='ty mt-3 mb-3'>Descrição{{ $projeto->description }}</p>
 
-                                    <p class='t t-gray'>itemInfoB</p>
-                                    <p class='t t-gray'>itemInfoC</p>
-                                    <p class='t t-gray'>itemInfoD</p>
-                                    <p class='t t-gray'>itemInfoE</p>
-                                    tagsRender
-                                    <p class='t t-gray'>aut</p>
-                                    <p class='t t-gray'>date</p>
+                                    <p class='t t-gray'>Ano de início: {{ $projeto->projectYearStart }}</p>
+                                    <p class='t t-gray'>Ano de término: {{ $projeto->projectYearEnd }}</p>
+                                    <p class='t t-gray'>Situação: {{ $projeto->situacao }}</p>
                                 </div>
                             </div>
                         </li>
@@ -1165,28 +1138,28 @@
 
 
 <script>
-var app = new Vue({
-    el: '#profile',
-    data: {
-        tabOpened: '2',
-        isActive: false
+    var app = new Vue({
+        el: '#profile',
+        data: {
+            tabOpened: '2',
+            isActive: false
 
-    },
-    methods: {
-        changeTab(tab) {
-            this.tabOpened = tab
-            var tabs = document.getElementsByClassName("c-profmenu-btn")
+        },
+        methods: {
+            changeTab(tab) {
+                this.tabOpened = tab
+                var tabs = document.getElementsByClassName("c-profmenu-btn")
 
-            for (i = 0; i < tabs.length; i++)
-                tabs[i].className = tabs[i].className.replace("c-profmenu-active", "")
+                for (i = 0; i < tabs.length; i++)
+                    tabs[i].className = tabs[i].className.replace("c-profmenu-active", "")
 
-            tabs[Number(tab) - 1].className += " c-profmenu-active"
-        }
-    },
-    mounted: function() {
-        this.changeTab(1)
-    },
-})
+                tabs[Number(tab) - 1].className += " c-profmenu-active"
+            }
+        },
+        mounted: function() {
+            this.changeTab(1)
+        },
+    })
 </script>
 
 @stop

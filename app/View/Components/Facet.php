@@ -8,6 +8,7 @@ use Illuminate\View\Component;
 use Illuminate\Http\Request;
 use App\Models\Person;
 use App\Models\Work;
+use App\Models\Projeto;
 use Illuminate\Support\Facades\DB;
 
 class Facet extends Component
@@ -33,6 +34,9 @@ class Facet extends Component
         }
         if ($this->type == "Person") {
             $query = Person::select($this->field . ' as field', DB::raw('count(*) as count'));
+        }
+        if ($this->type == "Projeto") {
+            $query = Projeto::select($this->field . ' as field', DB::raw('count(*) as count'));
         }
         if ($this->request->name) {
             $query->where('name', 'like', '%' . $this->request->name . '%');
@@ -60,6 +64,9 @@ class Facet extends Component
         }
         if ($this->request->inSupportOf) {
             $query->where('inSupportOf', $this->request->inSupportOf);
+        }
+        if ($this->request->situacao) {
+            $query->where('situacao', $this->request->doi);
         }
         if ($this->request->sourceOrganization) {
             $query->where('sourceOrganization', $this->request->sourceOrganization);

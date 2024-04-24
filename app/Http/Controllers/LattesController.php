@@ -1037,6 +1037,10 @@ class LattesController extends Controller
                             $project = new Projeto;
                             $project->fill([
                                 'name' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['NOME-DO-PROJETO'],
+                                'description' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['DESCRICAO-DO-PROJETO'],
+                                'projectYearStart' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['ANO-INICIO'],
+                                'projectYearEnd' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['ANO-INICIO'],
+                                'situacao' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['SITUACAO'],
                             ]);
                             try {
                                 $project->save();

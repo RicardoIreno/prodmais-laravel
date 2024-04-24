@@ -41,12 +41,12 @@
                             <i class="i i-ppg-logo sitemenu-ico"></i>
                         </a>
                     </li> -->
-                    <!-- <li class=" sitemenu-item">
-                        <a class="sitemenu-link" href="projetos.php" title="Projetos de pesquisa">
+                    <li class=" sitemenu-item">
+                        <a class="sitemenu-link" href="{{url('/')}}/projetos" title="Projetos de pesquisa">
                             Projetos de Pesquisa
                             <i class="i i-project sitemenu-ico"></i>
                         </a>
-                    </li> -->
+                    </li>
 
                     <li class=" sitemenu-item">
                         <a class="sitemenu-link" href="{{url('/')}}/upload" title="Upload">
