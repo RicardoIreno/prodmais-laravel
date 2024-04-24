@@ -33,6 +33,7 @@ class Person extends Model
         'instituicao',
         'lattesDataAtualizacao',
         'lattesID10',
+        'lattesID16',
         'nacionalidade',
         'name',
         'nomeCitacoesBibliograficas',

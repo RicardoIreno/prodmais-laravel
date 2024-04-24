@@ -23,6 +23,7 @@ return new class extends Migration
             $table->jsonb('instituicao')->nullable();
             $table->string('lattesDataAtualizacao');
             $table->string('lattesID10')->nullable();
+            $table->string('lattesID16')->nullable();
             $table->string('nacionalidade')->nullable();
             $table->string('name');
             $table->longText('nomeCitacoesBibliograficas');
