@@ -19,10 +19,12 @@
             $request->has('about')||
             $request->has('isPartOfName')||
             $request->has('educationEventName')||
+            $request->has('genero')||
             $request->has('releasedEvent')||
             $request->has('inLanguage')||
             $request->has('issn')||
             $request->has('instituicao')||
+            $request->has('search')||
             $request->has('sourceOrganization')||
             $request->has('ppg_nome')||
             $request->has('publisher')
@@ -70,6 +72,9 @@
                     }
                     if ($key == 'instituicao') {
                     $key_name = 'Instituição';
+                    }
+                    if ($key == 'search') {
+                    $key_name = 'Termo de busca';
                     }
                     if ($key == 'ppg_nome') {
                     $key_name = 'Programa de Pós-Graduação';

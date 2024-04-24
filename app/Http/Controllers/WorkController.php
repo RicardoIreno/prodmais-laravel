@@ -27,7 +27,7 @@ class WorkController extends Controller
             $query->where('name', 'iLIKE', '%' . $request->name . '%');
         }
         if ($request->search) {
-            $query->where('name', 'iLIKE', '%' . $request->search . '%')->orWhere('author', 'iLIKE', '%' . $request->search . '%');
+            $query->where('name', 'iLIKE', '%' . $request->search . '%');
         }
         if ($request->type) {
             $query->where('type', $request->type);
@@ -40,6 +40,15 @@ class WorkController extends Controller
         }
         if ($request->about) {
             $query->whereJsonContains('about', $request->about);
+        }
+        if ($request->genero) {
+            $query->whereJsonContains('genero', $request->genero);
+        }
+        if ($request->instituicao) {
+            $query->whereJsonContains('instituicao', $request->instituicao);
+        }
+        if ($request->ppg_nome) {
+            $query->whereJsonContains('ppg_nome', $request->ppg_nome);
         }
         if ($request->author_array) {
             $query->whereJsonContains('author_array', $request->author_array);
