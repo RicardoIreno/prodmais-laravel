@@ -1209,8 +1209,12 @@
 
             </div>
 
-            <p class="t t-lastUpdate t-right">Atualização Lattes em {{ $id->lattesDataAtualizacao }}</p>
-            <p class="t t-lastUpdate t-right">Processado em {{ $id->updated_at }}</p>
+            <p class="t t-lastUpdate t-right">Atualização do Lattes em
+                {{ DateTime::createFromFormat('dmY', $id->lattesDataAtualizacao)->format('Y-m-d') }}
+            </p>
+            <p class="t t-lastUpdate t-right">Processado em
+                {{ DateTime::createFromFormat('Y-m-d H:i:s', $id->updated_at)->format('Y-m-d') }}
+            </p>
 
         </div>
 
