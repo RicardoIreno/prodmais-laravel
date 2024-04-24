@@ -8,6 +8,10 @@
 <?php $works[$work->datePublished][] = $work; ?>
 @endforeach
 
+@foreach ($id->projetos as $projeto)
+<?php $projetos_array[$projeto->projectYearStart][] = $projeto; ?>
+@endforeach
+
 <main id="profile" class="c-wrapper-container">
     <div class="c-wrapper-paper">
         <div class="c-wrapper-inner">
@@ -143,6 +147,53 @@
                             unset($weight);
                             ?>
                             <span class="c-graph-label">Trabalhos publicados</span>
+                        </div>
+                        <div class="c-graph-line">
+                            <?php
+
+                            $j = 0;
+                            $years_array_values = [];
+                            for ($i = date("Y"); $i >= date("Y", strtotime("-9 year")); $i--) {
+                                if (isset($projetos_array[$i])) {
+                                    $projetos_publicados[$j]['total'] = count($projetos_array[$i]);
+                                } else {
+                                    $projetos_publicados[$j]['total'] = 0;
+                                }
+                                $years_array_values[] = $projetos_publicados[$j]['total'];
+                                $projetos_publicados[$j]['year'] = $i;
+                                $j++;
+                            }
+                            if (count($years_array_values) == 0) {
+                                $years_array_max = 1;
+                            } else {
+                                $years_array_max = max($years_array_values);
+                            }
+
+                            if ($years_array_max == 0) {
+                                $years_array_max = 1;
+                            }
+
+                            foreach ($projetos_publicados as $projetos_publicado) {
+                                $total_year = $projetos_publicado['total'];
+                                $this_year = $projetos_publicado['year'];
+                                if ($total_year / $years_array_max <= 1 && $total_year / $years_array_max > 0.8) {
+                                    $weight = 4;
+                                } elseif ($total_year / $years_array_max <= 0.8 && $total_year / $years_array_max > 0.6) {
+                                    $weight = 3;
+                                } elseif ($total_year / $years_array_max <= 0.6 && $total_year / $years_array_max > 0.4) {
+                                    $weight = 2;
+                                } elseif ($total_year / $years_array_max <= 0.4 && $total_year / $years_array_max > 0.2) {
+                                    $weight = 1;
+                                } else {
+                                    $weight = 0;
+                                }
+                                echo "<div class='c-graph-unit' data-weight='{$weight}' title='{$this_year} — total: {$total_year}'></div>";
+                            }
+                            unset($i);
+                            unset($j);
+                            unset($weight);
+                            ?>
+                            <span class="c-graph-label">Participação em projetos</span>
                         </div>
 
                     </div>
