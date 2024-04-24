@@ -1,8 +1,7 @@
 <header class="siteheader">
     <div class="siteheader__content">
 
-        <a href="https://unifesp.br/prodmais/">
-            <!-- <img class="siteheader-logo" src="< ?php echo $url_base; ?>/inc/images/logos/logo_header.svg" loading="lazy" /> -->
+        <a href="{{url('/')}}">
             <i class="i i-prodmaisheader siteheader__logo"></i>
         </a>
 
