@@ -465,6 +465,10 @@ class LattesController extends Controller
             'isPartOf' => $isPartOfBook,
         ]);
 
+        $work->fill([
+            'isPartOfName' => $capitulo['DETALHAMENTO-DO-CAPITULO']['@attributes']['TITULO-DO-LIVRO'],
+        ]);
+
         if (isset($capitulo['AUTORES'])) {
             foreach ($capitulo['AUTORES'] as $autores) {
                 if (isset($autores['@attributes'])) {

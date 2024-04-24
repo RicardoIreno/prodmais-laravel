@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\LattesController;
+use App\Http\Controllers\ExportersController;
 use App\Models\Person;
 
 /*
@@ -42,3 +43,5 @@ Route::get('graficos', [WorkController::class, 'graficos'])->name('graficos');
 Route::get('/sobre', function () {
     return view('sobre');
 });
+
+Route::get('/exporters/bibtex/{id}', [ExportersController::class, 'bibtex']);
