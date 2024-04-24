@@ -168,7 +168,7 @@ class LattesController extends Controller
         }
     }
 
-    public function trabalhosEmEventos(array $trabalhosEmEventos, array $attributes)
+    public function trabalhosEmEventos(array $trabalhosEmEventos, array $attributes, Request $request)
     {
         //echo "<pre>" . print_r($attributes, true) . "</pre>";
         //echo "<pre>" . print_r($trabalhosEmEventos, true) . "</pre>";
@@ -241,6 +241,30 @@ class LattesController extends Controller
                 ]);
             }
 
+            if (isset($request->instituicao)) {
+                $instituicoes[] = $request->instituicao;
+                $work->fill([
+                    'instituicao' => $instituicoes
+                ]);
+                unset($instituicoes);
+            }
+
+            if (isset($request->ppg_nome)) {
+                $ppgs[] = $request->ppg_nome;
+                $work->fill([
+                    'ppg_nome' => $ppgs
+                ]);
+                unset($ppgs);
+            }
+
+            if (isset($request->genero)) {
+                $generos[] = $request->genero;
+                $work->fill([
+                    'genero' => $generos
+                ]);
+                unset($generos);
+            }
+
             if (!empty($trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['DOI'])) {
                 $sha256 = hash('sha256', $trabalhoEmEventos['DADOS-BASICOS-DO-TRABALHO']['@attributes']['DOI']);
             } else {
@@ -274,20 +298,20 @@ class LattesController extends Controller
         }
     }
 
-    public function livros(array $livros, array $attributes)
+    public function livros(array $livros, array $attributes, Request $request)
     {
         foreach ($livros as $livro_array) {
             if (isset($livro_array['DADOS-BASICOS-DO-LIVRO'])) {
-                $this->processLivro($livro_array, $attributes);
+                $this->processLivro($livro_array, $attributes, $request);
             } else {
                 foreach ($livro_array as $livro) {
-                    $this->processLivro($livro, $attributes);
+                    $this->processLivro($livro, $attributes, $request);
                 }
             }
         }
     }
 
-    function processLivro(array $livro, array $attributes)
+    function processLivro(array $livro, array $attributes, Request $request)
     {
         $authorLattesIds = [];
         $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
@@ -344,6 +368,30 @@ class LattesController extends Controller
             ]);
         }
 
+        if (isset($request->instituicao)) {
+            $instituicoes[] = $request->instituicao;
+            $work->fill([
+                'instituicao' => $instituicoes
+            ]);
+            unset($instituicoes);
+        }
+
+        if (isset($request->ppg_nome)) {
+            $ppgs[] = $request->ppg_nome;
+            $work->fill([
+                'ppg_nome' => $ppgs
+            ]);
+            unset($ppgs);
+        }
+
+        if (isset($request->genero)) {
+            $generos[] = $request->genero;
+            $work->fill([
+                'genero' => $generos
+            ]);
+            unset($generos);
+        }
+
         if (!empty($livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['DOI'])) {
             $sha256 = hash('sha256', $livro['DADOS-BASICOS-DO-LIVRO']['@attributes']['DOI']);
         } else {
@@ -376,20 +424,20 @@ class LattesController extends Controller
         }
     }
 
-    public function capitulos(array $capitulos, array $attributes)
+    public function capitulos(array $capitulos, array $attributes, Request $request)
     {
         foreach ($capitulos as $capitulo_array) {
             if (isset($capitulo_array['DADOS-BASICOS-DO-CAPITULO'])) {
-                $this->processCapitulo($capitulo_array, $attributes);
+                $this->processCapitulo($capitulo_array, $attributes, $request);
             } else {
                 foreach ($capitulo_array as $capitulo) {
-                    $this->processCapitulo($capitulo, $attributes);
+                    $this->processCapitulo($capitulo, $attributes, $request);
                 }
             }
         }
     }
 
-    function processCapitulo(array $capitulo, array $attributes)
+    function processCapitulo(array $capitulo, array $attributes, Request $request)
     {
         $authorLattesIds = [];
         $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
@@ -449,6 +497,30 @@ class LattesController extends Controller
             ]);
         }
 
+        if (isset($request->instituicao)) {
+            $instituicoes[] = $request->instituicao;
+            $work->fill([
+                'instituicao' => $instituicoes
+            ]);
+            unset($instituicoes);
+        }
+
+        if (isset($request->ppg_nome)) {
+            $ppgs[] = $request->ppg_nome;
+            $work->fill([
+                'ppg_nome' => $ppgs
+            ]);
+            unset($ppgs);
+        }
+
+        if (isset($request->genero)) {
+            $generos[] = $request->genero;
+            $work->fill([
+                'genero' => $generos
+            ]);
+            unset($generos);
+        }
+
         if (!empty($capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['DOI'])) {
             $sha256 = hash('sha256', $capitulo['DADOS-BASICOS-DO-CAPITULO']['@attributes']['DOI']);
         } else {
@@ -481,20 +553,20 @@ class LattesController extends Controller
         }
     }
 
-    public function jornais(array $jornais, array $attributes)
+    public function jornais(array $jornais, array $attributes, Request $request)
     {
         foreach ($jornais as $jornal_array) {
             if (isset($jornal_array['DADOS-BASICOS-DO-TEXTO'])) {
-                $this->processJornal($jornal_array, $attributes);
+                $this->processJornal($jornal_array, $attributes, $request);
             } else {
                 foreach ($jornal_array as $jornal) {
-                    $this->processJornal($jornal, $attributes);
+                    $this->processJornal($jornal, $attributes, $request);
                 }
             }
         }
     }
 
-    function processJornal(array $jornal, array $attributes)
+    function processJornal(array $jornal, array $attributes, Request $request)
     {
         $authorLattesIds = [];
         $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
@@ -554,6 +626,30 @@ class LattesController extends Controller
             ]);
         }
 
+        if (isset($request->instituicao)) {
+            $instituicoes[] = $request->instituicao;
+            $work->fill([
+                'instituicao' => $instituicoes
+            ]);
+            unset($instituicoes);
+        }
+
+        if (isset($request->ppg_nome)) {
+            $ppgs[] = $request->ppg_nome;
+            $work->fill([
+                'ppg_nome' => $ppgs
+            ]);
+            unset($ppgs);
+        }
+
+        if (isset($request->genero)) {
+            $generos[] = $request->genero;
+            $work->fill([
+                'genero' => $generos
+            ]);
+            unset($generos);
+        }
+
         if (!empty($jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['DOI'])) {
             $sha256 = hash('sha256', $jornal['DADOS-BASICOS-DO-TEXTO']['@attributes']['DOI']);
         } else {
@@ -586,20 +682,20 @@ class LattesController extends Controller
         }
     }
 
-    public function demais(array $demais, array $attributes)
+    public function demais(array $demais, array $attributes, Request $request)
     {
         foreach ($demais as $demais_array) {
             if (isset($demais_array['DADOS-BASICOS-DE-OUTRA-PRODUCAO'])) {
-                $this->processDemais($demais_array, $attributes);
+                $this->processDemais($demais_array, $attributes, $request);
             } else {
                 foreach ($demais_array as $outra) {
-                    $this->processDemais($outra, $attributes);
+                    $this->processDemais($outra, $attributes, $request);
                 }
             }
         }
     }
 
-    function processDemais(array $outra, array $attributes)
+    function processDemais(array $outra, array $attributes, Request $request)
     {
         $authorLattesIds = [];
         $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
@@ -628,6 +724,30 @@ class LattesController extends Controller
                 $sha256_array[] = $outra['DADOS-BASICOS-DO-PREFACIO-POSFACIO']['@attributes']['NATUREZA'];
                 $sha256_array[] = $outra['DADOS-BASICOS-DO-PREFACIO-POSFACIO']['@attributes']['HOME-PAGE-DO-TRABALHO'];
                 $sha256 = hash('sha256', '' . implode("", $sha256_array) . '');
+            }
+
+            if (isset($request->instituicao)) {
+                $instituicoes[] = $request->instituicao;
+                $work->fill([
+                    'instituicao' => $instituicoes
+                ]);
+                unset($instituicoes);
+            }
+
+            if (isset($request->ppg_nome)) {
+                $ppgs[] = $request->ppg_nome;
+                $work->fill([
+                    'ppg_nome' => $ppgs
+                ]);
+                unset($ppgs);
+            }
+
+            if (isset($request->genero)) {
+                $generos[] = $request->genero;
+                $work->fill([
+                    'genero' => $generos
+                ]);
+                unset($generos);
             }
 
             $work->fill([
@@ -691,6 +811,31 @@ class LattesController extends Controller
                     'url' => $url,
                 ]);
             }
+
+            if (isset($request->instituicao)) {
+                $instituicoes[] = $request->instituicao;
+                $work->fill([
+                    'instituicao' => $instituicoes
+                ]);
+                unset($instituicoes);
+            }
+
+            if (isset($request->ppg_nome)) {
+                $ppgs[] = $request->ppg_nome;
+                $work->fill([
+                    'ppg_nome' => $ppgs
+                ]);
+                unset($ppgs);
+            }
+
+            if (isset($request->genero)) {
+                $generos[] = $request->genero;
+                $work->fill([
+                    'genero' => $generos
+                ]);
+                unset($generos);
+            }
+
             if (!empty($outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['DOI'])) {
                 $sha256 = hash('sha256', $outra['DADOS-BASICOS-DE-OUTRA-PRODUCAO']['@attributes']['DOI']);
             } else {
@@ -749,20 +894,20 @@ class LattesController extends Controller
         }
     }
 
-    public function artigosAceitos(array $artigosAceitos, array $attributes)
+    public function artigosAceitos(array $artigosAceitos, array $attributes, Request $request)
     {
         foreach ($artigosAceitos as $artigosAceitos_array) {
             if (isset($artigosAceitos_array['DADOS-BASICOS-DO-ARTIGO'])) {
-                $this->processArtigosAceitos($artigosAceitos_array, $attributes);
+                $this->processArtigosAceitos($artigosAceitos_array, $attributes, $request);
             } else {
                 foreach ($artigosAceitos_array as $artigoAceito) {
-                    $this->processArtigosAceitos($artigoAceito, $attributes);
+                    $this->processArtigosAceitos($artigoAceito, $attributes, $request);
                 }
             }
         }
     }
 
-    function processArtigosAceitos(array $artigoAceito, array $attributes)
+    function processArtigosAceitos(array $artigoAceito, array $attributes, Request $request)
     {
         $authorLattesIds = [];
         $authorLattesIds[] = $attributes['NUMERO-IDENTIFICADOR'];
@@ -818,6 +963,30 @@ class LattesController extends Controller
             $work->fill([
                 'url' => $url,
             ]);
+        }
+
+        if (isset($request->instituicao)) {
+            $instituicoes[] = $request->instituicao;
+            $work->fill([
+                'instituicao' => $instituicoes
+            ]);
+            unset($instituicoes);
+        }
+
+        if (isset($request->ppg_nome)) {
+            $ppgs[] = $request->ppg_nome;
+            $work->fill([
+                'ppg_nome' => $ppgs
+            ]);
+            unset($ppgs);
+        }
+
+        if (isset($request->genero)) {
+            $generos[] = $request->genero;
+            $work->fill([
+                'genero' => $generos
+            ]);
+            unset($generos);
         }
 
         if (!empty($artigoAceito['DADOS-BASICOS-DO-ARTIGO']['@attributes']['DOI'])) {
@@ -973,22 +1142,22 @@ class LattesController extends Controller
                     $this->artigos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-PUBLICADOS'], $lattes['@attributes'], $request);
                 }
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['TRABALHOS-EM-EVENTOS'])) {
-                    $this->trabalhosEmEventos($lattes['PRODUCAO-BIBLIOGRAFICA']['TRABALHOS-EM-EVENTOS'], $lattes['@attributes']);
+                    $this->trabalhosEmEventos($lattes['PRODUCAO-BIBLIOGRAFICA']['TRABALHOS-EM-EVENTOS'], $lattes['@attributes'], $request);
                 }
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['LIVROS-PUBLICADOS-OU-ORGANIZADOS'])) {
-                    $this->livros($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['LIVROS-PUBLICADOS-OU-ORGANIZADOS'], $lattes['@attributes']);
+                    $this->livros($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['LIVROS-PUBLICADOS-OU-ORGANIZADOS'], $lattes['@attributes'], $request);
                 }
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['CAPITULOS-DE-LIVROS-PUBLICADOS'])) {
-                    $this->capitulos($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['CAPITULOS-DE-LIVROS-PUBLICADOS'], $lattes['@attributes']);
+                    $this->capitulos($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['CAPITULOS-DE-LIVROS-PUBLICADOS'], $lattes['@attributes'], $request);
                 }
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['TEXTOS-EM-JORNAIS-OU-REVISTAS'])) {
-                    $this->jornais($lattes['PRODUCAO-BIBLIOGRAFICA']['TEXTOS-EM-JORNAIS-OU-REVISTAS'], $lattes['@attributes']);
+                    $this->jornais($lattes['PRODUCAO-BIBLIOGRAFICA']['TEXTOS-EM-JORNAIS-OU-REVISTAS'], $lattes['@attributes'], $request);
                 }
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['DEMAIS-TIPOS-DE-PRODUCAO-BIBLIOGRAFICA'])) {
-                    $this->demais($lattes['PRODUCAO-BIBLIOGRAFICA']['DEMAIS-TIPOS-DE-PRODUCAO-BIBLIOGRAFICA'], $lattes['@attributes']);
+                    $this->demais($lattes['PRODUCAO-BIBLIOGRAFICA']['DEMAIS-TIPOS-DE-PRODUCAO-BIBLIOGRAFICA'], $lattes['@attributes'], $request);
                 }
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'])) {
-                    $this->artigosAceitos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'], $lattes['@attributes']);
+                    $this->artigosAceitos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'], $lattes['@attributes'], $request);
                 }
                 return redirect('/person' . '/' . $lattes['@attributes']['NUMERO-IDENTIFICADOR']);
             } catch (\Exception $e) {
