@@ -6,6 +6,7 @@ use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonRequest;
 use App\Models\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PersonController extends Controller
 {
@@ -85,5 +86,32 @@ class PersonController extends Controller
     public function destroy(Person $person)
     {
         //
+    }
+
+    /**
+     * Generate tag cloud.
+     */
+
+    public static function personTagCloud(string $id)
+    {
+        $queryAbout = DB::table('works')->select(DB::raw("jsonb_array_elements_text(about) as about"));
+        $queryAbout->whereRaw('("authorLattesIds")::jsonb @> \'["' . $id . '"]\'');
+        $queryAbout->selectRaw('count(*) as count');
+        $queryAbout->groupBy('about');
+        $queryAbout->orderBy('count', 'desc');
+        $aboutData = $queryAbout->limit(100)->get();
+
+        $aboutData = json_encode($aboutData);
+        $aboutData = json_decode($aboutData);
+        shuffle($aboutData);
+
+        $buf = [];
+        foreach ($aboutData as $t) {
+            $buf[] = '<li><a class="tag" data-weight="' . $t->count . '">' . $t->about . '</a> </li>';
+        }
+
+        echo ("<ul class='tag-cloud' role='navigation' aria-label='Tags mais usadas'>");
+        echo (implode("", $buf));
+        echo "</ul>";
     }
 }

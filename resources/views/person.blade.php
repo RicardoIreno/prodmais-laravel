@@ -451,6 +451,12 @@
                         @endif
 
                         <hr class="c-line u-my-20" />
+                        <h3 class="t t-h3">Tags mais usadas</h3>
+
+                        {{ \App\Http\Controllers\PersonController::personTagCloud($id->id) }}
+
+
+                        <hr class="c-line u-my-20" />
 
                         @if(isset($id->idiomas['IDIOMA']))
 
