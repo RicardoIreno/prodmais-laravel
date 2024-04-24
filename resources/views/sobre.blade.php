@@ -53,7 +53,7 @@ M75.6,75.1V58.2h16.9v16.4c-0.2,0.1-0.4,0.3-0.5,0.5H75.6z" />
             Serrapilheira - Sou Ciência"</p>
 
         <h3 class="t t-h3 u-my-10">
-            <a href="https://github.com/unifesp/prodmais" target="blank">
+            <a href="https://github.com/trmurakami/prodmais-laravel" target="blank">
                 <p class="t t-a">Visite o nosso repositório Github</p>
         </h3>
 
