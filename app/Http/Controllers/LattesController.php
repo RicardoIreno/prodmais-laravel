@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Person;
 use App\Models\Work;
+use App\Models\Projeto;
 use Illuminate\Support\Facades\DB;
 
 class LattesController extends Controller
@@ -1024,6 +1025,32 @@ class LattesController extends Controller
         }
     }
 
+    public function processProjetos(array $atuacoes, Person $person)
+    {
+        foreach ($atuacoes as $atuacao_profissional) {
+            foreach ($atuacao_profissional as $atuacao_profissional1) {
+                //dd($atuacao_profissional1);
+                if (isset($atuacao_profissional1['ATIVIDADES-DE-PARTICIPACAO-EM-PROJETO']['PARTICIPACAO-EM-PROJETO'])) {
+                    foreach ($atuacao_profissional1['ATIVIDADES-DE-PARTICIPACAO-EM-PROJETO']['PARTICIPACAO-EM-PROJETO'] as $projeto_de_pesquisa) {
+                        if (isset($projeto_de_pesquisa['PROJETO-DE-PESQUISA'])) {
+                            //dd($projeto_de_pesquisa);
+                            $project = new Projeto;
+                            $project->fill([
+                                'name' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['NOME-DO-PROJETO'],
+                            ]);
+                            try {
+                                $project->save();
+                                $project->authors()->attach($person);
+                            } catch (\Exception $e) {
+                                echo $e->getMessage();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public function createPerson(array $lattes, Request $request)
     {
         //echo "<pre>" . print_r($attributes, true) . "</pre>";
@@ -1130,6 +1157,9 @@ class LattesController extends Controller
 
             try {
                 $person->save();
+                if (isset($lattes['DADOS-GERAIS']['ATUACOES-PROFISSIONAIS'])) {
+                    $this->processProjetos($lattes['DADOS-GERAIS']['ATUACOES-PROFISSIONAIS'], $person);
+                }
             } catch (\Exception $e) {
                 echo $e->getMessage();
             }
@@ -1164,7 +1194,7 @@ class LattesController extends Controller
                 if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'])) {
                     $this->artigosAceitos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'], $lattes['@attributes'], $request);
                 }
-                return redirect('/person' . '/' . $lattes['@attributes']['NUMERO-IDENTIFICADOR']);
+                //return redirect('/person' . '/' . $lattes['@attributes']['NUMERO-IDENTIFICADOR']);
             } catch (\Exception $e) {
                 echo $e->getMessage();
             }
