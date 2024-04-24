@@ -1,35 +1,76 @@
 <header class="siteheader">
     <div class="siteheader__content">
 
+        <a href="https://unifesp.br/prodmais/">
+            <!-- <img class="siteheader-logo" src="< ?php echo $url_base; ?>/inc/images/logos/logo_header.svg" loading="lazy" /> -->
+            <i class="i i-prodmaisheader siteheader__logo"></i>
+        </a>
+
         <div class="sitemenu-container">
+            <!-- <a class="u-skip" href="#skipmenu">Pular menu principal</a> -->
+            <input class="sitemenu-btn-check" type="checkbox" id="checkbox_toggle">
+            <label class="sitemenu-btn-ico" for="checkbox_toggle">☰</label>
+            <!-- <div class="u-skip" id="skipmenu"></div> -->
+
             <nav class="sitemenu" title="Menu do prodmais" aria-labelledby="Menu principal">
+
                 <ul class="sitemenu-list">
-                    <li class="sitemenu-item" title="Home"><a href="{{url('/')}}"
-                            class="nav-link px-2 text-secondary"><i class="i i-prodmaisheader siteheader__logo"></i></a>
-                    </li>
-                    <li class="sitemenu-item"><a class="sitemenu-link" href="{{url('/')}}"
-                            class="nav-link px-2 text-secondary">Início <i class="i i-home sitemenu-ico"></i></a>
-                    </li>
-                    <li class=" sitemenu-item"><a class="sitemenu-link" href="{{url('/')}}/people"
-                            class="nav-link px-2 text-white">Pesquisadores <i class="i i-aboutme sitemenu-ico"></i></a>
 
+                    <li class="sitemenu-item" title="Home">
+                        <a class="sitemenu-link" href="{{url('/')}}" title="Home">
+                            Home
+                            <i class="i i-home sitemenu-ico"></i>
+                        </a>
                     </li>
 
-                    <li class=" sitemenu-item"><a class="sitemenu-link" href="{{url('/')}}/works"
-                            class="nav-link px-2 text-white">Obras <i class="i i-about sitemenu-ico"></i></a>
+                    <li class=" sitemenu-item">
+                        <a class="sitemenu-link" href="{{url('/')}}/people" title="Pesquisadores">
+                            Pesquisadores
+                            <i class="i i-aboutme sitemenu-ico"></i>
+                        </a>
                     </li>
-                    <li class=" sitemenu-item"><a class="sitemenu-link" href="{{url('/')}}/upload"
-                            class="nav-link px-2 text-white">Upload <i class="i i-about sitemenu-ico"></i></a>
+
+                    <li class=" sitemenu-item">
+                        <a class="sitemenu-link" href="{{url('/')}}/works" title="Produções">
+                            Produções
+                            <i class="i i-category sitemenu-ico"></i>
+                        </a>
                     </li>
-                    <li class=" sitemenu-item"><a class="sitemenu-link" href="{{url('/')}}/graficos"
-                            class="nav-link px-2 text-white">Gráficos <i class="i i-about sitemenu-ico"></i></a>
+                    <!-- <li class=" sitemenu-item">
+                        <a class="sitemenu-link" href="ppgs.php" title="Programas de pós graduação">
+                            PPGs
+                            <i class="i i-ppg-logo sitemenu-ico"></i>
+                        </a>
+                    </li> -->
+                    <!-- <li class=" sitemenu-item">
+                        <a class="sitemenu-link" href="projetos.php" title="Projetos de pesquisa">
+                            Projetos de Pesquisa
+                            <i class="i i-project sitemenu-ico"></i>
+                        </a>
+                    </li> -->
+
+                    <li class=" sitemenu-item">
+                        <a class="sitemenu-link" href="{{url('/')}}/upload" title="Upload">
+                            Upload
+                            <i class="i i-project sitemenu-ico"></i>
+                        </a>
                     </li>
-                    <li class=" sitemenu-item"><a class="sitemenu-link" href="{{url('/')}}/sobre"
-                            class="nav-link px-2 text-white">Sobre <i class="i i-about sitemenu-ico"></i></a>
+
+                    <li class="sitemenu-item">
+                        <a class="sitemenu-link" href="{{url('/')}}/graficos" title="Gráficos">
+                            Gráficos
+                            <i class="i i-dashboard sitemenu-ico"></i>
+                        </a>
+                    </li>
+
+                    <li class="sitemenu-item">
+                        <a class="sitemenu-link" href="{{url('/')}}/sobre" title="Sobre o Prodmais">
+                            Sobre
+                            <i class="i i-about sitemenu-ico"></i>
+                        </a>
                     </li>
                 </ul>
             </nav>
         </div>
-
     </div>
 </header>
