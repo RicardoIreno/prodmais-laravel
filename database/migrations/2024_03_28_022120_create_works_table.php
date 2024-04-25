@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('datePublished')->nullable();
             $table->string('doi')->nullable();
             $table->jsonb('educationEvent')->nullable();
-            $table->string('educationEventName')->nullable();
+            $table->longText('educationEventName')->nullable();
             $table->jsonb('genero')->nullable();
             $table->string('inLanguage')->nullable();
             $table->jsonb('isPartOf')->nullable();
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->jsonb('instituicao')->nullable();
             $table->string('issn')->nullable();
             $table->string('issueNumber')->nullable();
-            $table->string('name');
+            $table->longText('name');
             $table->string('numberOfPages')->nullable();
             $table->string('pageEnd')->nullable();
             $table->string('pageStart')->nullable();
@@ -40,7 +40,7 @@ return new class extends Migration
             $table->string('qualis')->nullable();
             $table->string('sha256');
             $table->string('type');
-            $table->string('url')->nullable();
+            $table->longText('url')->nullable();
             $table->string('volumeNumber')->nullable();
             $table->timestamps();
         });

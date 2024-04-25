@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('lattesID10')->nullable();
             $table->string('lattesID16')->nullable();
             $table->string('nacionalidade')->nullable();
-            $table->string('name');
+            $table->longText('name');
             $table->longText('nomeCitacoesBibliograficas')->nullable();
             $table->string('orcid')->nullable();
             $table->jsonb('orientacoesConcluidas')->nullable();
