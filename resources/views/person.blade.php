@@ -461,6 +461,8 @@
 
                         @if(isset($id->formacao['MESTRADO']))
 
+                        @if(isset($id->formacao['MESTRADO']['@attributes']))
+
                         <div class="s-list">
                             <div class="s-list-bullet"><i title="formation" class="i i-academic s-list-ico"></i></div>
                             <div class="s-list-content">
@@ -499,6 +501,52 @@
                                 </ul>
                             </div>
                         </div>
+                        @else
+
+                        @foreach ($id->formacao['MESTRADO'] as $MESTRADO)
+
+                        <div class="s-list">
+                            <div class="s-list-bullet"><i title="formation" class="i i-academic s-list-ico"></i></div>
+                            <div class="s-list-content">
+                                @if($MESTRADO['@attributes']['STATUS-DO-CURSO'] ==
+                                'INCOMPLETO')
+                                <p class="t t-b">Status do Curso:
+                                    {{ $MESTRADO['@attributes']['STATUS-DO-CURSO'] }}
+                                </p>
+                                @endif
+                                <p class="t t-b">Mestrado em
+                                    {{ $MESTRADO['@attributes']['NOME-CURSO'] }}
+                                </p>
+                                <p></p>
+                                @if($MESTRADO['@attributes']['TITULO-DA-DISSERTACAO-TESE']
+                                != '')
+                                <p class="ty">
+                                    Título da dissertação:
+                                    {{ $MESTRADO['@attributes']['TITULO-DA-DISSERTACAO-TESE'] }}
+                                </p>
+                                @endif
+                                <p class="t t-gray"></p>
+                                <p class="t t-gray"></p>
+                                <p class="t t-gray">Orientação:
+                                    {{ $MESTRADO['@attributes']['NOME-COMPLETO-DO-ORIENTADOR'] }}
+                                </p>
+                                <p class="t t-gray">
+                                    {{ $MESTRADO['@attributes']['NOME-INSTITUICAO'] }}
+                                </p>
+                                <ul class="s-list-tags">
+                                    <p class="t t-gray"></p>
+                                    <p class="t t-gray">
+                                        {{ $MESTRADO['@attributes']['ANO-DE-INICIO'] }}
+                                        a
+                                        {{ $MESTRADO['@attributes']['ANO-DE-CONCLUSAO'] }}
+                                    </p>
+                                </ul>
+                            </div>
+                        </div>
+
+                        @endforeach
+
+                        @endif
                         @endif
 
                         <!-- Graduação -->
@@ -735,9 +783,12 @@
                                                 <div class="card">
                                                     <div class="card-body">
                                                         <h5 class="card-title">É parte de:</h5>
+                                                        @if(isset($work->isPartOf['name']))
                                                         <h6 class="card-subtitle mb-2 text-muted">Publicação:
                                                             {{ $work->isPartOf['name'] }}
                                                         </h6>
+                                                        @endif
+
                                                         <p class="card-text">
                                                         <ul class="c-authors-list">
 
@@ -1242,10 +1293,12 @@
                                     <p class='d-linewrap t-gray mt-2 mb-2'>
                                         {{ $projeto->instituicao }}
                                     </p>
+                                    @if(is_array($projeto->integrantes))
                                     <p class='d-linewrap t-gray mt-2 mb-2'>
                                         Integrantes: {{ implode(", ", $projeto->integrantes) }}
                                     </p>
-                                    <p class='ty mt-3 mb-3'>Descrição{{ $projeto->description }}</p>
+                                    @endif
+                                    <p class='ty mt-3 mb-3'>Descrição: {{ $projeto->description }}</p>
 
                                     <p class='t t-gray'>Ano de início: {{ $projeto->projectYearStart }}</p>
                                     <p class='t t-gray'>Ano de término: {{ $projeto->projectYearEnd }}</p>
