@@ -64,4 +64,13 @@ class QualisController extends Controller
 
         return view('qualis', compact('qualis'));
     }
+
+    public static function queryQualis($issn)
+    {
+        $query = DB::table('qualis');
+        $query->where('issn', $issn);
+        $qualis = $query->first();
+
+        return $qualis;
+    }
 }

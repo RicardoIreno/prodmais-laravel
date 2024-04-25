@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('pageStart')->nullable();
             $table->jsonb('ppg_nome')->nullable();
             $table->jsonb('publisher')->nullable();
+            $table->string('qualis')->nullable();
             $table->string('sha256');
             $table->string('type');
             $table->string('url')->nullable();

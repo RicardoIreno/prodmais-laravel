@@ -64,8 +64,23 @@ class LattesController extends Controller
                 'type' => 'Artigo publicado',
             ]);
 
-            $isPartOf['name'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['TITULO-DO-PERIODICO-OU-REVISTA'];
-            $isPartOf['issn'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['ISSN'];
+            $isPartOf['issn'] = str_replace('-', '', $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['ISSN']);
+            if (!empty($isPartOf['issn'])) {
+                $qualis_result = QualisController::queryQualis($isPartOf['issn']);
+                if (!empty($qualis_result->titulo)) {
+                    $isPartOf['name'] = $qualis_result->titulo;
+                    $work->fill([
+                        'isPartOfName' => $qualis_result->titulo,
+                        'qualis' => $qualis_result->estrato
+                    ]);
+                } else {
+                    $isPartOf['name'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['TITULO-DO-PERIODICO-OU-REVISTA'];
+                    $work->fill([
+                        'isPartOfName' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['TITULO-DO-PERIODICO-OU-REVISTA'],
+                    ]);
+                }
+            }
+
             $isPartOf['volumeNumber'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['VOLUME'];
             $isPartOf['issueNumber'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['SERIE'];
             $isPartOf['pageStart'] = $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['PAGINA-INICIAL'];
@@ -74,10 +89,6 @@ class LattesController extends Controller
 
             $work->fill([
                 'isPartOf' => $isPartOf,
-            ]);
-
-            $work->fill([
-                'isPartOfName' => $artigo['DETALHAMENTO-DO-ARTIGO']['@attributes']['TITULO-DO-PERIODICO-OU-REVISTA'],
             ]);
 
             if (isset($artigo['AUTORES'])) {

@@ -24,6 +24,7 @@
             $request->has('inLanguage')||
             $request->has('issn')||
             $request->has('instituicao')||
+            $request->has('qualis')||
             $request->has('search')||
             $request->has('sourceOrganization')||
             $request->has('ppg_nome')||
@@ -82,6 +83,9 @@
                     if ($key == 'publisher') {
                     $key_name = 'Editora';
                     }
+                    if ($key == 'qualis') {
+                    $key_name = 'Extrato Qualis 2017-2020';
+                    }
                     if ($key == 'releasedEvent') {
                     $key_name = 'Nome do evento';
                     }
@@ -111,6 +115,7 @@
                     <x-facet field="isPartOfName" fieldName="É parte de" type="Work" :request="$request" />
                     <x-facet field="educationEventName" fieldName="Nome do evento" type="Work" :request="$request" />
                     <x-facetArray field="genero" fieldName="Gênero" type="Work" :request="$request" />
+                    <x-facet field="qualis" fieldName="Extrato Qualis 2017-2020" type="Work" :request="$request" />
                 </div>
 
             </div>

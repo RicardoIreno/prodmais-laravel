@@ -48,6 +48,7 @@ class Work extends Model
         'pageStart',
         'ppg_nome',
         'publisher',
+        'qualis',
         'sha256',
         'type',
         'url',

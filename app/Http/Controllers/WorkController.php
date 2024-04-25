@@ -38,6 +38,9 @@ class WorkController extends Controller
         if ($request->educationEventName) {
             $query->where('educationEventName', $request->educationEventName);
         }
+        if ($request->qualis) {
+            $query->where('qualis', $request->qualis);
+        }
         if ($request->about) {
             $query->whereJsonContains('about', $request->about);
         }

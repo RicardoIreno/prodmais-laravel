@@ -126,6 +126,10 @@
                                 $years_array_max = max($years_array_values);
                             }
 
+                            if ($years_array_max == 0) {
+                                $years_array_max = 1;
+                            }
+
                             foreach ($trabalhos_publicados as $trabalhos_publicado) {
                                 $total_year = $trabalhos_publicado['total'];
                                 $this_year = $trabalhos_publicado['year'];
