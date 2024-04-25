@@ -6,6 +6,7 @@ use App\Http\Controllers\ProjetoController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\LattesController;
 use App\Http\Controllers\ExportersController;
+use App\Http\Controllers\QualisController;
 use App\Models\Person;
 
 /*
@@ -49,3 +50,5 @@ Route::get('/sobre', function () {
 });
 
 Route::get('/exporters/bibtex/{id}', [ExportersController::class, 'bibtex']);
+
+Route::resource('qualis', QualisController::class);

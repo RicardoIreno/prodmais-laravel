@@ -97,10 +97,17 @@ Editar o arquivo .env com as informações do PostgreSQL
 
     php artisan migrate:fresh
 
-### Criar registros de teste
+### Criar um link simbolico para o storage
 
-    php artisan db:seed --class=PersonSeeder
-    php artisan db:seed --class=WorkSeeder
+    php artisan storage:link
+
+### Copiar o arquivo qualis.tsv para a pasta storage
+
+    cp public/qualis.tsv storage/app/public/
+
+### Indexar os arquivos do qualis
+
+    php artisan db:seed --class=QualisSeeder
 
 ## Para alterar o tema
 
