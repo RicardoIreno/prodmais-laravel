@@ -322,6 +322,7 @@
 
                         @if(isset($id->formacao['DOUTORADO']))
 
+                        @if(isset($id->formacao['DOUTORADO']['@attributes']))
                         <div class="s-list">
                             <div class="s-list-bullet"><i title="formation" class="i i-academic s-list-ico"></i></div>
                             <div class="s-list-content">
@@ -360,6 +361,54 @@
                                 </ul>
                             </div>
                         </div>
+                        @else
+
+                        @foreach ($id->formacao['DOUTORADO'] as $DOUTORADO)
+
+                        <div class="s-list">
+                            <div class="s-list-bullet"><i title="formation" class="i i-academic s-list-ico"></i></div>
+                            <div class="s-list-content">
+                                @if($DOUTORADO['@attributes']['STATUS-DO-CURSO'] ==
+                                'INCOMPLETO')
+                                <p class="t t-b">Status do Curso:
+                                    {{ $DOUTORADO['@attributes']['STATUS-DO-CURSO'] }}
+                                </p>
+                                @endif
+                                <p class="t t-b">Doutorado em
+                                    {{ $DOUTORADO['@attributes']['NOME-CURSO'] }}
+                                </p>
+                                <p></p>
+                                @if($DOUTORADO['@attributes']['TITULO-DA-DISSERTACAO-TESE']
+                                != '')
+                                <p class="ty">
+                                    Título da tese:
+                                    {{ $DOUTORADO['@attributes']['TITULO-DA-DISSERTACAO-TESE'] }}
+                                </p>
+                                @endif
+                                <p class="t t-gray"></p>
+                                <p class="t t-gray"></p>
+                                <p class="t t-gray">Orientação:
+                                    {{ $DOUTORADO['@attributes']['NOME-COMPLETO-DO-ORIENTADOR'] }}
+                                </p>
+                                <p class="t t-gray">
+                                    {{ $DOUTORADO['@attributes']['NOME-INSTITUICAO'] }}
+                                </p>
+                                <ul class="s-list-tags">
+                                    <p class="t t-gray"></p>
+                                    <p class="t t-gray">
+                                        {{ $DOUTORADO['@attributes']['ANO-DE-INICIO'] }}
+                                        a
+                                        {{ $DOUTORADO['@attributes']['ANO-DE-CONCLUSAO'] }}
+                                    </p>
+                                </ul>
+                            </div>
+                        </div>
+
+                        @endforeach
+
+                        @endif
+
+
                         @endif
 
                         <!-- Mestrado Profissionalizante -->

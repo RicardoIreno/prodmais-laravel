@@ -1044,31 +1044,46 @@ class LattesController extends Controller
                 if (isset($atuacao_profissional1['ATIVIDADES-DE-PARTICIPACAO-EM-PROJETO']['PARTICIPACAO-EM-PROJETO'])) {
                     foreach ($atuacao_profissional1['ATIVIDADES-DE-PARTICIPACAO-EM-PROJETO']['PARTICIPACAO-EM-PROJETO'] as $projeto_de_pesquisa) {
                         if (isset($projeto_de_pesquisa['PROJETO-DE-PESQUISA'])) {
-                            $project = new Projeto;
-                            $project->fill([
-                                'name' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['NOME-DO-PROJETO'],
-                                'description' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['DESCRICAO-DO-PROJETO'],
-                                'instituicao' => $atuacao_profissional1['@attributes']['NOME-INSTITUICAO'],
-                                'projectYearStart' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['ANO-INICIO'],
-                                'projectYearEnd' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['ANO-INICIO'],
-                                'situacao' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes']['SITUACAO'],
-                            ]);
-                            if (isset($projeto_de_pesquisa['PROJETO-DE-PESQUISA']['EQUIPE-DO-PROJETO'])) {
-                                $integrantes = [];
-                                foreach ($projeto_de_pesquisa['PROJETO-DE-PESQUISA']['EQUIPE-DO-PROJETO'] as $integrante) {
-                                    foreach ($integrante as $integrante1) {
-                                        $integrantes[] = $integrante1['@attributes']['NOME-COMPLETO'];
-                                    }
-                                }
-                                $project->fill([
-                                    'integrantes' => $integrantes,
-                                ]);
+
+                            if (isset($projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes'])) {
+                                $projeto_de_pesquisa['PROJETO-DE-PESQUISA'] = $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['@attributes'];
                             }
-                            try {
-                                $project->save();
-                                $project->authors()->attach($person);
-                            } catch (\Exception $e) {
-                                echo $e->getMessage();
+
+                            $project = new Projeto;
+
+                            if (isset($projeto_de_pesquisa['PROJETO-DE-PESQUISA']['NOME-DO-PROJETO'])) {
+                                $project->fill([
+                                    'name' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['NOME-DO-PROJETO'],
+                                    'description' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['DESCRICAO-DO-PROJETO'],
+                                    'projectYearStart' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['ANO-INICIO'],
+                                    'projectYearEnd' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['ANO-INICIO'],
+                                    'situacao' => $projeto_de_pesquisa['PROJETO-DE-PESQUISA']['SITUACAO'],
+                                ]);
+
+                                if (isset($atuacao_profissional1['@attributes']['NOME-INSTITUICAO'])) {
+                                    $project->fill([
+                                        'instituicao' => $atuacao_profissional1['@attributes']['NOME-INSTITUICAO']
+                                    ]);
+                                }
+
+                                if (isset($projeto_de_pesquisa['PROJETO-DE-PESQUISA']['EQUIPE-DO-PROJETO'])) {
+                                    $integrantes = [];
+                                    foreach ($projeto_de_pesquisa['PROJETO-DE-PESQUISA']['EQUIPE-DO-PROJETO'] as $integrante) {
+                                        foreach ($integrante as $integrante1) {
+                                            dd($integrante1);
+                                            $integrantes[] = $integrante1['@attributes']['NOME-COMPLETO'];
+                                        }
+                                    }
+                                    $project->fill([
+                                        'integrantes' => $integrantes,
+                                    ]);
+                                }
+                                try {
+                                    $project->save();
+                                    $project->authors()->attach($person);
+                                } catch (\Exception $e) {
+                                    echo $e->getMessage();
+                                }
                             }
                         }
                     }
@@ -1199,28 +1214,28 @@ class LattesController extends Controller
                 $lattesXML = simplexml_load_file($request->file);
                 $lattes = json_decode(json_encode($lattesXML), true);
                 $this->createPerson($lattes, $request);
-                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-PUBLICADOS'])) {
-                    $this->artigos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-PUBLICADOS'], $lattes['@attributes'], $request);
-                }
-                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['TRABALHOS-EM-EVENTOS'])) {
-                    $this->trabalhosEmEventos($lattes['PRODUCAO-BIBLIOGRAFICA']['TRABALHOS-EM-EVENTOS'], $lattes['@attributes'], $request);
-                }
-                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['LIVROS-PUBLICADOS-OU-ORGANIZADOS'])) {
-                    $this->livros($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['LIVROS-PUBLICADOS-OU-ORGANIZADOS'], $lattes['@attributes'], $request);
-                }
-                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['CAPITULOS-DE-LIVROS-PUBLICADOS'])) {
-                    $this->capitulos($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['CAPITULOS-DE-LIVROS-PUBLICADOS'], $lattes['@attributes'], $request);
-                }
-                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['TEXTOS-EM-JORNAIS-OU-REVISTAS'])) {
-                    $this->jornais($lattes['PRODUCAO-BIBLIOGRAFICA']['TEXTOS-EM-JORNAIS-OU-REVISTAS'], $lattes['@attributes'], $request);
-                }
-                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['DEMAIS-TIPOS-DE-PRODUCAO-BIBLIOGRAFICA'])) {
-                    $this->demais($lattes['PRODUCAO-BIBLIOGRAFICA']['DEMAIS-TIPOS-DE-PRODUCAO-BIBLIOGRAFICA'], $lattes['@attributes'], $request);
-                }
-                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'])) {
-                    $this->artigosAceitos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'], $lattes['@attributes'], $request);
-                }
-                return redirect('/person' . '/' . $lattes['@attributes']['NUMERO-IDENTIFICADOR']);
+                // if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-PUBLICADOS'])) {
+                //     $this->artigos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-PUBLICADOS'], $lattes['@attributes'], $request);
+                // }
+                // if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['TRABALHOS-EM-EVENTOS'])) {
+                //     $this->trabalhosEmEventos($lattes['PRODUCAO-BIBLIOGRAFICA']['TRABALHOS-EM-EVENTOS'], $lattes['@attributes'], $request);
+                // }
+                // if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['LIVROS-PUBLICADOS-OU-ORGANIZADOS'])) {
+                //     $this->livros($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['LIVROS-PUBLICADOS-OU-ORGANIZADOS'], $lattes['@attributes'], $request);
+                // }
+                // if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['CAPITULOS-DE-LIVROS-PUBLICADOS'])) {
+                //     $this->capitulos($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['CAPITULOS-DE-LIVROS-PUBLICADOS'], $lattes['@attributes'], $request);
+                // }
+                // if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['TEXTOS-EM-JORNAIS-OU-REVISTAS'])) {
+                //     $this->jornais($lattes['PRODUCAO-BIBLIOGRAFICA']['TEXTOS-EM-JORNAIS-OU-REVISTAS'], $lattes['@attributes'], $request);
+                // }
+                // if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['DEMAIS-TIPOS-DE-PRODUCAO-BIBLIOGRAFICA'])) {
+                //     $this->demais($lattes['PRODUCAO-BIBLIOGRAFICA']['DEMAIS-TIPOS-DE-PRODUCAO-BIBLIOGRAFICA'], $lattes['@attributes'], $request);
+                // }
+                // if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'])) {
+                //     $this->artigosAceitos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'], $lattes['@attributes'], $request);
+                // }
+                //return redirect('/person' . '/' . $lattes['@attributes']['NUMERO-IDENTIFICADOR']);
             } catch (\Exception $e) {
                 echo $e->getMessage();
             }
