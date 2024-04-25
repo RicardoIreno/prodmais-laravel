@@ -1228,4 +1228,41 @@ class LattesController extends Controller
             echo 'Não foi enviado um arquivo XML do Lattes válido.';
         }
     }
+
+    public function processXMLAPI(Request $request)
+    {
+        if ($request->file) {
+            try {
+                $lattesXML = simplexml_load_file($request->file);
+                $lattes = json_decode(json_encode($lattesXML), true);
+                $this->createPerson($lattes, $request);
+                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-PUBLICADOS'])) {
+                    $this->artigos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-PUBLICADOS'], $lattes['@attributes'], $request);
+                }
+                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['TRABALHOS-EM-EVENTOS'])) {
+                    $this->trabalhosEmEventos($lattes['PRODUCAO-BIBLIOGRAFICA']['TRABALHOS-EM-EVENTOS'], $lattes['@attributes'], $request);
+                }
+                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['LIVROS-PUBLICADOS-OU-ORGANIZADOS'])) {
+                    $this->livros($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['LIVROS-PUBLICADOS-OU-ORGANIZADOS'], $lattes['@attributes'], $request);
+                }
+                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['CAPITULOS-DE-LIVROS-PUBLICADOS'])) {
+                    $this->capitulos($lattes['PRODUCAO-BIBLIOGRAFICA']['LIVROS-E-CAPITULOS']['CAPITULOS-DE-LIVROS-PUBLICADOS'], $lattes['@attributes'], $request);
+                }
+                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['TEXTOS-EM-JORNAIS-OU-REVISTAS'])) {
+                    $this->jornais($lattes['PRODUCAO-BIBLIOGRAFICA']['TEXTOS-EM-JORNAIS-OU-REVISTAS'], $lattes['@attributes'], $request);
+                }
+                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['DEMAIS-TIPOS-DE-PRODUCAO-BIBLIOGRAFICA'])) {
+                    $this->demais($lattes['PRODUCAO-BIBLIOGRAFICA']['DEMAIS-TIPOS-DE-PRODUCAO-BIBLIOGRAFICA'], $lattes['@attributes'], $request);
+                }
+                if (isset($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'])) {
+                    $this->artigosAceitos($lattes['PRODUCAO-BIBLIOGRAFICA']['ARTIGOS-ACEITOS-PARA-PUBLICACAO'], $lattes['@attributes'], $request);
+                }
+                return response()->json(['message' => 'XML processado com sucesso!']);
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+            }
+        } else {
+            return response()->json(['message' => 'Não foi enviado um arquivo XML do Lattes válido.']);
+        }
+    }
 }
