@@ -49,7 +49,8 @@
                     $key_name = 'Programa de Pós-Graduação';
                     }
                     @endphp
-                    <a type="button" class="btn btn-outline-warning mb-1" href="projetos?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
+                    <a type="button" class="btn btn-outline-warning mb-1"
+                        href="projetos?{{ http_build_query(array_diff_key($request->all(), [$key => $work])) }}">
                         {{ $key_name }}: {{ $work }} (X)
                     </a>
                 </div>
@@ -111,9 +112,11 @@
                                         {{ $value->instituicao }}
                                     </p>
 
+                                    @if(is_array($value->integrantes))
                                     <p class='d-linewrap t-gray mt-2'>
                                         Integrantes: {{ implode(", ", $value->integrantes) }}
                                     </p>
+                                    @endif
 
                                     @if(isset($value->description))
                                     <p class='d-linewrap t-gray mt-2'>
