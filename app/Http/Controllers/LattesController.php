@@ -1123,14 +1123,24 @@ class LattesController extends Controller
                 'id' => (string)$lattes['@attributes']['NUMERO-IDENTIFICADOR'],
                 'lattesID16' => (string)$lattes['@attributes']['NUMERO-IDENTIFICADOR'],
                 'lattesDataAtualizacao' => $lattes['@attributes']['DATA-ATUALIZACAO'],
-                'resumoCVpt' => $lattes['DADOS-GERAIS']['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH'],
-                'resumoCVen' => $lattes['DADOS-GERAIS']['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH-EN'],
                 'name' => $lattes['DADOS-GERAIS']['@attributes']['NOME-COMPLETO'],
                 'nacionalidade' => $lattes['DADOS-GERAIS']['@attributes']['PAIS-DE-NACIONALIDADE'],
                 'nomeCitacoesBibliograficas' => $lattes['DADOS-GERAIS']['@attributes']['NOME-EM-CITACOES-BIBLIOGRAFICAS'],
-                'orcid' => $lattes['DADOS-GERAIS']['@attributes']['ORCID-ID'],
                 'formacao' => $lattes['DADOS-GERAIS']['FORMACAO-ACADEMICA-TITULACAO']
             ]);
+
+            if (isset($lattes['DADOS-GERAIS']['@attributes']['ORCID-ID'])) {
+                $person->fill([
+                    'orcid' => $lattes['DADOS-GERAIS']['@attributes']['ORCID-ID'],
+                ]);
+            }
+
+            if (isset($lattes['DADOS-GERAIS']['RESUMO-CV'])) {
+                $person->fill([
+                    'resumoCVpt' => $lattes['DADOS-GERAIS']['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH'],
+                    'resumoCVen' => $lattes['DADOS-GERAIS']['RESUMO-CV']['@attributes']['TEXTO-RESUMO-CV-RH-EN'],
+                ]);
+            }
 
             $lattesID10 = $this->lattesID10($lattes['@attributes']['NUMERO-IDENTIFICADOR']);
 
