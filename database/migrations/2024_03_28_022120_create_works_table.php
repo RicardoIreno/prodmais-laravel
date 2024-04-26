@@ -43,6 +43,10 @@ return new class extends Migration
             $table->longText('url')->nullable();
             $table->string('volumeNumber')->nullable();
             $table->timestamps();
+
+            $table->index([
+                'about', 'author', 'author_array', 'authorLattesIds', 'datePublished', 'doi', 'educationEvent', 'educationEventName', 'genero', 'inLanguage', 'isPartOf', 'isPartOfName', 'isbn', 'instituicao', 'issn', 'name', 'ppg_nome', 'publisher', 'type'
+            ]);
         });
     }
 

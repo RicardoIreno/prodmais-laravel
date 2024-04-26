@@ -21,6 +21,10 @@ return new class extends Migration
             $table->string('projectYearStart')->nullable();
             $table->string('situacao')->nullable();
             $table->timestamps();
+
+            $table->index([
+                'name', 'instituicao', 'integrantes', 'description', 'projectYearStart', 'projectYearEnd', 'situacao'
+            ]);
         });
     }
 

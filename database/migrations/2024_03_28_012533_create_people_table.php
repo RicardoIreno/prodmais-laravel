@@ -36,8 +36,14 @@ return new class extends Migration
             $table->string('tipvin')->nullable();
             $table->string('unidade')->nullable();
             $table->timestamps();
+
+            $table->index([
+                'curso_nome', 'departamento', 'genero', 'instituicao', 'lattesID10', 'lattesID16', 'name', 'nomeCitacoesBibliograficas', 'orcid', 'ppg_nome', 'tipvin', 'unidade'
+            ]);
         });
     }
+
+
 
     /**
      * Reverse the migrations.

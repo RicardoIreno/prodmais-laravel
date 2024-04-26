@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('area');
             $table->string('ano');
             $table->timestamps();
+
+            $table->index([
+                'issn', 'titulo'
+            ]);
         });
     }
 
