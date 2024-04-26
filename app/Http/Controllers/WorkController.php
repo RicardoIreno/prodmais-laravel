@@ -131,7 +131,7 @@ class WorkController extends Controller
         if ($request->type) {
             $typeData = $typeData->where('type', $request->type);
         }
-        $typeData = $typeData->groupBy('type')->orderBy('total', 'desc')->get();
+        $typeData = $typeData->groupBy('type')->orderBy('total', 'desc')->limit(10)->get();
 
         // Gerar gráfico de tag cloud
 
